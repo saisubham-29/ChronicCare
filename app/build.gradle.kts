@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.graphplot)
     implementation(libs.circleimageview)
     implementation(libs.appcompat)
     implementation(libs.material)

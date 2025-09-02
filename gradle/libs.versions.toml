@@ -17,6 +17,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version = "3.1.0" }
+graphplot = { module = "com.github.PhilJay:MPAndroidChart", version = "3.1.0" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
