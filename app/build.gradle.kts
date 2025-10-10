@@ -25,19 +25,42 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
-    implementation(libs.graphplot)
-    implementation(libs.circleimageview)
+    // --- ROOM DATABASE ---
+    val room_version = "2.8.2"
+
+    implementation("androidx.room:room-runtime:$room_version")
+
+    // Use this for Java projects (annotation processor)
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // Optional: Kotlin coroutines and LiveData extensions
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // Optional: Paging, RxJava, Guava support
+    implementation("androidx.room:room-paging:$room_version")
+    implementation("androidx.room:room-rxjava3:$room_version")
+    implementation("androidx.room:room-guava:$room_version")
+
+    // Optional: Room testing utilities
+    testImplementation("androidx.room:room-testing:$room_version")
+
+    // --- UI + CORE DEPENDENCIES ---
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.graphplot)
+    implementation(libs.circleimageview)
+
+    // --- TESTING ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

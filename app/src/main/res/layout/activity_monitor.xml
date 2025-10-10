@@ -89,6 +89,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_dropdown"
+                            android:clickable="true"
                             app:tint="#26A69A"/>
                     </LinearLayout>
 
@@ -116,6 +117,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:id="@+id/mic_icon"
                             android:src="@drawable/ic_mic"
                             app:tint="#26A69A"/>
                     </LinearLayout>
