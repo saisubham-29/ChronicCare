@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_monitor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#FFFFFF"
-    android:layout_marginTop="25dp">
+    android:background="#FFFFFF">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,7 +62,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -168,24 +164,7 @@
                         android:fontFamily="sans-serif" />
 
                 </LinearLayout>
-
-
             </androidx.cardview.widget.CardView>
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chartGlucose"
-                android:layout_below="@+id/livedata_card"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="20dp" />
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/comparison"
-                android:layout_width="match_parent"
-                android:layout_below="@+id/chartGlucose"
-                android:layout_height="280dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp" />
-
-
 
 
         </RelativeLayout>
