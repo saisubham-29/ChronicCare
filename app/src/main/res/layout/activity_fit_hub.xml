@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,6 +9,31 @@
     android:layout_margin="10dp"
     android:fitsSystemWindows="true"
     android:background="#FFFFFF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_margin="10dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/fithubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FitHub"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/fithubDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fithubTitle"
+            android:layout_marginTop="0dp"
+            android:text="Stay fit, Live happier."
+            android:textColor="#4c5663"
+            android:textSize="18sp" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="70dp"
@@ -18,4 +43,111 @@
         app:civ_border_width="1dp"
         app:civ_border_color="#FF000000" />
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/FithubActions"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@id/fithubDesc"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <!-- Row 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="0">
+
+                <!-- Card 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#f7f7f7"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="1dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/foodImg"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="left"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_food" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_toRightOf="@+id/foodImg"
+                            android:text="Log  Food"
+                            android:textSize="15sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- Card 2 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#f7f7f7"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="1dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/gymImg"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_gym" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/gymImg"
+                            android:text="Log Exercise"
+                            android:textSize="15sp" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/MealPlanText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's Meal Plan"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/FithubActions"
+            android:textSize="28sp" />
+
+
+
+    </RelativeLayout>
+</ScrollView>

@@ -40,16 +40,17 @@
         android:text="Anjali"
         android:textSize="28sp" />
 
+    <!-- Live Data Card -->
     <TextView
         android:id="@+id/mainPageDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/mainPageGreeting"
+        android:layout_marginTop="0dp"
         android:text="Friday, Aug 15"
-        android:textSize="18sp"
-        android:textColor="#4c5663" />
+        android:textColor="#4c5663"
+        android:textSize="18sp" />
 
-    <!-- Live Data Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/livedata_card"
         android:layout_width="match_parent"
