@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ChronicCare"
         tools:targetApi="31">
         <activity
+            android:name=".AddMedications"
+            android:exported="false" />
+        <activity
             android:name=".AlarmActivity"
             android:exported="false" />
         <activity

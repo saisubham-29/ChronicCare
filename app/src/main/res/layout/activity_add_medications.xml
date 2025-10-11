@@ -1,0 +1,80 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleAddMedication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Medication"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <!-- Medication Name -->
+    <EditText
+        android:id="@+id/medNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Medication Name"
+        android:layout_below="@id/titleAddMedication"
+        android:layout_marginTop="16dp"
+        android:inputType="text"/>
+
+    <!-- Dose -->
+    <EditText
+        android:id="@+id/doseEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Dose"
+        android:layout_below="@id/medNameEditText"
+        android:layout_marginTop="12dp"
+        android:inputType="text"/>
+
+    <!-- Meal RadioGroup -->
+    <RadioGroup
+        android:id="@+id/mealRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/doseEditText"
+        android:layout_marginTop="12dp">
+
+        <RadioButton
+            android:id="@+id/beforeFoodRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Before Food"/>
+
+        <RadioButton
+            android:id="@+id/afterFoodRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="After Food"/>
+    </RadioGroup>
+
+    <!-- Medication Taken Switch -->
+    <Switch
+        android:id="@+id/medTakenSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Med Taken"
+        android:layout_below="@id/mealRadioGroup"
+        android:layout_marginTop="12dp"/>
+
+    <!-- Add Button -->
+    <Button
+        android:id="@+id/btnAddMedication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Medication"
+        android:layout_below="@id/medTakenSwitch"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@android:color/white"/>
+
+</RelativeLayout>

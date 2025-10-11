@@ -1,6 +1,7 @@
 package com.example.chroniccare;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.Firebase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -17,7 +21,8 @@ import java.util.Random;
 public class HomeActivity extends BottomNavActivity {
 
     // Core views that must exist
-    private TextView currentReadingValue, lastCheckedTime;
+    private TextView currentReadingValue;
+    private TextView lastCheckedTime;
     private CardView btnCheckNow, btnTakeNow,logFood;
     private TextView nextMedicationName, medTiming;
 
@@ -28,9 +33,15 @@ public class HomeActivity extends BottomNavActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         logFood =findViewById(R.id.LogFood);
         logFood.setOnClickListener(v->logFood());
+        TextView addMedication = findViewById(R.id.AddMediaction);
+        addMedication.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, AddMedications.class);
+            startActivity(intent);
+        });
 
         // Initialize with error handling
         try {
