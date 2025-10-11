@@ -52,6 +52,11 @@ dependencies {
     implementation("androidx.room:room-rxjava3:$room_version")
     implementation("androidx.room:room-guava:$room_version")
 
+    //2 dependecies added at 11:12
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.google.android.material:material:1.8.0")
+
     // Optional: Room testing utilities
     testImplementation("androidx.room:room-testing:$room_version")
 
