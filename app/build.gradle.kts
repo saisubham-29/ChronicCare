@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -33,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.database)
     // --- ROOM DATABASE ---
     val room_version = "2.8.2"
 

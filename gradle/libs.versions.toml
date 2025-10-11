@@ -8,6 +8,8 @@ material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
 roomRuntime = "2.8.2"
+googleGmsGoogleServices = "4.4.3"
+firebaseDatabase = "22.0.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -20,9 +22,11 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 circleimageview = { module = "de.hdodenhof:circleimageview", version = "3.1.0" }
 graphplot = { module = "com.github.PhilJay:MPAndroidChart", version = "3.1.0" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 
 

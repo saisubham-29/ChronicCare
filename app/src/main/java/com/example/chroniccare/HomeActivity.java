@@ -38,7 +38,7 @@ public class HomeActivity extends BottomNavActivity {
             setupBasicClickListeners();
             updateBasicUI();
         } catch (Exception e) {
-            Toast.makeText(this, "Error initializing: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
             e.printStackTrace();
         }
     }
