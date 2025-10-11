@@ -1,53 +1,99 @@
 package com.example.chroniccare;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import java.util.Calendar;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AlarmActivity extends AppCompatActivity {
 
-    private Ringtone ringtone;
-    private Button btnTakeNow, btnTakeLater;
+    private String medicationId;
+    private String medicationName;
+    private FirebaseFirestore firestore;
+    private int alarmCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_alarm);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        firestore = FirebaseFirestore.getInstance();
 
+        getWindow().addFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        );
 
+        Intent intent = getIntent();
+        medicationId = intent.getStringExtra("MEDICATION_ID");
+        medicationName = intent.getStringExtra("MEDICATION_NAME");
+        alarmCode = intent.getIntExtra("ALARM_CODE", AlarmService.INITIAL_REMINDER_CODE);
+
+        if (medicationId == null || medicationName == null) {
+            Toast.makeText(this, "Reminder data missing.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        TextView medNameView = findViewById(R.id.alarmMedicationName);
+        Button btnTakeNow = findViewById(R.id.btnAlarmTakeNow);
+        Button btnWillTakeLater = findViewById(R.id.btnAlarmDismiss);
+
+        String alertType = "";
+        if (alarmCode == AlarmService.FOLLOWUP_REMINDER_CODE) {
+            alertType = " (2nd Alert)";
+            btnWillTakeLater.setText("Will Take Later");
+        } else if (alarmCode == AlarmService.SNOOZE_REMINDER_CODE) {
+            alertType = " (Snoozed)";
+            btnWillTakeLater.setText("Snooze (10 min)");
+        } else {
+            btnWillTakeLater.setText("Will Take Later");
+        }
+        medNameView.setText(medicationName + alertType);
+
+        btnTakeNow.setOnClickListener(v -> takeMedicationNow());
+        btnWillTakeLater.setOnClickListener(v -> willTakeLater());
     }
 
-   // Mock database update — replace with actual Room DB logic
-    private void updateMedicationStatus(boolean taken) {
-        // Example:
-        // medicationDao.updateStatus(medicationId, "Taken");
+    private void takeMedicationNow() {
+        if (medicationId == null) return;
+
+        Map<String, Object> updateData = new HashMap<>();
+        updateData.put("MedTaken", true);
+
+        firestore.collection("Medications").document(medicationId)
+                .set(updateData, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, medicationName + " taken. Alarm stopped.", Toast.LENGTH_SHORT).show();
+                    AlarmService.cancelAllReminders(this, medicationId, medicationName);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to update Firestore.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void willTakeLater() {
+        AlarmService.cancelSpecificReminder(this, medicationId, medicationName, AlarmService.INITIAL_REMINDER_CODE);
+        AlarmService.cancelSpecificReminder(this, medicationId, medicationName, AlarmService.FOLLOWUP_REMINDER_CODE);
+
+        AlarmService.scheduleSnoozeAlarm(this, medicationId, medicationName);
+
+        finish();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        Toast.makeText(this, "Select 'Take Now' or 'Will Take Later'", Toast.LENGTH_SHORT).show();
     }
 }

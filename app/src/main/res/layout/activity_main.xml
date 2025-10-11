@@ -272,6 +272,31 @@
         android:padding="8dp"
         android:layout_below="@id/QuickActionTxt"
         >
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTestAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/QuickActionSection"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/button_shape_t1"
+            android:fontFamily="sans-serif"
+            android:text="TEST MEDICATION ALARM (5 Seconds)"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's Schedule"
+            android:layout_below="@id/btnTestAlarm"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="0dp"
+            android:textSize="25sp"
+            android:id="@+id/TodaysScheduleTxt"/>
 
         <!-- Row 1 -->
         <LinearLayout
@@ -327,6 +352,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:id="@+id/LogExercise"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="8dp"
@@ -373,6 +399,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
+                android:id="@+id/ViewReports"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="1dp"
                 android:clickable="true"
@@ -410,6 +437,7 @@
                 android:layout_weight="1"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="8dp"
+                android:id="@+id/ContactDoctor"
                 android:clickable="true"
                 app:cardElevation="1dp"
                 app:cardBackgroundColor="#f7f7f7">
@@ -617,6 +645,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/HealthInsights"
+        android:id="@+id/HOrizontalCardContainer"
         android:layout_marginTop="16dp"
         android:scrollbars="none"
         android:layout_marginBottom="100dp">
