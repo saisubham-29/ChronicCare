@@ -18,16 +18,19 @@ public class HomeActivity extends BottomNavActivity {
 
     // Core views that must exist
     private TextView currentReadingValue, lastCheckedTime;
-    private CardView btnCheckNow, btnTakeNow;
+    private CardView btnCheckNow, btnTakeNow,logFood;
     private TextView nextMedicationName, medTiming;
 
     private Calendar nextMedicationTime;
     private SimpleDateFormat timeFormat;
     private Random random;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        logFood =findViewById(R.id.LogFood);
+        logFood.setOnClickListener(v->logFood());
 
         // Initialize with error handling
         try {

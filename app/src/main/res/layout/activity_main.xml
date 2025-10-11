@@ -288,6 +288,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
+                android:id="@+id/LogFood"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="1dp"
                 android:clickable="true"
