@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF">
 
     <LinearLayout
@@ -167,18 +167,92 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <com.github.mikephil.charting.charts.LineChart
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+            <!-- Blood Glucose Trend -->
+            <TextView
+                android:id="@+id/tvGlucoseTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/livedata_card"
                 android:layout_marginTop="20dp"
-                android:id="@+id/chartGlucose"/>
+                android:text="Blood Glucose"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/tvGlucoseDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/tvGlucoseTitle"
+                android:text="7 days ▼"
+                android:textSize="14sp"
+                android:textColor="#26A69A" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartGlucose"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/tvGlucoseTitle"
+                android:layout_marginTop="8dp" />
+
+
+            <!-- Glucose Summary Labels -->
+            <LinearLayout
+                android:id="@+id/layoutGlucoseStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chartGlucose"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvLowest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lowest 104"
+                    android:textColor="#26A69A"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvHighest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Highest 140"
+                    android:textColor="#E53935"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvAverage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Average 122"
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <!-- Comparison Chart -->
+            <TextView
+                android:id="@+id/tvComparisionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutGlucoseStats"
+                android:layout_marginTop="20dp"
+                android:text="Comparision"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000" />
+
             <com.github.mikephil.charting.charts.BarChart
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_below="@+id/chartGlucose"
-                android:id="@+id/comparision"
-                android:layout_marginTop="20dp"/>
+                android:layout_below="@id/tvComparisionTitle"
+                android:id="@+id/barchart"/>
+
+
 
         </RelativeLayout>
     </LinearLayout>

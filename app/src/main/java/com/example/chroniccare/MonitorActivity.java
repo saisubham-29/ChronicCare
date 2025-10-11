@@ -3,11 +3,11 @@ package com.example.chroniccare;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -18,17 +18,18 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-
 import java.util.ArrayList;
+
+
 
 public class MonitorActivity extends BottomNavActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monitor);
+
 
         LineChart chartGlucose = findViewById(R.id.chartGlucose);
-        BarChart comparision = findViewById(R.id.comparision);
+        BarChart comparision = findViewById(R.id.barchart);
 
         // ================= Line Chart (Blood Glucose Trend) =================
         ArrayList<Entry> lineEntries = new ArrayList<>();
