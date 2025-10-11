@@ -524,30 +524,22 @@
                     app:cardCornerRadius="8dp"
                     app:cardElevation="2dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="160dp"
+                        android:layout_height="100dp"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp">
 
-                        <ImageView
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/img_exercise"
-                            android:contentDescription="Gentle Yoga" />
+                            android:layout_height="match_parent">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#66000000" /> <!-- Dark overlay -->
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_play_button"
-                            android:contentDescription="Play Button" />
-
-                        <TextView
+                            <WebView
+                                android:id="@+id/webView_gentle_yoga"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/black" /> <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Gentle Yoga"
@@ -558,16 +550,17 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="15 mins"
-                            android:textColor="@android:color/white"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="15 mins"
+                                android:textColor="@android:color/white"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginBottom="4dp"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
                 </androidx.cardview.widget.CardView>
 
                 <!-- Video Card 2: Surya Namaskar -->

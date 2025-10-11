@@ -37,58 +37,10 @@ public class AlarmActivity extends AppCompatActivity {
             return insets;
         });
 
-        btnTakeNow = findViewById(R.id.btnTakeNow);
-        btnTakeLater = findViewById(R.id.btnTakeLater);
 
-        // Play the alarm sound immediately when the activity opens
-        playAlarmSound();
-
-        btnTakeNow.setOnClickListener(v -> {
-            stopAlarm();
-            updateMedicationStatus(true); // mock DB update
-            Toast.makeText(this, "✅ Medication marked as taken.", Toast.LENGTH_SHORT).show();
-            finish();
-        });
-
-        btnTakeLater.setOnClickListener(v -> {
-            stopAlarm();
-            scheduleSnooze(5); // snooze for 5 minutes
-            Toast.makeText(this, "⏰ Reminder snoozed for 5 minutes.", Toast.LENGTH_SHORT).show();
-            finish();
-        });
     }
 
-    private void playAlarmSound() {
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null)
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        ringtone = RingtoneManager.getRingtone(getApplicationContext(), alarmUri);
-        ringtone.play();
-    }
-
-    private void stopAlarm() {
-        if (ringtone != null && ringtone.isPlaying()) {
-            ringtone.stop();
-        }
-    }
-
-    private void scheduleSnooze(int minutes) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        long triggerTime = System.currentTimeMillis() + minutes * 60 * 1000L;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-        } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-        }
-    }
-
-    // Mock database update — replace with actual Room DB logic
+   // Mock database update — replace with actual Room DB logic
     private void updateMedicationStatus(boolean taken) {
         // Example:
         // medicationDao.updateStatus(medicationId, "Taken");
@@ -97,6 +49,5 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopAlarm();
     }
 }
