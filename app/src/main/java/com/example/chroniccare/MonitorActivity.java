@@ -2,12 +2,14 @@
 package com.example.chroniccare;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -74,31 +76,31 @@ public class MonitorActivity extends BottomNavActivity {
         chartGlucose.invalidate();
 
 
-        // ================= Bar Chart (Before vs After Meal) =================
+        // ================= Bar Chart (Before vs After Meal) - COMPLETE VERSION =================
         ArrayList<BarEntry> beforeMeal = new ArrayList<>();
         ArrayList<BarEntry> afterMeal = new ArrayList<>();
 
-        // Example values for each day
-        beforeMeal.add(new BarEntry(0, 110));
-        afterMeal.add(new BarEntry(0, 118));
+// Complete data for all 7 days
+        beforeMeal.add(new BarEntry(0, 110f)); // Mon
+        afterMeal.add(new BarEntry(0, 118f));
 
-        beforeMeal.add(new BarEntry(1, 120));
-        afterMeal.add(new BarEntry(1, 118));
+        beforeMeal.add(new BarEntry(1, 120f)); // Tue
+        afterMeal.add(new BarEntry(1, 118f));
 
-        beforeMeal.add(new BarEntry(2, 135));
-        afterMeal.add(new BarEntry(2, 140));
+        beforeMeal.add(new BarEntry(2, 135f)); // Wed
+        afterMeal.add(new BarEntry(2, 140f));
 
-        beforeMeal.add(new BarEntry(3, 130));
-        afterMeal.add(new BarEntry(3, 140));
+        beforeMeal.add(new BarEntry(3, 130f)); // Thu
+        afterMeal.add(new BarEntry(3, 140f));
 
-        beforeMeal.add(new BarEntry(4, 115));
-        afterMeal.add(new BarEntry(4, 107));
+        beforeMeal.add(new BarEntry(4, 115f)); // Fri
+        afterMeal.add(new BarEntry(4, 107f));
 
-        beforeMeal.add(new BarEntry(5, 125));
-        afterMeal.add(new BarEntry(5, 130));
+        beforeMeal.add(new BarEntry(5, 125f)); // Sat
+        afterMeal.add(new BarEntry(5, 130f));
 
-        beforeMeal.add(new BarEntry(6, 108));
-        afterMeal.add(new BarEntry(6, 120));
+        beforeMeal.add(new BarEntry(6, 108f)); // Sun
+        afterMeal.add(new BarEntry(6, 120f));
 
         BarDataSet setBefore = new BarDataSet(beforeMeal, "Before Meal");
         setBefore.setColor(ContextCompat.getColor(this, R.color.teal_700));
@@ -110,36 +112,41 @@ public class MonitorActivity extends BottomNavActivity {
         barData.setBarWidth(0.4f);
 
         comparision.setData(barData);
-        comparision.groupBars(0f, 0.2f, 0.05f); // group spacing
+        comparision.groupBars(0f, 0.4f, 0.06f); // Adjust group spacing
 
         comparision.getDescription().setEnabled(false);
         comparision.setDrawGridBackground(false);
         comparision.setDrawBarShadow(false);
-        comparision.getLegend().setEnabled(false);
+        comparision.getLegend().setEnabled(true); // Enable legend to show Before/After colors
 
-        // X-Axis (days of week)
+// X-Axis - Show all day labels
         XAxis barXAxis = comparision.getXAxis();
         barXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         barXAxis.setGranularity(1f);
         barXAxis.setValueFormatter(new IndexAxisValueFormatter(
                 new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"}));
         barXAxis.setDrawGridLines(false);
+        barXAxis.setLabelCount(7); // Ensure all 7 labels are shown
+        barXAxis.setCenterAxisLabels(true);
 
-        // Y-Axis
+// Y-Axis
         YAxis barLeft = comparision.getAxisLeft();
         barLeft.setAxisMinimum(0f);
         barLeft.setAxisMaximum(160f);
+        barLeft.setGranularity(20f); // Show grid lines at intervals of 20
+        barLeft.setDrawGridLines(true);
+        barLeft.setGridColor(Color.parseColor("#E0E0E0"));
         comparision.getAxisRight().setEnabled(false);
 
-        // ✅ Custom labels above bars (difference between after & before)
+// Custom labels above bars showing the difference
         final int[] diffs = {+8, -2, +5, +10, -8, +5, +12};
 
         barData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getBarLabel(BarEntry barEntry) {
                 int xIndex = (int) barEntry.getX();
-                // Show label only on AFTER meal bar
-                if (barEntry.getY() == afterMeal.get(xIndex).getY()) {
+                // Show difference label only on AFTER meal bars
+                if (barEntry.getData() != null && barEntry.getData().equals("after")) {
                     int diff = diffs[xIndex];
                     return (diff >= 0 ? "+" : "") + diff;
                 }
@@ -147,8 +154,23 @@ public class MonitorActivity extends BottomNavActivity {
             }
         });
 
+// Mark after meal entries for label display
+        for (int i = 0; i < afterMeal.size(); i++) {
+            afterMeal.get(i).setData("after");
+        }
+
         barData.setValueTextSize(12f);
         barData.setValueTextColor(Color.BLACK);
+        barData.setValueTypeface(Typeface.DEFAULT_BOLD);
+
+// Additional chart styling
+        comparision.setFitBars(true);
+        comparision.setDrawValueAboveBar(true);
+        comparision.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        comparision.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        comparision.getLegend().setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        comparision.getLegend().setDrawInside(false);
+        comparision.getLegend().setYOffset(10f);
 
         comparision.invalidate();
     }

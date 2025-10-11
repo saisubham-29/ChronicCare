@@ -240,17 +240,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layoutGlucoseStats"
-                android:layout_marginTop="20dp"
-                android:text="Comparision"
+                android:layout_marginTop="30dp"
+                android:text="Comparison"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#000" />
 
             <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="220dp"
                 android:layout_below="@id/tvComparisionTitle"
-                android:id="@+id/barchart"/>
+                android:layout_marginTop="12dp" />
 
 
 
