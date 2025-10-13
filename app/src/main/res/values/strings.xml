@@ -1,38 +1,4 @@
 <resources>
     <string name="app_name">ChronicCare</string>
-
-    <!-- Screen 1 -->
-    <string name="onboarding_screen1_title">Welcome to Your Personal Health Companion</string>
-    <string name="onboarding_screen1_subtext">
-        Your Health, Smarter Than Ever — we help you take charge of your wellness every day, effortlessly.
-    </string>
-
-    <!-- Screen 2 -->
-    <string name="onboarding_screen2_title">Never Miss a Checkup Again</string>
-    <string name="onboarding_screen2_subtext">
-        Book doctor appointments automatically, get instant confirmations, and receive smart reminders tailored to your schedule.
-        Your time matters — we make sure your health fits right in.
-    </string>
-
-    <!-- Screen 3 -->
-    <string name="onboarding_screen3_title">Stay Connected to Your Body</string>
-    <string name="onboarding_screen3_subtext">
-        Sync your favorite wearable devices to track heart rate, sleep, steps, and more — all in real time.
-        Get instant alerts when something looks off, and insights when you’re doing great.
-    </string>
-
-    <!-- Screen 4 -->
-    <string name="onboarding_screen4_title">Your Body, Your Plan</string>
-    <string name="onboarding_screen4_subtext">
-        Receive personalized diet plans, workout tips, and health articles that match your goals and medical profile.
-        Our AI learns what works best for you — not just anyone.
-    </string>
-
-    <!-- Screen 5 -->
-    <string name="onboarding_screen5_title">Ask. Learn. Stay Healthy.</string>
-    <string name="onboarding_screen5_subtext">
-        Chat anytime with Dr.GPT, your 24/7 AI health assistant.
-        Ask questions, get medical insights, and understand your health like never before — instantly and privately.
-    </string>
-
+    <string name="default_web_client_id">202062206794-1fq8obnm035tv8ts2fp9ptophte5mc8i.apps.googleusercontent.com</string>
 </resources>
