@@ -35,6 +35,9 @@ android {
 
 dependencies {
     implementation(libs.firebase.database)
+    implementation("com.google.firebase:firebase-auth:22.1.1")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation("com.google.firebase:firebase-firestore:24.7.1")
     // --- ROOM DATABASE ---
     val room_version = "2.8.2"
     implementation( "com.google.firebase:firebase-firestore:26.0.2")
