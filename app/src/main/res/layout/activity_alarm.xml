@@ -1,64 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#FFFFFF"
-    android:padding="32dp">
+    android:background="#26A69A">
 
-    <ImageView
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@drawable/ic_bell2"
-        android:tint="#2faa92"
-        android:contentDescription="Medication Reminder"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TIME TO TAKE MEDICATION"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="24dp"/>
-
-    <TextView
-        android:id="@+id/alarmMedicationName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medication Name Placeholder"
-        android:textSize="20sp"
-        android:textColor="#333333"
-        android:layout_marginTop="8dp"/>
-
+    <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="32dp"
         android:gravity="center">
 
-        <Button
-            android:id="@+id/btnAlarmDismiss"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Will Take Later"
-            android:backgroundTint="#AAAAAA"
-            android:textColor="@color/black"
-            android:layout_marginEnd="8dp"/>
+        <!-- Bell Icon -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_bell2"
+            android:tint="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
-        <Button
-            android:id="@+id/btnAlarmTakeNow"
-            android:layout_width="0dp"
+        <!-- Time -->
+        <TextView
+            android:id="@+id/tvAlarmTime"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Take Now"
-            android:backgroundTint="#2faa92"
-            android:textColor="@color/white"
-            android:layout_marginStart="8dp"/>
+            android:text="8:00 AM"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Medication Name -->
+        <TextView
+            android:id="@+id/alarmMedicationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Metformin 500mg"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Meal Info -->
+        <TextView
+            android:id="@+id/tvMealInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Before Food"
+            android:textSize="16sp"
+            android:textColor="#E0F2F1"
+            android:layout_marginBottom="48dp" />
+
+        <!-- Swipe Instructions -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Swipe to respond"
+            android:textSize="14sp"
+            android:textColor="#E0F2F1"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Swipe Container -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/swipeCard"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Left Action (Snooze) -->
+                <LinearLayout
+                    android:id="@+id/leftAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_lock_idle_alarm"
+                        android:tint="#FF9800" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5 min"
+                        android:textSize="14sp"
+                        android:textColor="#FF9800"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <!-- Right Action (Taken) -->
+                <LinearLayout
+                    android:id="@+id/rightAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Taken"
+                        android:textSize="14sp"
+                        android:textColor="#4CAF50"
+                        android:layout_marginEnd="8dp" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_checked"
+                        android:tint="#4CAF50" />
+                </LinearLayout>
+
+                <!-- Swipeable Button -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/swipeButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="32dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="#26A69A">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_send"
+                        android:rotation="180"
+                        android:tint="#FFFFFF" />
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-</LinearLayout>
+    <!-- Dismiss Button -->
+    <TextView
+        android:id="@+id/btnDismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:text="Dismiss"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:padding="16dp" />
+
+</RelativeLayout>

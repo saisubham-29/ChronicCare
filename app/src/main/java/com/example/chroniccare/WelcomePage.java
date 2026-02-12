@@ -1,6 +1,8 @@
 package com.example.chroniccare;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +22,10 @@ public class WelcomePage extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        
+        new Handler().postDelayed(() -> {
+            startActivity(new Intent(WelcomePage.this, HomeActivity.class));
+            finish();
+        }, 2000);
     }
 }

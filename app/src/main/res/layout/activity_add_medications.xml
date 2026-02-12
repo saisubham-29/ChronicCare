@@ -1,83 +1,302 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#FFFFFF">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleAddMedication"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Medication"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <!-- Medication Name -->
-    <EditText
-        android:id="@+id/medNameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Medication Name"
-        android:layout_below="@id/titleAddMedication"
-        android:layout_marginTop="16dp"
-        android:inputType="text"/>
-
-    <!-- Dose -->
-    <EditText
-        android:id="@+id/doseEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Dose"
-        android:layout_below="@id/medNameEditText"
-        android:layout_marginTop="12dp"
-        android:inputType="text"/>
-
-    <!-- Time -->
-    <EditText
-        android:id="@+id/timeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Select Time"
-        android:layout_below="@id/doseEditText"
-        android:layout_marginTop="12dp"
-        android:focusable="false"
-        android:clickable="true"
-        android:inputType="none"/>
-
-    <!-- Meal RadioGroup -->
-    <RadioGroup
-        android:id="@+id/mealRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/timeEditText"
-        android:layout_marginTop="12dp">
-
-        <RadioButton
-            android:id="@+id/beforeFoodRadio"
-            android:layout_width="wrap_content"
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Before Food"/>
+            android:orientation="vertical"
+            android:layout_marginBottom="32dp">
 
-        <RadioButton
-            android:id="@+id/afterFoodRadio"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Medication"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Schedule your medication reminder"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- Medication Name Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="After Food"/>
-    </RadioGroup>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#F8F9FA">
 
-    <!-- Add Button -->
-    <Button
-        android:id="@+id/btnAddMedication"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Medication"
-        android:layout_below="@id/mealRadioGroup"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/black"
-        android:textColor="@android:color/white"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-</RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medication Name"
+                    android:textSize="12sp"
+                    android:textColor="#26A69A"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/medNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="e.g., Metformin"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:background="@android:color/transparent"
+                    android:inputType="text" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Dose Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#F8F9FA">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dosage"
+                    android:textSize="12sp"
+                    android:textColor="#26A69A"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/doseEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="e.g., 500mg"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:background="@android:color/transparent"
+                    android:inputType="text" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Frequency Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#F8F9FA">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daily Schedule"
+                    android:textSize="12sp"
+                    android:textColor="#26A69A"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Morning -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <CheckBox
+                        android:id="@+id/checkMorning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Morning"
+                        android:textSize="14sp"
+                        android:buttonTint="#26A69A" />
+
+                    <TextView
+                        android:id="@+id/tvMorningTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="8:00 AM"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textColor="#666666" />
+
+                    <RadioGroup
+                        android:id="@+id/rgMorning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbMorningBF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B/F"
+                            android:textSize="12sp"
+                            android:buttonTint="#26A69A"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/rbMorningAF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A/F"
+                            android:textSize="12sp"
+                            android:buttonTint="#26A69A" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <!-- Afternoon -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <CheckBox
+                        android:id="@+id/checkAfternoon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Afternoon"
+                        android:textSize="14sp"
+                        android:buttonTint="#26A69A" />
+
+                    <TextView
+                        android:id="@+id/tvAfternoonTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2:00 PM"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textColor="#666666" />
+
+                    <RadioGroup
+                        android:id="@+id/rgAfternoon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbAfternoonBF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B/F"
+                            android:textSize="12sp"
+                            android:buttonTint="#26A69A"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/rbAfternoonAF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A/F"
+                            android:textSize="12sp"
+                            android:buttonTint="#26A69A" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <!-- Night -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <CheckBox
+                        android:id="@+id/checkNight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Night"
+                        android:textSize="14sp"
+                        android:buttonTint="#26A69A" />
+
+                    <TextView
+                        android:id="@+id/tvNightTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="9:00 PM"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textColor="#666666" />
+
+                    <RadioGroup
+                        android:id="@+id/rgNight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbNightBF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B/F"
+                            android:textSize="12sp"
+                            android:buttonTint="#26A69A"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/rbNightAF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A/F"
+                            android:textSize="12sp"
+                            android:buttonTint="#26A69A" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Add Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddMedication"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Add Medication"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:background="@drawable/button_shape_t1"
+            android:elevation="4dp" />
+
+    </LinearLayout>
+</ScrollView>
