@@ -3,6 +3,8 @@ package com.example.chroniccare;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -22,6 +24,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,12 +35,13 @@ public class HomeActivity extends BottomNavActivity {
 
     // Header
     private TextView mainPageGreeting, mainPageName, mainPageDate;
+    private de.hdodenhof.circleimageview.CircleImageView profileImage;
 
     // Live data
     private TextView currentReadingValue, lastCheckedTime;
 
     // Medication
-    private TextView nextMedicationName, medTiming;
+    private TextView nextMedicationName, nextMedicationDose, medTiming, foodInstruction;
 
     // Buttons
     private AppCompatButton btnCheckNow, btnTakeNow;
@@ -55,11 +59,13 @@ public class HomeActivity extends BottomNavActivity {
     private GoogleSignInAccount account;
     private Handler handler = new Handler();
     private Runnable updateTimeRunnable;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        sharedPreferences = getSharedPreferences("ChronicCarePrefs", MODE_PRIVATE);
         initializeViews();
 
         account = GoogleSignIn.getLastSignedInAccount(this);
@@ -67,6 +73,7 @@ public class HomeActivity extends BottomNavActivity {
         updateGreeting();
         updateDate();
         updateUserName(account);
+        loadUserPhoto();
         updateInitialReadings();
         loadNextMedication();
         loadTodaysSchedule();
@@ -94,12 +101,15 @@ public class HomeActivity extends BottomNavActivity {
         mainPageGreeting = findViewById(R.id.mainPageGreeting);
         mainPageName = findViewById(R.id.mainPageName);
         mainPageDate = findViewById(R.id.mainPageDate);
+        profileImage = findViewById(R.id.profile_image);
 
         currentReadingValue = findViewById(R.id.currentReadingValue);
         lastCheckedTime = findViewById(R.id.LastCheckedTime);
 
         nextMedicationName = findViewById(R.id.NextMedicationName);
+        nextMedicationDose = findViewById(R.id.NextMedicationDose);
         medTiming = findViewById(R.id.MedTiming);
+        foodInstruction = findViewById(R.id.FoodInstrcution);
 
         btnCheckNow = findViewById(R.id.btn_checknow);
         btnTakeNow  = findViewById(R.id.btn_takenow);
@@ -142,11 +152,30 @@ public class HomeActivity extends BottomNavActivity {
                 fullName = account.getGivenName();
             else if (account.getEmail() != null)
                 fullName = account.getEmail();
+        } else {
+            fullName = sharedPreferences.getString("userName", "User");
         }
 
         String displayName = formatName(fullName);
         mainPageName.setText(displayName);
     }
+    
+    private void loadUserPhoto() {
+        String photoUrl = sharedPreferences.getString("userPhoto", "");
+        
+        if (!photoUrl.isEmpty()) {
+            if (photoUrl.startsWith("http")) {
+                Picasso.get().load(photoUrl).placeholder(R.drawable.ic_profile).into(profileImage);
+            } else {
+                profileImage.setImageURI(Uri.parse(photoUrl));
+            }
+        }
+        
+        profileImage.setOnClickListener(v -> 
+            startActivity(new Intent(this, ProfileActivity.class))
+        );
+    }
+    
     private String formatName(String name) {
 
         if (name == null || name.trim().isEmpty())
@@ -190,8 +219,10 @@ public class HomeActivity extends BottomNavActivity {
         }
         
         if (userId == null) {
-            nextMedicationName.setText("No medications scheduled");
+            nextMedicationName.setText("No medications");
+            nextMedicationDose.setText("");
             medTiming.setText("");
+            foodInstruction.setText("");
             return;
         }
 
@@ -224,23 +255,39 @@ public class HomeActivity extends BottomNavActivity {
                     if (nextMed != null) {
                         updateNextMedicationUI(nextMed, minDiff);
                     } else {
-                        nextMedicationName.setText("No upcoming medications");
+                        nextMedicationName.setText("No upcoming");
+                        nextMedicationDose.setText("");
                         medTiming.setText("");
+                        foodInstruction.setText("");
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error loading next medication", e);
-                    nextMedicationName.setText("Error loading medications");
+                    nextMedicationName.setText("Error loading");
+                    nextMedicationDose.setText("");
                     medTiming.setText("");
+                    foodInstruction.setText("");
                 });
     }
 
     private void updateNextMedicationUI(QueryDocumentSnapshot doc, long millisUntil) {
-        String name = doc.getString("name");
+        String fullName = doc.getString("name");
         String mealTime = doc.getString("mealTime");
         
-        nextMedicationName.setText(name != null ? name : "Medication");
+        // Split name and dose (e.g., "Metformin 500mg" -> "Metformin" + "500mg")
+        if (fullName != null && fullName.contains(" ")) {
+            int lastSpace = fullName.lastIndexOf(" ");
+            String medName = fullName.substring(0, lastSpace);
+            String dose = fullName.substring(lastSpace + 1);
+            
+            nextMedicationName.setText(medName);
+            nextMedicationDose.setText(dose);
+        } else {
+            nextMedicationName.setText(fullName != null ? fullName : "Medication");
+            nextMedicationDose.setText("");
+        }
         
+        // Calculate time remaining
         long minutes = millisUntil / 60000;
         long hours = minutes / 60;
         long days = hours / 24;
@@ -256,11 +303,8 @@ public class HomeActivity extends BottomNavActivity {
             timeText = "Due Now";
         }
         
-        if (mealTime != null) {
-            timeText += " - " + mealTime;
-        }
-        
-        medTiming.setText(timeText);
+        medTiming.setText(timeText + " -");
+        foodInstruction.setText(mealTime != null ? mealTime : "");
     }
 
     private void startTimeUpdater() {

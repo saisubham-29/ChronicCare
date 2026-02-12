@@ -1,6 +1,7 @@
 package com.example.chroniccare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 public class LogInPage extends AppCompatActivity {
     LinearLayout btnGoogle;
     GoogleSignInClient gsc;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class LogInPage extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        
+        sharedPreferences = getSharedPreferences("ChronicCarePrefs", MODE_PRIVATE);
         
         btnGoogle = findViewById(R.id.btnGoogle);
         
@@ -57,6 +61,7 @@ public class LogInPage extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if (account != null) {
+                    saveLoginState(account);
                     Toast.makeText(this, "Welcome " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LogInPage.this, HomeActivity.class));
                     finish();
@@ -65,5 +70,15 @@ public class LogInPage extends AppCompatActivity {
                 Toast.makeText(this, "Sign-in failed", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    
+    private void saveLoginState(GoogleSignInAccount account) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggedIn", true);
+        editor.putString("userId", account.getId());
+        editor.putString("userName", account.getDisplayName());
+        editor.putString("userEmail", account.getEmail());
+        editor.putString("userPhoto", account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : "");
+        editor.apply();
     }
 }
