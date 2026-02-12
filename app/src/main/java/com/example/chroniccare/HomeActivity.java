@@ -61,9 +61,6 @@ public class HomeActivity extends BottomNavActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // ✅ REQUIRED
-        setContentView(R.layout.activity_main);
-
         initializeViews();
 
         account = GoogleSignIn.getLastSignedInAccount(this);
@@ -77,6 +74,13 @@ public class HomeActivity extends BottomNavActivity {
         loadTodaysSchedule();
 
         setupClickListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh schedule when returning from AddMedications
+        loadTodaysSchedule();
     }
 
     private void initializeViews() {

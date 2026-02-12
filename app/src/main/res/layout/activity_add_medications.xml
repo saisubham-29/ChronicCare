@@ -35,13 +35,25 @@
         android:layout_marginTop="12dp"
         android:inputType="text"/>
 
+    <!-- Time -->
+    <EditText
+        android:id="@+id/timeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Time"
+        android:layout_below="@id/doseEditText"
+        android:layout_marginTop="12dp"
+        android:focusable="false"
+        android:clickable="true"
+        android:inputType="none"/>
+
     <!-- Meal RadioGroup -->
     <RadioGroup
         android:id="@+id/mealRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/doseEditText"
+        android:layout_below="@id/timeEditText"
         android:layout_marginTop="12dp">
 
         <RadioButton
@@ -57,22 +69,13 @@
             android:text="After Food"/>
     </RadioGroup>
 
-    <!-- Medication Taken Switch -->
-    <Switch
-        android:id="@+id/medTakenSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Med Taken"
-        android:layout_below="@id/mealRadioGroup"
-        android:layout_marginTop="12dp"/>
-
     <!-- Add Button -->
     <Button
         android:id="@+id/btnAddMedication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Medication"
-        android:layout_below="@id/medTakenSwitch"
+        android:layout_below="@id/mealRadioGroup"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/black"
         android:textColor="@android:color/white"/>
