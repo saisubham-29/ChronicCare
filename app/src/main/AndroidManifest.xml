@@ -55,7 +55,10 @@
             android:exported="false"
             android:launchMode="singleTop"
             android:showWhenLocked="true"
-            android:turnScreenOn="true" />
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.ChronicCare" />
         <activity
             android:name=".DrGPTActivity"
             android:exported="false" />
@@ -96,6 +99,7 @@
             android:exported="true"
             android:directBootAware="true">
             <intent-filter>
+                <action android:name="com.example.chroniccare.MEDICATION_ALARM" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>

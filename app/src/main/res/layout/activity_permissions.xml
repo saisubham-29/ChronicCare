@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_bell2"
+        android:tint="#26A69A"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tvPermissionMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="32dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGrantPermission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Grant Permission"
+        android:textSize="16sp"
+        app:cornerRadius="12dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+</LinearLayout>

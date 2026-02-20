@@ -209,12 +209,14 @@ public class AddMedications extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
         if (calendar.before(Calendar.getInstance())) {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
         Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.setAction("com.example.chroniccare.MEDICATION_ALARM");
         intent.putExtra("medicationName", medName);
         intent.putExtra("mealTime", mealTime);
         intent.putExtra("time", formatTime(hour, minute));
@@ -232,7 +234,7 @@ public class AddMedications extends AppCompatActivity {
                 pendingIntent
         );
         
-        Log.d("AddMedications", "Alarm scheduled for " + medName + " at " + calendar.getTime());
+        Log.d("AddMedications", "Alarm scheduled for " + medName + " at " + calendar.getTime() + " with data: " + mealTime);
         
         scheduleNextDayAlarm(medName, hour, minute, mealTime, requestCode, calendar);
     }
@@ -242,6 +244,7 @@ public class AddMedications extends AppCompatActivity {
         nextDay.add(Calendar.DAY_OF_MONTH, 1);
         
         Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.setAction("com.example.chroniccare.MEDICATION_ALARM");
         intent.putExtra("medicationName", medName);
         intent.putExtra("mealTime", mealTime);
         intent.putExtra("time", formatTime(hour, minute));

@@ -25,18 +25,24 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "AlarmReceiver triggered!");
         
+        String medicationName = intent.getStringExtra("medicationName");
+        String mealTime = intent.getStringExtra("mealTime");
+        String time = intent.getStringExtra("time");
+        
+        Log.d(TAG, "Medication: " + medicationName);
+        
+        // Safety check - don't trigger if medication data is missing
+        if (medicationName == null || medicationName.trim().isEmpty()) {
+            Log.e(TAG, "Medication name is null or empty - ignoring alarm");
+            return;
+        }
+        
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
                 "ChronicCare:AlarmWakeLock"
         );
         wakeLock.acquire(60000); // 1 minute
-        
-        String medicationName = intent.getStringExtra("medicationName");
-        String mealTime = intent.getStringExtra("mealTime");
-        String time = intent.getStringExtra("time");
-        
-        Log.d(TAG, "Medication: " + medicationName);
         
         boolean reschedule = intent.getBooleanExtra("reschedule", false);
         if (reschedule) {
@@ -110,24 +116,42 @@ public class AlarmReceiver extends BroadcastReceiver {
                 NotificationManager.IMPORTANCE_HIGH
             );
             channel.setDescription("Reminders for medication schedule");
+            channel.enableVibration(true);
+            channel.setSound(
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
+                new android.media.AudioAttributes.Builder()
+                    .setUsage(android.media.AudioAttributes.USAGE_ALARM)
+                    .build()
+            );
             notificationManager.createNotificationChannel(channel);
         }
         
         Intent intent = new Intent(context, AlarmActivity.class);
         intent.putExtra("medicationName", medicationName);
         intent.putExtra("mealTime", mealTime);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         
         PendingIntent pendingIntent = PendingIntent.getActivity(
             context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
         
+        PendingIntent fullScreenIntent = PendingIntent.getActivity(
+            context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_bell2)
-            .setContentTitle("Time for " + medicationName)
-            .setContentText(mealTime)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentTitle("💊 TIME TO TAKE MEDICATION")
+            .setContentText(medicationName + " - " + mealTime)
+            .setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(medicationName + "\n" + mealTime + "\n\nTap to open alarm"))
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
-            .setAutoCancel(true)
+            .setVibrate(new long[]{0, 1000, 500, 1000})
+            .setAutoCancel(false)
+            .setOngoing(true)
+            .setFullScreenIntent(fullScreenIntent, true)
             .setContentIntent(pendingIntent);
         
         notificationManager.notify(medicationName.hashCode(), builder.build());
