@@ -5,8 +5,10 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 
@@ -23,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
@@ -45,7 +49,7 @@ public class HomeActivity extends BottomNavActivity {
     private TextView nextMedicationName, nextMedicationDose, medTiming, foodInstruction;
 
     // Buttons
-    private AppCompatButton btnCheckNow, btnTakeNow;
+    private AppCompatButton btnCheckNow, btnTakeNow, btnStopAlarm;
 
     // Quick actions
     private CardView logFoodCard, logExerciseCard, viewReportsCard, contactDoctorCard;
@@ -54,6 +58,7 @@ public class HomeActivity extends BottomNavActivity {
     private LinearLayout todaysScheduleContainer;
     private FirebaseFirestore firestore;
     private FirebaseAuth auth;
+    private ListenerRegistration medicationListener;
 
     // Logic
     private Random random;
@@ -81,6 +86,24 @@ public class HomeActivity extends BottomNavActivity {
 
         setupClickListeners();
         startTimeUpdater();
+        checkAlarmPermission();
+    }
+    
+    private void checkAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                new AlertDialog.Builder(this)
+                    .setTitle("Permission Required")
+                    .setMessage("ChronicCare needs permission to show alarms when your phone is locked.\n\nThis ensures you never miss your medication reminders.")
+                    .setPositiveButton("Grant Permission", (dialog, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Later", null)
+                    .show();
+            }
+        }
     }
 
     @Override
@@ -96,6 +119,9 @@ public class HomeActivity extends BottomNavActivity {
         super.onDestroy();
         if (updateTimeRunnable != null) {
             handler.removeCallbacks(updateTimeRunnable);
+        }
+        if (medicationListener != null) {
+            medicationListener.remove();
         }
     }
 
@@ -120,6 +146,7 @@ public class HomeActivity extends BottomNavActivity {
 
         btnCheckNow = findViewById(R.id.btn_checknow);
         btnTakeNow  = findViewById(R.id.btn_takenow);
+        btnStopAlarm = findViewById(R.id.btn_stop_alarm);
 
         logFoodCard = findViewById(R.id.LogFood);
         logExerciseCard = findViewById(R.id.LogExercise);
@@ -321,12 +348,22 @@ public class HomeActivity extends BottomNavActivity {
         btnTakeNow.setOnClickListener(v -> {
             Toast.makeText(this, "Mark medications from schedule below", Toast.LENGTH_SHORT).show();
         });
+        
+        btnStopAlarm.setOnClickListener(v -> {
+            stopAllAlarms();
+        });
 
         logExerciseCard.setOnClickListener(v ->
                 startActivity(new Intent(this, LogExercise.class)));
 
         findViewById(R.id.AddMediaction).setOnClickListener(v ->
                 startActivity(new Intent(this, AddMedications.class)));
+    }
+    
+    private void stopAllAlarms() {
+        Intent serviceIntent = new Intent(this, AlarmForegroundService.class);
+        stopService(serviceIntent);
+        Toast.makeText(this, "All alarms stopped", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -355,18 +392,25 @@ public class HomeActivity extends BottomNavActivity {
         
         if (userId == null) return;
 
-        // Load all medications
-        firestore.collection("users").document(userId).collection("medications")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    todaysScheduleContainer.removeAllViews();
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        addMedicationRow(document);
+        // Remove old listener
+        if (medicationListener != null) {
+            medicationListener.remove();
+        }
+
+        // Add real-time listener
+        medicationListener = firestore.collection("users").document(userId).collection("medications")
+                .addSnapshotListener((queryDocumentSnapshots, error) -> {
+                    if (error != null) {
+                        Log.e(TAG, "Error loading medications", error);
+                        return;
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error loading medications", e);
-                    Toast.makeText(this, "Error loading medications", Toast.LENGTH_SHORT).show();
+                    
+                    if (queryDocumentSnapshots != null) {
+                        todaysScheduleContainer.removeAllViews();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            addMedicationRow(document);
+                        }
+                    }
                 });
     }
 

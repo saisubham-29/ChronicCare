@@ -61,6 +61,7 @@ public class DrGPTActivity extends BottomNavActivity {
         progressBar = findViewById(R.id.progressBar);
         profileImage = findViewById(R.id.profile_image);
         ImageView sendButton = findViewById(R.id.sendButton);
+        ImageView btnClearChat = findViewById(R.id.btnClearChat);
         
         // Null checks
         if (chatContainer == null || messageInput == null || chatScrollView == null || progressBar == null || sendButton == null) {
@@ -95,6 +96,9 @@ public class DrGPTActivity extends BottomNavActivity {
         if (sessionId == null) {
             sessionId = UUID.randomUUID().toString();
             prefs.edit().putString("drGptSessionId", sessionId).apply();
+            Log.d(TAG, "Created new session: " + sessionId);
+        } else {
+            Log.d(TAG, "Using existing session: " + sessionId);
         }
         
         loadLocalChatHistory();
@@ -106,6 +110,11 @@ public class DrGPTActivity extends BottomNavActivity {
                 messageInput.setText("");
             }
         });
+        
+        // Clear chat button
+        if (btnClearChat != null) {
+            btnClearChat.setOnClickListener(v -> showClearChatDialog());
+        }
     }
     
     @Override
@@ -359,5 +368,23 @@ public class DrGPTActivity extends BottomNavActivity {
                 Log.e(TAG, "Error clearing Firestore: " + e.getMessage(), e);
             }
         }
+    }
+    
+    private void showClearChatDialog() {
+        new android.app.AlertDialog.Builder(this)
+            .setTitle("Clear Chat")
+            .setMessage("This will clear all chat history and start a new session. Continue?")
+            .setPositiveButton("Clear", (dialog, which) -> {
+                clearLocalSession();
+                // Create new session
+                sessionId = UUID.randomUUID().toString();
+                getSharedPreferences("ChronicCarePrefs", MODE_PRIVATE)
+                    .edit()
+                    .putString("drGptSessionId", sessionId)
+                    .apply();
+                Log.d(TAG, "New session created: " + sessionId);
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
     }
 }

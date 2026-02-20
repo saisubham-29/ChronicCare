@@ -25,6 +25,17 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/btnClearChat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="#FFFFFF"
+            android:contentDescription="Clear chat" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="50dp"

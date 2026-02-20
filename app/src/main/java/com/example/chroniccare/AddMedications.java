@@ -1,11 +1,14 @@
 package com.example.chroniccare;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -50,8 +53,23 @@ public class AddMedications extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
+        checkAndRequestPermissions();
         initViews();
         setupListeners();
+    }
+    
+    private void checkAndRequestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (!notificationManager.canUseFullScreenIntent()) {
+                    startActivity(new Intent(this, PermissionsActivity.class));
+                }
+            } else {
+                // For Android 12-13, show info dialog
+                Toast.makeText(this, "Enable 'Display over other apps' in Settings for alarms to work when locked", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void initViews() {
@@ -208,10 +226,40 @@ public class AddMedications extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        alarmManager.setRepeating(
+        alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+        );
+        
+        Log.d("AddMedications", "Alarm scheduled for " + medName + " at " + calendar.getTime());
+        
+        scheduleNextDayAlarm(medName, hour, minute, mealTime, requestCode, calendar);
+    }
+    
+    private void scheduleNextDayAlarm(String medName, int hour, int minute, String mealTime, int requestCode, Calendar currentAlarm) {
+        Calendar nextDay = (Calendar) currentAlarm.clone();
+        nextDay.add(Calendar.DAY_OF_MONTH, 1);
+        
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("medicationName", medName);
+        intent.putExtra("mealTime", mealTime);
+        intent.putExtra("time", formatTime(hour, minute));
+        intent.putExtra("reschedule", true);
+        intent.putExtra("hour", hour);
+        intent.putExtra("minute", minute);
+        intent.putExtra("requestCode", requestCode);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                (medName + "_next").hashCode() + requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                nextDay.getTimeInMillis(),
                 pendingIntent
         );
     }

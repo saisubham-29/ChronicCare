@@ -19,10 +19,16 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
             app:navigationIconTint="#FFFFFF"
-            app:title="My Profile"
+            app:title="Your Details"
+            app:titleCentered="true"
             app:titleTextColor="#FFFFFF" />
 
     </com.google.android.material.appbar.AppBarLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/profile_shape"
+        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

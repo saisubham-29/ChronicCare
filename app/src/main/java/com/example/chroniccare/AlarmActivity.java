@@ -1,9 +1,12 @@
 package com.example.chroniccare;
 
 import android.app.AlarmManager;
+import android.app.KeyguardManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,7 +28,8 @@ import java.util.Calendar;
 public class AlarmActivity extends AppCompatActivity {
 
     private CardView swipeButton;
-    private TextView tvAlarmTime, alarmMedicationName, tvMealInfo, btnDismiss;
+    private TextView tvAlarmTime, alarmMedicationName, tvMealInfo;
+    private MaterialButton btnDismiss;
     private float initialX;
     private int screenWidth;
     private String medicationName, mealTime, time;
@@ -35,14 +40,22 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+            keyguardManager.requestDismissKeyguard(this, null);
+        } else {
+            getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                    WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            );
+        }
+        
         setContentView(R.layout.activity_alarm);
-
-        getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
-                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-        );
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -105,6 +118,7 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void handleTaken() {
+        stopAlarmService();
         markMedicationTaken();
         Toast.makeText(this, "Medication marked as taken", Toast.LENGTH_SHORT).show();
         finish();
@@ -117,11 +131,17 @@ public class AlarmActivity extends AppCompatActivity {
             return;
         }
 
+        stopAlarmService();
         snoozed = true;
         Toast.makeText(this, "Reminder in 5 minutes", Toast.LENGTH_SHORT).show();
         scheduleSnooze(5);
         scheduleFollowUp(10);
         finish();
+    }
+    
+    private void stopAlarmService() {
+        Intent serviceIntent = new Intent(this, AlarmForegroundService.class);
+        stopService(serviceIntent);
     }
 
     private void scheduleSnooze(int minutes) {
@@ -199,5 +219,11 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Toast.makeText(this, "Please swipe to respond", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopAlarmService();
     }
 }

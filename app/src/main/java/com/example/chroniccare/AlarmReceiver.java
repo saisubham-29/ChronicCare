@@ -1,5 +1,6 @@
 package com.example.chroniccare;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,28 +9,94 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Build;
+import android.os.PowerManager;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+
+import java.util.Calendar;
 
 public class AlarmReceiver extends BroadcastReceiver {
     
     private static final String CHANNEL_ID = "medication_reminders";
+    private static final String TAG = "AlarmReceiver";
     
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "AlarmReceiver triggered!");
+        
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
+                "ChronicCare:AlarmWakeLock"
+        );
+        wakeLock.acquire(60000); // 1 minute
+        
         String medicationName = intent.getStringExtra("medicationName");
         String mealTime = intent.getStringExtra("mealTime");
         String time = intent.getStringExtra("time");
         
-        Intent alarmIntent = new Intent(context, AlarmActivity.class);
-        alarmIntent.putExtra("medicationName", medicationName);
-        alarmIntent.putExtra("mealTime", mealTime);
-        alarmIntent.putExtra("time", time);
-        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Log.d(TAG, "Medication: " + medicationName);
         
-        context.startActivity(alarmIntent);
+        boolean reschedule = intent.getBooleanExtra("reschedule", false);
+        if (reschedule) {
+            int hour = intent.getIntExtra("hour", 0);
+            int minute = intent.getIntExtra("minute", 0);
+            int requestCode = intent.getIntExtra("requestCode", 0);
+            rescheduleAlarm(context, medicationName, hour, minute, mealTime, requestCode);
+        }
+        
+        // Start foreground service
+        Intent serviceIntent = new Intent(context, AlarmForegroundService.class);
+        serviceIntent.putExtra("medicationName", medicationName);
+        serviceIntent.putExtra("mealTime", mealTime);
+        serviceIntent.putExtra("time", time);
+        
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(serviceIntent);
+            } else {
+                context.startService(serviceIntent);
+            }
+            Log.d(TAG, "Service started");
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to start service", e);
+        }
         
         showNotification(context, medicationName, mealTime);
+        
+        wakeLock.release();
+    }
+    
+    private void rescheduleAlarm(Context context, String medName, int hour, int minute, String mealTime, int requestCode) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("medicationName", medName);
+        intent.putExtra("mealTime", mealTime);
+        intent.putExtra("time", String.format("%02d:%02d", hour, minute));
+        intent.putExtra("reschedule", true);
+        intent.putExtra("hour", hour);
+        intent.putExtra("minute", minute);
+        intent.putExtra("requestCode", requestCode);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                (medName + "_next").hashCode() + requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                pendingIntent
+        );
     }
     
     private void showNotification(Context context, String medicationName, String mealTime) {
