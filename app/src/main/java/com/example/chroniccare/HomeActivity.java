@@ -351,6 +351,9 @@ public class HomeActivity extends BottomNavActivity {
 //            stopAllAlarms();
 //        });
 
+        logFoodCard.setOnClickListener(v ->
+                startActivity(new Intent(this, LogFood.class)));
+
         logExerciseCard.setOnClickListener(v ->
                 startActivity(new Intent(this, LogExercise.class)));
 

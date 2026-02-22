@@ -39,12 +39,73 @@ public class FitHubActivity extends BottomNavActivity {
         ProfileImageHelper.loadProfileImage(this, profileImage);
         profileImage.setOnClickListener(v -> ProfileImageHelper.handleProfileClick(this));
         
-        findViewById(R.id.webView_gentle_yoga).setOnClickListener(v -> {
-            openYouTubeVideo("EvMTrP8eRvM");
-        });
+        setupVideoClickListeners();
         
         db = AppDatabase.getInstance(this);
         loadPersonalizedArticles();
+    }
+    
+    private void setupVideoClickListeners() {
+        // Video 1: MadFit - No Jumping Cardio
+        setupVideoCard(R.id.video1, "vCq-qy1v6Bc", "No Jumping Cardio", "10 min");
+        
+        // Video 2: Alex Crockford - Daily Workout
+        setupVideoCard(R.id.video2, "Sr8aCh3SNHQ", "Daily Workout", "10 min");
+        
+        // Video 3: Oliver Sjostrom - HIIT
+        setupVideoCard(R.id.video3, "PwXUHMKamP8", "Intense HIIT", "10 min");
+        
+        // Video 4: BullyJuice - Full Body
+        setupVideoCard(R.id.video4, "aV-vgqCQFbU", "Full Body Workout", "10 min");
+        
+        // Video 5: MadFit - Beginner Full Body
+        setupVideoCard(R.id.video5, "QbmPxLWmWr8", "Beginner Full Body", "10 min");
+        
+        // Video 6: MadFit - AB Workout
+        setupVideoCard(R.id.video6, "UTRsLReOKzg", "AB Workout", "10 min");
+        
+        // Video 7: Oliver Sjostrom - Cardio HIIT
+        setupVideoCard(R.id.video7, "yGMPQliSBCo", "Cardio HIIT", "10 min");
+        
+        // Video 8: Alex Crockford - Playlist
+        View video8 = findViewById(R.id.video8);
+        TextView title8 = video8.findViewById(R.id.videoTitle);
+        TextView duration8 = video8.findViewById(R.id.videoDuration);
+        ImageView thumb8 = video8.findViewById(R.id.videoThumbnail);
+        
+        title8.setText("Daily Workout Series");
+        duration8.setText("Playlist");
+        Picasso.get()
+            .load("https://img.youtube.com/vi/Sr8aCh3SNHQ/maxresdefault.jpg")
+            .placeholder(R.drawable.img_exercise)
+            .into(thumb8);
+        video8.setOnClickListener(v -> openUrl("https://www.youtube.com/playlist?list=PLBU6uF21RTAAgyoH2InY3GENbAsMpTPgO"));
+        
+        // Video 9: General Daily Workout
+        setupVideoCard(R.id.video9, "-nCVxDwanEM", "Daily Workout", "10 min");
+        
+        // Video 10: Lower Body Stretch
+        setupVideoCard(R.id.video10, "CKnlEt5n3Sk", "Lower Body Stretch", "10 min");
+    }
+    
+    private void setupVideoCard(int cardId, String videoId, String title, String duration) {
+        View card = findViewById(cardId);
+        TextView titleView = card.findViewById(R.id.videoTitle);
+        TextView durationView = card.findViewById(R.id.videoDuration);
+        ImageView thumbnail = card.findViewById(R.id.videoThumbnail);
+        
+        titleView.setText(title);
+        durationView.setText(duration);
+        
+        // Load YouTube thumbnail
+        String thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+        Picasso.get()
+            .load(thumbnailUrl)
+            .placeholder(R.drawable.img_exercise)
+            .error(R.drawable.img_exercise)
+            .into(thumbnail);
+        
+        card.setOnClickListener(v -> openYouTubeVideo(videoId));
     }
     
     private void loadPersonalizedArticles() {

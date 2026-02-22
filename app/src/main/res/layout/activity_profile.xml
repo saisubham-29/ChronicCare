@@ -55,10 +55,10 @@
                         app:civ_border_color="#FFFFFF" />
             <de.hdodenhof.circleimageview.CircleImageView
                 android:translationX="65dp"
-                android:id="@+id/editProfileImage"
+                android:id="@+id/btnChangePhoto"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@color/primarycolor"
+                android:src="@drawable/edit"
                 android:layout_gravity="center"
                  />
 
@@ -78,9 +78,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:text="user@email.com"
-                android:textSize="14sp"
-                android:textColor="#E0F2F1" />
+                android:textSize="18sp"
+                android:textColor="@color/black" />
 
 
 
@@ -90,7 +92,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:background="#00acac"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
@@ -100,6 +102,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:orientation="vertical"
                     android:padding="20dp">
 

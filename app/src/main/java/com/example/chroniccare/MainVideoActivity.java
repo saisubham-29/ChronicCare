@@ -1,6 +1,7 @@
 // MainVideoActivity.java
 package com.example.chroniccare;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,54 +13,54 @@ public class MainVideoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Replace R.layout.activity_main with your actual layout file name
         setContentView(R.layout.activity_fit_hub);
 
         setupVideoCards();
     }
 
     private void setupVideoCards() {
-        // --- Video Card 1: Gentle Yoga ---
-        CardView gentleYogaCard = findViewById(R.id.card_Gentle_Yoga); // Ensure this ID is in your XML
-        final String gentleYogaUrl = "https://youtu.be/EvMTrP8eRvM?si=l3NhUB29vSJ6N6rR";
-
-        gentleYogaCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchVideoPlayer(gentleYogaUrl);
-            }
-        });
-
-        // --- Video Card 2: Surya Namaskar ---
-        CardView suryaNamaskarCard = findViewById(R.id.card_Surya_Namaskar); // Ensure this ID is in your XML
-        final String suryaNamaskarUrl = "https://youtu.be/UJ1L3Kpdgw0?si=FCZ3eK3YHspF1-0n";
-
-        suryaNamaskarCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchVideoPlayer(suryaNamaskarUrl);
-            }
-        });
-
-        // --- Video Card 3: Core Strength ---
-        CardView coreStrengthCard = findViewById(R.id.card_Core_Strength); // Ensure this ID is in your XML
-        final String coreStrengthUrl = "https://youtu.be/zv7kSlx7mqE?si=hO7FNXFbV_iernia";
-
-        coreStrengthCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchVideoPlayer(coreStrengthUrl);
-            }
-        });
+        // Video cards now use video1, video2, etc. IDs
+        setupVideoCard(R.id.video1, "vCq-qy1v6Bc");
+        setupVideoCard(R.id.video2, "Sr8aCh3SNHQ");
+        setupVideoCard(R.id.video3, "PwXUHMKamP8");
+        setupVideoCard(R.id.video4, "aV-vgqCQFbU");
+        setupVideoCard(R.id.video5, "QbmPxLWmWr8");
+        setupVideoCard(R.id.video6, "UTRsLReOKzg");
+        setupVideoCard(R.id.video7, "yGMPQliSBCo");
+        setupVideoCard(R.id.video9, "-nCVxDwanEM");
+        setupVideoCard(R.id.video10, "CKnlEt5n3Sk");
+        
+        // Video 8 is a playlist
+        View video8 = findViewById(R.id.video8);
+        if (video8 != null) {
+            video8.setOnClickListener(v -> openUrl("https://www.youtube.com/playlist?list=PLBU6uF21RTAAgyoH2InY3GENbAsMpTPgO"));
+        }
     }
-
-    private void launchVideoPlayer(String videoUrl) {
-        // Create an Intent to open the VideoPlayerActivity
-        Intent intent = new Intent(MainVideoActivity.this, VideoPlayerActivity.class);
-
-        // Pass the video URL as an extra
-        intent.putExtra("VIDEO_URL", videoUrl);
-
-        startActivity(intent);
+    
+    private void setupVideoCard(int cardId, String videoId) {
+        View card = findViewById(cardId);
+        if (card != null) {
+            card.setOnClickListener(v -> openYouTubeVideo(videoId));
+        }
+    }
+    
+    private void openYouTubeVideo(String videoId) {
+        try {
+            Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoId));
+            startActivity(appIntent);
+        } catch (Exception e) {
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, 
+                Uri.parse("https://www.youtube.com/watch?v=" + videoId));
+            startActivity(webIntent);
+        }
+    }
+    
+    private void openUrl(String url) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
