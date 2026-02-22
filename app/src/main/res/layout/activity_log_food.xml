@@ -42,7 +42,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Search for food items"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:minHeight="48dp"
+                android:singleLine="true"
                 android:textSize="16sp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp" />

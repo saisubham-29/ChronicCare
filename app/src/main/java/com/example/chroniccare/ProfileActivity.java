@@ -40,12 +40,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends BaseActivity {
 
-    private CircleImageView profileImage;
+    private CircleImageView profileImage, btnChangePhoto;
     private TextView tvName, tvEmail;
     private TextInputEditText etPhone, etDOB, etHeight, etWeight, etConditions, etAllergies;
     private TextInputEditText etEmergencyName, etEmergencyPhone, etEmergencyRelation;
     private AutoCompleteTextView spinnerGender, spinnerBloodGroup;
-    private MaterialButton btnChangePhoto, btnSaveProfile, btnLogout, btnUploadDocument, btnViewDocuments;
+    private MaterialButton btnSaveProfile, btnLogout, btnUploadDocument, btnViewDocuments;
     private ImageView btnSharePersonal, btnShareMedical, btnShareEmergency;
     private MaterialToolbar toolbar;
     private SharedPreferences sharedPreferences;
@@ -61,42 +61,144 @@ public class ProfileActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-
-        executorService = java.util.concurrent.Executors.newSingleThreadExecutor();
+        
         sharedPreferences = getSharedPreferences("ChronicCarePrefs", MODE_PRIVATE);
-        db = AppDatabase.getInstance(this);
         currentUserId = sharedPreferences.getString("userId", "");
         
-        Log.d("ProfileActivity", "Current userId: " + currentUserId);
-        
         if (currentUserId == null || currentUserId.isEmpty()) {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LogInPage.class));
             finish();
             return;
         }
         
+        setContentView(R.layout.activity_profile);
+        
+        executorService = java.util.concurrent.Executors.newSingleThreadExecutor();
+        db = AppDatabase.getInstance(this);
         firebaseSync = new com.example.chroniccare.utils.FirebaseSync(currentUserId);
         
         initializeViews();
         setupToolbar();
         setupDropdowns();
-        syncProfileFromCloud();
-        loadUserData();
         setupListeners();
+        
+        // Load local data first, then sync from cloud
+        loadUserData();
+        syncProfileFromCloud();
     }
     
     private void syncProfileFromCloud() {
         com.google.firebase.firestore.FirebaseFirestore firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance();
         
-        // Sync personal info
+        // Sync personal info from Firebase to local DB
         firestore.collection("users").document(currentUserId)
             .collection("profile").document("personalInfo")
             .get()
             .addOnSuccessListener(doc -> {
                 if (doc.exists()) {
                     Log.d("ProfileActivity", "✅ Synced personal info from cloud");
+                    
+                    // Save to local database
+                    executorService.execute(() -> {
+                        User user = db.userDao().getUserByUserId(currentUserId);
+                        if (user == null) {
+                            user = new User();
+                            user.userId = currentUserId;
+                        }
+                        
+                        user.name = doc.getString("name");
+                        user.email = doc.getString("email");
+                        user.phone = doc.getString("phone");
+                        user.dob = doc.getString("dob");
+                        user.gender = doc.getString("gender");
+                        user.bloodGroup = doc.getString("bloodGroup");
+                        
+                        db.userDao().insert(user);
+                        
+                        // Now sync medical info
+                        syncMedicalInfoFromCloud();
+                    });
+                } else {
+                    Log.d("ProfileActivity", "No personal info in cloud");
+                    syncMedicalInfoFromCloud();
                 }
+            })
+            .addOnFailureListener(e -> {
+                Log.e("ProfileActivity", "Failed to sync personal info from cloud", e);
+            });
+    }
+    
+    private void syncMedicalInfoFromCloud() {
+        com.google.firebase.firestore.FirebaseFirestore firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        
+        firestore.collection("users").document(currentUserId)
+            .collection("profile").document("medicalInfo")
+            .get()
+            .addOnSuccessListener(doc -> {
+                if (doc.exists()) {
+                    Log.d("ProfileActivity", "✅ Synced medical info from cloud");
+                    
+                    executorService.execute(() -> {
+                        User user = db.userDao().getUserByUserId(currentUserId);
+                        if (user == null) {
+                            user = new User();
+                            user.userId = currentUserId;
+                        }
+                        
+                        user.height = doc.getString("height");
+                        user.weight = doc.getString("weight");
+                        user.conditions = doc.getString("conditions");
+                        user.allergies = doc.getString("allergies");
+                        
+                        db.userDao().insert(user);
+                        
+                        // Now sync emergency contact
+                        syncEmergencyContactFromCloud();
+                    });
+                } else {
+                    Log.d("ProfileActivity", "No medical info in cloud");
+                    syncEmergencyContactFromCloud();
+                }
+            })
+            .addOnFailureListener(e -> {
+                Log.e("ProfileActivity", "Failed to sync medical info from cloud", e);
+            });
+    }
+    
+    private void syncEmergencyContactFromCloud() {
+        com.google.firebase.firestore.FirebaseFirestore firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        
+        firestore.collection("users").document(currentUserId)
+            .collection("profile").document("emergencyContact")
+            .get()
+            .addOnSuccessListener(doc -> {
+                if (doc.exists()) {
+                    Log.d("ProfileActivity", "✅ Synced emergency contact from cloud");
+                    
+                    executorService.execute(() -> {
+                        User user = db.userDao().getUserByUserId(currentUserId);
+                        if (user == null) {
+                            user = new User();
+                            user.userId = currentUserId;
+                        }
+                        
+                        user.emergencyName = doc.getString("name");
+                        user.emergencyPhone = doc.getString("phone");
+                        user.emergencyRelation = doc.getString("relation");
+                        
+                        db.userDao().insert(user);
+                        
+                        // Reload UI after all syncs complete
+                        runOnUiThread(() -> loadUserData());
+                    });
+                } else {
+                    Log.d("ProfileActivity", "No emergency contact in cloud");
+                    runOnUiThread(() -> loadUserData());
+                }
+            })
+            .addOnFailureListener(e -> {
+                Log.e("ProfileActivity", "Failed to sync emergency contact from cloud", e);
+                runOnUiThread(() -> loadUserData());
             });
     }
 
@@ -203,27 +305,45 @@ public class ProfileActivity extends BaseActivity {
         if (executorService != null && !executorService.isShutdown()) {
             executorService.execute(() -> {
                 try {
+                    Log.d("ProfileActivity", "Loading user data for userId: " + currentUserId);
                     User user = db.userDao().getUserByUserId(currentUserId);
+                    
+                    if (user != null) {
+                        Log.d("ProfileActivity", "User found in DB: " + user.name);
+                        Log.d("ProfileActivity", "Conditions: " + user.conditions);
+                        Log.d("ProfileActivity", "Emergency Name: " + user.emergencyName);
+                        Log.d("ProfileActivity", "Height: " + user.height);
+                    } else {
+                        Log.d("ProfileActivity", "User NOT found in DB");
+                    }
+                    
                     runOnUiThread(() -> {
                         if (user != null) {
                             // Load from database
                             tvName.setText(user.name != null ? user.name : "User");
                             tvEmail.setText(user.email != null ? user.email : "");
-                            if (etPhone != null) etPhone.setText(user.phone);
-                            if (etDOB != null) etDOB.setText(user.dob);
-                            if (etHeight != null) etHeight.setText(user.height);
-                            if (etWeight != null) etWeight.setText(user.weight);
-                            if (etConditions != null) etConditions.setText(user.conditions);
-                            if (etAllergies != null) etAllergies.setText(user.allergies);
-                            if (etEmergencyName != null) etEmergencyName.setText(user.emergencyName);
-                            if (etEmergencyPhone != null) etEmergencyPhone.setText(user.emergencyPhone);
-                            if (etEmergencyRelation != null) etEmergencyRelation.setText(user.emergencyRelation);
-                            if (user.gender != null && spinnerGender != null) spinnerGender.setText(user.gender, false);
-                            if (user.bloodGroup != null && spinnerBloodGroup != null) spinnerBloodGroup.setText(user.bloodGroup, false);
+                            
+                            if (etPhone != null) etPhone.setText(user.phone != null ? user.phone : "");
+                            if (etDOB != null) etDOB.setText(user.dob != null ? user.dob : "");
+                            if (etHeight != null) etHeight.setText(user.height != null ? user.height : "");
+                            if (etWeight != null) etWeight.setText(user.weight != null ? user.weight : "");
+                            if (etConditions != null) etConditions.setText(user.conditions != null ? user.conditions : "");
+                            if (etAllergies != null) etAllergies.setText(user.allergies != null ? user.allergies : "");
+                            if (etEmergencyName != null) etEmergencyName.setText(user.emergencyName != null ? user.emergencyName : "");
+                            if (etEmergencyPhone != null) etEmergencyPhone.setText(user.emergencyPhone != null ? user.emergencyPhone : "");
+                            if (etEmergencyRelation != null) etEmergencyRelation.setText(user.emergencyRelation != null ? user.emergencyRelation : "");
+                            
+                            if (user.gender != null && !user.gender.isEmpty() && spinnerGender != null) 
+                                spinnerGender.setText(user.gender, false);
+                            if (user.bloodGroup != null && !user.bloodGroup.isEmpty() && spinnerBloodGroup != null) 
+                                spinnerBloodGroup.setText(user.bloodGroup, false);
+                                
+                            Log.d("ProfileActivity", "UI updated with user data");
                         } else {
                             // Load from SharedPreferences (first time)
                             tvName.setText(sharedPreferences.getString("userName", "User"));
                             tvEmail.setText(sharedPreferences.getString("userEmail", ""));
+                            Log.d("ProfileActivity", "No user data in DB, loaded from SharedPreferences");
                         }
                         ProfileImageHelper.loadProfileImage(ProfileActivity.this, profileImage);
                     });
@@ -255,7 +375,10 @@ public class ProfileActivity extends BaseActivity {
             executorService.execute(() -> {
                 try {
                     db.userDao().insert(user);
-                    runOnUiThread(() -> Toast.makeText(this, "Profile saved successfully", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Profile saved successfully", Toast.LENGTH_SHORT).show();
+                        loadUserData(); // Reload to show saved data
+                    });
                 } catch (Exception e) {
                     Log.e("ProfileActivity", "Error saving profile: " + e.getMessage(), e);
                     runOnUiThread(() -> Toast.makeText(this, "Failed to save profile", Toast.LENGTH_SHORT).show());

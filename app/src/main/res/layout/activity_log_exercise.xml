@@ -1,274 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".LogExercise">
+    android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#62C4C3"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/dumbell"
+            android:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="LOG EXERCISE"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="24dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Log Exercise"
-                    android:textColor="#000000"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"/>
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_notification_bell"
-                    android:contentDescription="Notification bell icon"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#8352F7"
-                    android:padding="20dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Start Strong and\nSet Your Fitness\nGoals"
-                            android:textColor="#FFFFFF"
-                            android:textSize="26sp"
-                            android:textStyle="bold"
-                            android:lineSpacingMultiplier="0.9"/>
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnStartExercise"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="Start Exercise"
-                            android:textColor="#8352F7"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:background="@drawable/button_shape_white"
-                            android:paddingHorizontal="24dp"
-                            android:paddingVertical="10dp"
-                            android:minHeight="0dp"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:contentDescription="Fitness man image"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"/>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Progress"
-                    android:textColor="#000000"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="See All"
-                    android:textColor="#8352F7"
-                    android:textSize="16sp"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:layout_marginBottom="24dp"
-                android:paddingStart="16dp"
-                android:clipToPadding="false">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/item_progress_card_chest"/>
-
-                    <include layout="@layout/item_progress_card_legs"/>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_marginEnd="16dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="2dp"
-                        app:cardBackgroundColor="#F8F8F8">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="More..."
-                            android:textColor="#666666"/>
-                    </androidx.cardview.widget.CardView>
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Categories"
-                    android:textColor="#000000"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="See All"
-                    android:textColor="#8352F7"
-                    android:textSize="16sp"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:paddingStart="16dp"
-                android:clipToPadding="false"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="All"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/chip_background_selected"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Warm Up"
-                        android:textColor="#000000"
-                        android:textSize="14sp"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/chip_background_default"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Yoga"
-                        android:textColor="#000000"
-                        android:textSize="14sp"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/chip_background_default"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Biceps"
-                        android:textColor="#000000"
-                        android:textSize="14sp"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/chip_background_default"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chest"
-                        android:textColor="#000000"
-                        android:textSize="14sp"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/chip_background_default"/>
-
-                </LinearLayout>
-            </HorizontalScrollView>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp">
-
-                <include layout="@layout/item_exercise_card_warmup"/>
-
-
-
+                android:id="@+id/cardCycling"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:background="#E0F7F7"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/cycling"
+                    android:tint="#538080" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="CYCLING"
+                    android:textColor="#4A4A4A"
+                    android:textStyle="bold" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/cardCardio"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:background="#E0F7F7"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/cardio"
+                    android:tint="#538080" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="CARDIO"
+                    android:textColor="#4A4A4A"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/cardWalk"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:background="#E0F7F7"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/walk"
+                    android:tint="#538080" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="WALK"
+                    android:textColor="#4A4A4A"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardFlexibility"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:background="#E0F7F7"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/flexibility"
+                    android:tint="#538080" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="FLEXIBILITY"
+                    android:textColor="#4A4A4A"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/cardCore"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:background="#E0F7F7"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/core"
+                    android:tint="#538080" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="CORE"
+                    android:textColor="#4A4A4A"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardSwim"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:background="#E0F7F7"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/swim"
+                    android:tint="#538080" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="SWIM"
+                    android:textColor="#4A4A4A"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogManual"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="20dp"
+        android:backgroundTint="#D9D9D9"
+        android:text="LOG MANUALLY"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

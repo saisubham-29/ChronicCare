@@ -27,6 +27,9 @@
         android:theme="@style/Theme.ChronicCare"
         tools:targetApi="31">
         <activity
+            android:name=".LogFood"
+            android:exported="false" />
+        <activity
             android:name=".LogExercise"
             android:exported="false" />
         <activity
