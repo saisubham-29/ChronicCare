@@ -69,17 +69,21 @@ public class FitHubActivity extends BottomNavActivity {
         
         // Video 8: Alex Crockford - Playlist
         View video8 = findViewById(R.id.video8);
-        TextView title8 = video8.findViewById(R.id.videoTitle);
-        TextView duration8 = video8.findViewById(R.id.videoDuration);
-        ImageView thumb8 = video8.findViewById(R.id.videoThumbnail);
-        
-        title8.setText("Daily Workout Series");
-        duration8.setText("Playlist");
-        Picasso.get()
-            .load("https://img.youtube.com/vi/Sr8aCh3SNHQ/maxresdefault.jpg")
-            .placeholder(R.drawable.img_exercise)
-            .into(thumb8);
-        video8.setOnClickListener(v -> openUrl("https://www.youtube.com/playlist?list=PLBU6uF21RTAAgyoH2InY3GENbAsMpTPgO"));
+        if (video8 != null) {
+            TextView title8 = video8.findViewById(R.id.videoTitle);
+            TextView duration8 = video8.findViewById(R.id.videoDuration);
+            ImageView thumb8 = video8.findViewById(R.id.videoThumbnail);
+
+            if (title8 != null && duration8 != null && thumb8 != null) {
+                title8.setText("Daily Workout Series");
+                duration8.setText("Playlist");
+                Picasso.get()
+                    .load("https://img.youtube.com/vi/Sr8aCh3SNHQ/maxresdefault.jpg")
+                    .placeholder(R.drawable.img_exercise)
+                    .into(thumb8);
+                video8.setOnClickListener(v -> openUrl("https://www.youtube.com/playlist?list=PLBU6uF21RTAAgyoH2InY3GENbAsMpTPgO"));
+            }
+        }
         
         // Video 9: General Daily Workout
         setupVideoCard(R.id.video9, "-nCVxDwanEM", "Daily Workout", "10 min");
@@ -90,9 +94,15 @@ public class FitHubActivity extends BottomNavActivity {
     
     private void setupVideoCard(int cardId, String videoId, String title, String duration) {
         View card = findViewById(cardId);
+        if (card == null) {
+            return;
+        }
         TextView titleView = card.findViewById(R.id.videoTitle);
         TextView durationView = card.findViewById(R.id.videoDuration);
         ImageView thumbnail = card.findViewById(R.id.videoThumbnail);
+        if (titleView == null || durationView == null || thumbnail == null) {
+            return;
+        }
         
         titleView.setText(title);
         durationView.setText(duration);

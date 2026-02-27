@@ -20,9 +20,9 @@
             android:id="@+id/fithubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
             android:text="FitHub"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textSize="28sp" />
 
         <TextView
             android:id="@+id/fithubDesc"
@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/fithubTitle"
             android:layout_marginTop="0dp"
+            android:fontFamily="sans-serif"
             android:text="Stay fit, Live happier."
             android:textColor="#4c5663"
             android:textSize="18sp" />
@@ -50,8 +51,10 @@
             android:layout_height="80dp"
             android:layout_below="@id/fithubDesc"
             android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif"
             android:orientation="vertical"
             android:padding="1dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,11 +140,11 @@
             android:id="@+id/MealPlanText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
             android:text="Today's Meal Plan"
             android:layout_marginTop="8dp"
             android:layout_below="@id/FithubActions"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textSize="28sp" />
 
         <!-- Meal Cards Section (Horizontal ScrollView with new detailed card replica) -->
         <HorizontalScrollView
@@ -177,7 +180,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_food1_background" />
+                            android:src="@drawable/img_food1" />
 
                         <!-- Content Area -->
                         <LinearLayout
@@ -200,7 +203,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Oatmeal with Berries"
                                 android:textSize="16sp"
-                                android:textStyle="bold"
+                                android:fontFamily="sans-serif"
                                 android:textColor="#333333"
                                 android:layout_marginBottom="6dp" />
 
@@ -298,7 +301,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_food1_background" />
+                            android:src="@drawable/img_food2" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -318,7 +321,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Grilled Salmon Salad"
                                 android:textSize="16sp"
-                                android:textStyle="bold"
+                                android:fontFamily="sans-serif"
                                 android:textColor="#333333"
                                 android:layout_marginBottom="6dp" />
 
@@ -401,7 +404,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_food1_background" />
+                            android:src="@drawable/img_food3" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -421,7 +424,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Veggie Chicken Wrap"
                                 android:textSize="16sp"
-                                android:textStyle="bold"
+                                android:fontFamily="sans-serif"
                                 android:textColor="#333333"
                                 android:layout_marginBottom="6dp" />
 
@@ -499,7 +502,7 @@
             android:layout_marginTop="24dp"
             android:layout_below="@id/meal_cards_scroll"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:fontFamily="sans-serif" />
 
         <!-- Quick Workouts Videos (Horizontal ScrollView) -->
         <HorizontalScrollView
@@ -516,167 +519,36 @@
                 android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
-                <!-- Video Card 1: Gentle Yoga -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="160dp"
-                    android:layout_height="100dp"
-                    android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp">
+                <!-- Video 1: MadFit - No Jumping Cardio -->
+                <include layout="@layout/item_video_card" android:id="@+id/video1" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                <!-- Video 2: Alex Crockford - Daily Workout -->
+                <include layout="@layout/item_video_card" android:id="@+id/video2" />
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/img_exercise_background"
-                            android:contentDescription="Gentle Yoga" />
+                <!-- Video 3: Oliver Sjostrom - HIIT -->
+                <include layout="@layout/item_video_card" android:id="@+id/video3" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#66000000" /> <!-- Dark overlay -->
+                <!-- Video 4: BullyJuice - Full Body -->
+                <include layout="@layout/item_video_card" android:id="@+id/video4" />
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_play_button"
-                            android:contentDescription="Play Button" />
+                <!-- Video 5: MadFit - Beginner Full Body -->
+                <include layout="@layout/item_video_card" android:id="@+id/video5" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Gentle Yoga"
-                            android:textColor="@android:color/white"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                <!-- Video 6: MadFit - AB Workout -->
+                <include layout="@layout/item_video_card" android:id="@+id/video6" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="15 mins"
-                            android:textColor="@android:color/white"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
+                <!-- Video 7: Oliver Sjostrom - Cardio HIIT -->
+                <include layout="@layout/item_video_card" android:id="@+id/video7" />
 
-                <!-- Video Card 2: Surya Namaskar -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="160dp"
-                    android:layout_height="100dp"
-                    android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp">
+                <!-- Video 8: Alex Crockford - Playlist -->
+                <include layout="@layout/item_video_card" android:id="@+id/video8" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                <!-- Video 9: General Daily Workout -->
+                <include layout="@layout/item_video_card" android:id="@+id/video9" />
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/img_exercise_background"
-                            android:contentDescription="Surya Namaskar" />
+                <!-- Video 10: Lower Body Stretch -->
+                <include layout="@layout/item_video_card" android:id="@+id/video10" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#66000000" /> <!-- Dark overlay -->
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_play_button"
-                            android:contentDescription="Play Button" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Surya Namaskar"
-                            android:textColor="@android:color/white"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10 mins"
-                            android:textColor="@android:color/white"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- Video Card 3: Core Strength -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="160dp"
-                    android:layout_height="100dp"
-                    android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/img_exercise_background"
-                            android:contentDescription="Core Strength Workout" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#66000000" /> <!-- Dark overlay -->
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_play_button"
-                            android:contentDescription="Play Button" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Core Strength"
-                            android:textColor="@android:color/white"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="20 mins"
-                            android:textColor="@android:color/white"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -686,187 +558,18 @@
             android:id="@+id/articlesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Read About Diabetes"
+            android:text="Recommended For You"
             android:layout_marginTop="24dp"
             android:layout_below="@id/video_scroll"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:fontFamily="sans-serif" />
 
-        <!-- Articles List (Vertical LinearLayout) -->
         <LinearLayout
+            android:id="@+id/articlesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_below="@id/articlesText"
-            android:layout_marginTop="8dp">
-
-            <!-- Article Card 1: Healthy Nighttime Food -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/img_article1_background"
-                        android:scaleType="centerCrop"
-                        android:layout_marginEnd="12dp"
-                        android:contentDescription="Healthy Food" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Article"
-                            android:textSize="12sp"
-                            android:textColor="#808080" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Healthy Nighttime Food for people with Diabetes"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textColor="#333333" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="5 min read"
-                            android:textSize="12sp"
-                            android:textColor="#555555"
-                            android:layout_marginTop="4dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Article Card 2: Top 5 Snacks -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/img_article1_background"
-                        android:scaleType="centerCrop"
-                        android:layout_marginEnd="12dp"
-                        android:contentDescription="Healthy Snacks" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Article"
-                            android:textSize="12sp"
-                            android:textColor="#808080" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Top 5 Snacks for Diabetes; Low Sugar, High Nutrition"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textColor="#333333" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="8 min read"
-                            android:textSize="12sp"
-                            android:textColor="#555555"
-                            android:layout_marginTop="4dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Article Card 3: How Infections Impact -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/img_article1_background"
-                        android:scaleType="centerCrop"
-                        android:layout_marginEnd="12dp"
-                        android:contentDescription="Infection and Diabetes" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Article"
-                            android:textSize="12sp"
-                            android:textColor="#808080" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="How Infections Impact People with Type 2 Diabetes"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textColor="#333333" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4 min read"
-                            android:textSize="12sp"
-                            android:textColor="#555555"
-                            android:layout_marginTop="4dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+            android:layout_marginTop="8dp" />
     </RelativeLayout>
 </ScrollView>
