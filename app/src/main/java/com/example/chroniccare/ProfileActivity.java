@@ -12,14 +12,18 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chroniccare.database.AppDatabase;
+import com.example.chroniccare.database.FamilyMember;
 import com.example.chroniccare.database.MedicalDocument;
 import com.example.chroniccare.database.User;
 import com.example.chroniccare.utils.ProfileImageHelper;
@@ -31,8 +35,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 
@@ -57,6 +63,13 @@ public class ProfileActivity extends BaseActivity {
     private com.google.android.material.bottomsheet.BottomSheetDialog uploadBottomSheet;
     private com.example.chroniccare.utils.FirebaseSync firebaseSync;
     private java.util.concurrent.ExecutorService executorService;
+
+    // Family Profile views
+    private LinearLayout layoutSwitchProfile, btnFamilyDashboard, btnCaregiver, btnFamilyInsurance;
+    private TextView tvFamilyMemberName, tvFamilyMemberRelation;
+    private CircleImageView ivFamilyMemberProfile;
+    private int currentActiveMemberId = -1;
+    private RecyclerView rvFamilyMembersHorizontal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +98,30 @@ public class ProfileActivity extends BaseActivity {
         // Load local data first, then sync from cloud
         loadUserData();
         syncProfileFromCloud();
+        checkAndCreateFamilyMembers();
+        loadFamilyMembersHorizontal();
     }
     
+    private void checkAndCreateFamilyMembers() {
+        executorService.execute(() -> {
+            List<FamilyMember> members = db.familyMemberDao().getFamilyMembersByUserId(currentUserId);
+            if (members.isEmpty()) {
+                String[] names = {"Sneha", "Sai", "Anshu", "Shib", "Yug", "Dinu"};
+                String[] relations = {"Self", "Brother", "Sister", "Friend", "Cousin", "Other"};
+                
+                for (int i = 0; i < names.length; i++) {
+                    FamilyMember member = new FamilyMember();
+                    member.userId = currentUserId;
+                    member.memberName = names[i];
+                    member.relation = relations[i];
+                    db.familyMemberDao().insert(member);
+                }
+                
+                runOnUiThread(this::loadFamilyMembersHorizontal);
+            }
+        });
+    }
+
     private void syncProfileFromCloud() {
         com.google.firebase.firestore.FirebaseFirestore firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance();
         
@@ -226,6 +261,17 @@ public class ProfileActivity extends BaseActivity {
         btnSharePersonal = findViewById(R.id.btnSharePersonal);
         btnShareMedical = findViewById(R.id.btnShareMedical);
         btnShareEmergency = findViewById(R.id.btnShareEmergency);
+
+        // Family Views
+        layoutSwitchProfile = findViewById(R.id.layoutSwitchProfile);
+        btnFamilyDashboard = findViewById(R.id.btnFamilyDashboard);
+        btnCaregiver = findViewById(R.id.btnCaregiver);
+        btnFamilyInsurance = findViewById(R.id.btnFamilyInsurance);
+        tvFamilyMemberName = findViewById(R.id.tvFamilyMemberName);
+        tvFamilyMemberRelation = findViewById(R.id.tvFamilyMemberRelation);
+        ivFamilyMemberProfile = findViewById(R.id.ivFamilyMemberProfile);
+        rvFamilyMembersHorizontal = findViewById(R.id.rvFamilyMembersHorizontal);
+        rvFamilyMembersHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void setupToolbar() {
@@ -291,6 +337,80 @@ public class ProfileActivity extends BaseActivity {
         btnSharePersonal.setOnClickListener(v -> sharePersonalInfo());
         btnShareMedical.setOnClickListener(v -> shareMedicalInfo());
         btnShareEmergency.setOnClickListener(v -> shareEmergencyInfo());
+
+        // Family Listeners
+        layoutSwitchProfile.setOnClickListener(v -> showSwitchProfileDialog());
+        btnFamilyDashboard.setOnClickListener(v -> openFamilyDashboard());
+        btnCaregiver.setOnClickListener(v -> openCaregiverSection());
+        btnFamilyInsurance.setOnClickListener(v -> openFamilyInsurance());
+    }
+
+    private void loadFamilyMembersHorizontal() {
+        executorService.execute(() -> {
+            List<FamilyMember> members = db.familyMemberDao().getFamilyMembersByUserId(currentUserId);
+            runOnUiThread(() -> {
+                HorizontalFamilyMemberAdapter adapter = new HorizontalFamilyMemberAdapter(members, member -> {
+                    switchFamilyProfile(member);
+                });
+                rvFamilyMembersHorizontal.setAdapter(adapter);
+            });
+        });
+    }
+
+    private void showSwitchProfileDialog() {
+        com.google.android.material.bottomsheet.BottomSheetDialog dialog = new com.google.android.material.bottomsheet.BottomSheetDialog(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_switch_profile, null);
+        dialog.setContentView(view);
+
+        RecyclerView rvMembers = view.findViewById(R.id.rvFamilyMembersSelect);
+        rvMembers.setLayoutManager(new LinearLayoutManager(this));
+        
+        executorService.execute(() -> {
+            List<FamilyMember> members = db.familyMemberDao().getFamilyMembersByUserId(currentUserId);
+            runOnUiThread(() -> {
+                FamilyMemberAdapter adapter = new FamilyMemberAdapter(members, currentActiveMemberId, member -> {
+                    switchFamilyProfile(member);
+                    dialog.dismiss();
+                });
+                rvMembers.setAdapter(adapter);
+            });
+        });
+
+        view.findViewById(R.id.btnAddMember).setOnClickListener(v -> {
+            dialog.dismiss();
+            Toast.makeText(this, "Add family member feature coming soon", Toast.LENGTH_SHORT).show();
+        });
+
+        dialog.show();
+    }
+
+    private void switchFamilyProfile(FamilyMember member) {
+        currentActiveMemberId = member.id;
+        tvFamilyMemberName.setText(member.memberName);
+        tvFamilyMemberRelation.setText("Relation: " + member.relation);
+        Toast.makeText(this, "Switched to " + member.memberName + "'s profile", Toast.LENGTH_SHORT).show();
+        
+        // If it's not the primary user, you might want to load their specific medical data
+        if (member.relation.equalsIgnoreCase("Self")) {
+            loadUserData();
+        } else {
+            // Load dummy or specific data for family member
+            tvName.setText(member.memberName);
+            etConditions.setText(member.chronicConditions != null ? member.chronicConditions : "None reported");
+            // Clear or update other fields as necessary
+        }
+    }
+
+    private void openFamilyDashboard() {
+        startActivity(new Intent(this, FamilyDashboardActivity.class));
+    }
+
+    private void openCaregiverSection() {
+        startActivity(new Intent(this, CaregiverActivity.class));
+    }
+
+    private void openFamilyInsurance() {
+        startActivity(new Intent(this, FamilyInsuranceActivity.class));
     }
 
     private void showDatePicker() {
