@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,6 +52,7 @@ public class DrGPTActivity extends BottomNavActivity {
     private String userId;
     private DrGPTApiService apiService;
     private ExecutorService executorService;
+    private String lastUserMessage;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +180,14 @@ public class DrGPTActivity extends BottomNavActivity {
     private void sendMessage(String message) {
         addUserMessage(message);
         saveMessageToDb("user", message);
-        showLoading(true);
+        lastUserMessage = message;
 
+        if (handleSafetyMessage(message)) {
+            showLoading(false);
+            return;
+        }
+
+        showLoading(true);
         sendMessageWithMedicalContext(message);
     }
 
@@ -235,8 +243,9 @@ public class DrGPTActivity extends BottomNavActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String botResponse = response.body().getResponse();
                     if (botResponse != null && !botResponse.isEmpty()) {
-                        addBotMessage(botResponse);
-                        saveMessageToDb("assistant", botResponse);
+                        String safeResponse = applySafetyPostProcessing(botResponse, lastUserMessage);
+                        addBotMessage(safeResponse);
+                        saveMessageToDb("assistant", safeResponse);
                     }
                     Log.d(TAG, "API Response: " + botResponse);
                 } else {
@@ -255,10 +264,11 @@ public class DrGPTActivity extends BottomNavActivity {
     }
 
     private String buildMessageWithContext(String message, String context) {
+        String safetyRules = buildSafetyRules();
         if (context == null || context.isEmpty()) {
-            return message;
+            return safetyRules + "\n\nUser question:\n" + message;
         }
-        return "User profile summary:\n" + context + "\n\nUser question:\n" + message;
+        return safetyRules + "\n\nUser profile summary:\n" + context + "\n\nUser question:\n" + message;
     }
 
     private String buildUserContext(
@@ -378,6 +388,224 @@ public class DrGPTActivity extends BottomNavActivity {
         }
 
         return builder.toString().trim();
+    }
+
+    private boolean handleSafetyMessage(String message) {
+        String lower = message != null ? message.toLowerCase(Locale.getDefault()) : "";
+        if (isEmergencyMessage(lower)) {
+            addBotMessage(buildEmergencyResponse());
+            saveMessageToDb("assistant", buildEmergencyResponse());
+            return true;
+        }
+        if (isSelfHarmMessage(lower)) {
+            addBotMessage(buildSelfHarmResponse());
+            saveMessageToDb("assistant", buildSelfHarmResponse());
+            return true;
+        }
+        return false;
+    }
+
+    private String applySafetyPostProcessing(String response, String userMessage) {
+        String safeResponse = response;
+        boolean medicalQuery = isMedicalQuery(userMessage);
+        boolean medicationQuery = isMedicationQuery(userMessage) || containsMedicationHints(response);
+
+        if (medicationQuery) {
+            safeResponse = redactDosing(safeResponse);
+            safeResponse = safeResponse + "\n\nNeeds doctor's review: This involves medication. Please consult a qualified doctor before making changes.";
+        }
+
+        if (medicalQuery || medicationQuery) {
+            safeResponse = safeResponse + "\n\nI'm not a doctor. This is general information, not a diagnosis. Consider consulting a healthcare professional.";
+            if (mentionsSensitiveGroups(userMessage)) {
+                safeResponse = safeResponse + "\nBe extra cautious for children, pregnancy, or older adults—seek medical advice.";
+            }
+        }
+
+        if (containsOutOfScopeIndicators(safeResponse)) {
+            safeResponse = safeResponse + "\nIf you want, share more details and I can try to help, or you can consult a doctor.";
+        }
+
+        return safeResponse.trim();
+    }
+
+    private String buildSafetyRules() {
+        return "Safety rules (must follow):" +
+                "\n1) Never diagnose or impersonate a doctor. Use cautious language (e.g., 'this could be')." +
+                "\n2) If emergency symptoms are mentioned, stop normal response and advise emergency care. Provide India emergency number 112. No home remedies." +
+                "\n3) Never prescribe prescription drugs or give exact dosing. If medication is discussed, recommend doctor review." +
+                "\n4) If uncertain or info is missing, say 'I don't know' and ask for clarification or suggest a doctor." +
+                "\n5) For self-harm signals, respond empathetically and provide India helpline 1800-599-0019 and 112 for immediate danger." +
+                "\n6) Answer only using verified medical sources. If not found, say you don't have enough information." +
+                "\n7) Do not expose sensitive user info unless necessary. Ask for consent if needed." +
+                "\n8) Always offer escalation to a medical professional for serious concerns.";
+    }
+
+    private boolean isEmergencyMessage(String lower) {
+        return containsAny(lower,
+                "chest pain",
+                "pressure in chest",
+                "shortness of breath",
+                "difficulty breathing",
+                "not breathing",
+                "severe bleeding",
+                "unconscious",
+                "passed out",
+                "fainting",
+                "seizure",
+                "stroke",
+                "slurred speech",
+                "face drooping",
+                "sudden weakness",
+                "severe allergic reaction",
+                "anaphylaxis",
+                "severe burn",
+                "emergency",
+                "ambulance",
+                "heart attack"
+        );
+    }
+
+    private boolean isSelfHarmMessage(String lower) {
+        return containsAny(lower,
+                "suicide",
+                "kill myself",
+                "end my life",
+                "self harm",
+                "hurt myself",
+                "want to die"
+        );
+    }
+
+    private boolean isMedicationQuery(String message) {
+        if (message == null) {
+            return false;
+        }
+        String lower = message.toLowerCase(Locale.getDefault());
+        return containsAny(lower,
+                "medication",
+                "medicine",
+                "drug",
+                "tablet",
+                "pill",
+                "dose",
+                "dosage",
+                "mg",
+                "ml",
+                "antibiotic",
+                "insulin",
+                "metformin",
+                "paracetamol",
+                "ibuprofen",
+                "prescription"
+        );
+    }
+
+    private boolean containsMedicationHints(String response) {
+        if (response == null) {
+            return false;
+        }
+        String lower = response.toLowerCase(Locale.getDefault());
+        return containsAny(lower,
+                "mg",
+                "ml",
+                "tablet",
+                "pill",
+                "dose",
+                "dosage",
+                "medication",
+                "medicine",
+                "drug"
+        );
+    }
+
+    private boolean isMedicalQuery(String message) {
+        if (message == null) {
+            return false;
+        }
+        String lower = message.toLowerCase(Locale.getDefault());
+        return containsAny(lower,
+                "symptom",
+                "pain",
+                "fever",
+                "cough",
+                "cold",
+                "dizzy",
+                "nausea",
+                "vomit",
+                "headache",
+                "rash",
+                "infection",
+                "diabetes",
+                "blood pressure",
+                "sugar",
+                "heart",
+                "breath",
+                "medication",
+                "medicine",
+                "drug"
+        );
+    }
+
+    private boolean mentionsSensitiveGroups(String message) {
+        if (message == null) {
+            return false;
+        }
+        String lower = message.toLowerCase(Locale.getDefault());
+        return containsAny(lower,
+                "pregnant",
+                "pregnancy",
+                "child",
+                "baby",
+                "infant",
+                "elderly",
+                "senior"
+        );
+    }
+
+    private boolean containsOutOfScopeIndicators(String response) {
+        if (response == null) {
+            return false;
+        }
+        String lower = response.toLowerCase(Locale.getDefault());
+        return containsAny(lower,
+                "i don't know",
+                "not sure",
+                "cannot determine",
+                "insufficient information"
+        );
+    }
+
+    private String redactDosing(String response) {
+        if (response == null) {
+            return "";
+        }
+        return response.replaceAll("\\b\\d+(?:\\.\\d+)?\\s*(mg|ml|mcg|g)\\b", "[dose omitted]");
+    }
+
+    private boolean containsAny(String text, String... keywords) {
+        if (text == null || text.isEmpty()) {
+            return false;
+        }
+        for (String keyword : keywords) {
+            if (text.contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String buildEmergencyResponse() {
+        return "⚠️ This could be a medical emergency. Please seek urgent care now.\n"
+                + "Call emergency services in India: 112.\n"
+                + "I can't provide medical instructions for emergencies. Please get help immediately.";
+    }
+
+    private String buildSelfHarmResponse() {
+        return "I'm really sorry you're feeling this way. You deserve support, and help is available.\n"
+                + "If you're in India, you can call the mental health helpline: 1800-599-0019.\n"
+                + "If you feel in immediate danger, please call emergency services: 112.\n"
+                + "I'm not a doctor, but I care about your safety—please reach out to someone you trust or a professional.";
     }
 
     private void addUserMessage(String message) {

@@ -1,19 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
     android:fitsSystemWindows="true"
     android:background="#FFFFFF">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_profile"
-        app:civ_border_width="1dp"
-        app:civ_border_color="#FF000000" />
-</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/chatTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dr.GPT"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/btnClearChat"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_menu_dots"
+            android:tint="#666666"
+            android:contentDescription="Clear chat" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_toStartOf="@id/btnClearChat"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_profile"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMissedDose"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="💊 Missed Dose"
+                android:textAllCaps="false"
+                android:layout_marginEnd="8dp"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:paddingHorizontal="16dp"
+                app:cornerRadius="18dp"
+                app:backgroundTint="#26A69A"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFeelingDizzy"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="😵 Feeling Dizzy"
+                android:textAllCaps="false"
+                android:layout_marginEnd="8dp"
+                android:textColor="#333333"
+                android:textSize="13sp"
+                android:paddingHorizontal="16dp"
+                app:cornerRadius="18dp"
+                app:backgroundTint="#F3F4F6"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHighSugar"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="📈 High Sugar"
+                android:textAllCaps="false"
+                android:layout_marginEnd="8dp"
+                android:textColor="#333333"
+                android:textSize="13sp"
+                android:paddingHorizontal="16dp"
+                app:cornerRadius="18dp"
+                app:backgroundTint="#F3F4F6"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLowSugar"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="📉 Low Sugar"
+                android:textAllCaps="false"
+                android:layout_marginEnd="8dp"
+                android:textColor="#333333"
+                android:textSize="13sp"
+                android:paddingHorizontal="16dp"
+                app:cornerRadius="18dp"
+                app:backgroundTint="#F3F4F6"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFeelingTired"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="😴 Feeling Tired"
+                android:textAllCaps="false"
+                android:textColor="#333333"
+                android:textSize="13sp"
+                android:paddingHorizontal="16dp"
+                app:cornerRadius="18dp"
+                app:backgroundTint="#F3F4F6"
+                app:strokeWidth="0dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:id="@+id/chatScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/chatContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/messageInput"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="Ask Dr.GPT"
+            android:background="@drawable/input_background"
+            android:padding="12dp"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/sendButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_grey_send"
+            android:background="@drawable/input_background"
+            android:padding="10dp"
+            android:contentDescription="Send" />
+    </LinearLayout>
+
+</LinearLayout>
