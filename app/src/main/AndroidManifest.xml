@@ -106,7 +106,7 @@
             android:name=".PermissionsActivity"
             android:exported="false" />
 
-        <!-- Broadcast Receiver for Alarms -->
+        <!-- Broadcast Receiver for Alarms and Timezone changes -->
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
@@ -116,6 +116,15 @@
                 <action android:name="com.example.chroniccare.MEDICATION_ALARM" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".TimezoneChangeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
 

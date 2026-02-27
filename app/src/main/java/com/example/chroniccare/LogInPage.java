@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +34,6 @@ public class LogInPage extends AppCompatActivity {
     EditText etUsername;
     EditText etPassword;
     MaterialButton btnLogin;
-    LinearLayout btnGoogle;
-    EditText etUsername;
-    EditText etPassword;
-    TextView btnLogin;
     GoogleSignInClient gsc;
     SharedPreferences sharedPreferences;
     FirebaseAuth firebaseAuth;
@@ -74,7 +68,6 @@ public class LogInPage extends AppCompatActivity {
         etPassword = findViewById(R.id.etpassword);
         btnLogin = findViewById(R.id.btnLogin);
         signupLink = findViewById(R.id.signupLink);
-
         btnGoogle = findViewById(R.id.btnGoogle);
         btnInstagram = findViewById(R.id.btnInstagram);
         
@@ -100,9 +93,6 @@ public class LogInPage extends AppCompatActivity {
         if (returnBtn != null) {
             returnBtn.setOnClickListener(v -> finish());
         }
-        btnGoogle.setOnClickListener(v -> signIn());
-        btnLogin.setOnClickListener(v -> signInWithUsername());
-        signupLink.setOnClickListener(v -> startActivity(new Intent(LogInPage.this, SignUpActivity.class)));
     }
     
     private void signIn() {
@@ -118,8 +108,6 @@ public class LogInPage extends AppCompatActivity {
     private void signInWithUsername() {
         if (etUsername == null || etPassword == null) return;
 
-        String usernameInput = etUsername.getText().toString().trim();
-        String passwordInput = etPassword.getText().toString().trim();
         String usernameInput = etUsername.getText() != null ? etUsername.getText().toString().trim() : "";
         String passwordInput = etPassword.getText() != null ? etPassword.getText().toString().trim() : "";
 
@@ -166,7 +154,6 @@ public class LogInPage extends AppCompatActivity {
                         Toast.makeText(this, "Sign-in failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
-    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

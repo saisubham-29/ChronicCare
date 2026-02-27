@@ -499,21 +499,41 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnDelete"
+    <LinearLayout
+        android:id="@+id/actionButtonsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/TodaysScheduleCard"
         android:layout_marginTop="16dp"
-        android:text="Delete Selected"
-        android:visibility="gone"
-        app:backgroundTint="@android:color/holo_red_dark"/>
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelEdit"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Undo"
+            app:strokeColor="#666666"
+            android:textColor="#666666"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Delete Selected"
+            app:backgroundTint="@android:color/holo_red_dark"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Health Insights"
-        android:layout_below="@id/btnDelete"
+        android:layout_below="@id/actionButtonsContainer"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="0dp"
         android:textSize="25sp"

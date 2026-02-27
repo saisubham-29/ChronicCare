@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class AddMedications extends AppCompatActivity {
 
@@ -66,7 +67,6 @@ public class AddMedications extends AppCompatActivity {
                     startActivity(new Intent(this, PermissionsActivity.class));
                 }
             } else {
-                // For Android 12-13, show info dialog
                 Toast.makeText(this, "Enable 'Display over other apps' in Settings for alarms to work when locked", Toast.LENGTH_LONG).show();
             }
         }
@@ -128,20 +128,7 @@ public class AddMedications extends AppCompatActivity {
     }
 
     private void saveMedications() {
-        String userId = null;
-        
-        // Try Firebase Auth first
-        if (auth.getCurrentUser() != null) {
-            userId = auth.getCurrentUser().getUid();
-        } else {
-            // Fallback to Google Sign-In account ID
-            com.google.android.gms.auth.api.signin.GoogleSignInAccount account = 
-                com.google.android.gms.auth.api.signin.GoogleSignIn.getLastSignedInAccount(this);
-            if (account != null) {
-                userId = account.getId();
-            }
-        }
-        
+        String userId = getUserId();
         if (userId == null) {
             Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
             return;
@@ -185,6 +172,13 @@ public class AddMedications extends AppCompatActivity {
         finish();
     }
 
+    private String getUserId() {
+        if (auth.getCurrentUser() != null) return auth.getCurrentUser().getUid();
+        com.google.android.gms.auth.api.signin.GoogleSignInAccount account = 
+            com.google.android.gms.auth.api.signin.GoogleSignIn.getLastSignedInAccount(this);
+        return account != null ? account.getId() : null;
+    }
+
     private void saveMedicationToFirestore(String userId, String name, int hour, int minute, String mealTime, String period) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, hour);
@@ -199,6 +193,10 @@ public class AddMedications extends AppCompatActivity {
         medication.put("takenAt", null);
         medication.put("mealTime", mealTime);
         medication.put("period", period);
+        
+        // NEW: Timezone tracking fields
+        medication.put("originTimezone", TimeZone.getDefault().getID());
+        medication.put("strictInterval", true); // Default to strict 24h gap for safety
 
         firestore.collection("users").document(userId).collection("medications")
                 .add(medication);
@@ -228,13 +226,11 @@ public class AddMedications extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(),
-                pendingIntent
-        );
-        
-        Log.d("AddMedications", "Alarm scheduled for " + medName + " at " + calendar.getTime() + " with data: " + mealTime);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
         
         scheduleNextDayAlarm(medName, hour, minute, mealTime, requestCode, calendar);
     }
@@ -260,11 +256,11 @@ public class AddMedications extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                nextDay.getTimeInMillis(),
-                pendingIntent
-        );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextDay.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, nextDay.getTimeInMillis(), pendingIntent);
+        }
     }
 
     interface TimeSetListener {

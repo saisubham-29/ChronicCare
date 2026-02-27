@@ -35,6 +35,15 @@
         android:textColor="#555555"/>
 
     <ImageView
+        android:id="@+id/editMedIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_edit"
+        android:visibility="gone"
+        android:layout_marginEnd="8dp"
+        android:tint="#666666" />
+
+    <ImageView
         android:id="@+id/scheduleStatusIcon"
         android:layout_width="28dp"
         android:layout_height="28dp"

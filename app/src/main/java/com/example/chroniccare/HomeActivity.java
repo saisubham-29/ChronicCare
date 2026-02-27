@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import androidx.cardview.widget.CardView;
 import com.example.chroniccare.utils.ProfileImageHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,7 +62,8 @@ public class HomeActivity extends BottomNavActivity {
 
     // Buttons
     private AppCompatButton btnCheckNow, btnTakeNow;
-    private MaterialButton btnDelete;
+    private MaterialButton btnDelete, btnCancelEdit;
+    private View actionButtonsContainer;
 
     // Quick actions
     private CardView logFoodCard, logExerciseCard, viewReportsCard, contactDoctorCard;
@@ -157,6 +161,8 @@ public class HomeActivity extends BottomNavActivity {
         btnCheckNow = findViewById(R.id.btn_checknow);
         btnTakeNow  = findViewById(R.id.btn_takenow);
         btnDelete = findViewById(R.id.btnDelete);
+        btnCancelEdit = findViewById(R.id.btnCancelEdit);
+        actionButtonsContainer = findViewById(R.id.actionButtonsContainer);
 
         logFoodCard = findViewById(R.id.LogFood);
         logExerciseCard = findViewById(R.id.LogExercise);
@@ -273,7 +279,21 @@ public class HomeActivity extends BottomNavActivity {
         });
 
         btnTakeNow.setOnClickListener(v -> Toast.makeText(this, "Mark medications from schedule below", Toast.LENGTH_SHORT).show());
-        btnDelete.setOnClickListener(v -> confirmDeletion());
+        
+        if (btnDelete != null) {
+            btnDelete.setOnClickListener(v -> confirmDeletion());
+        }
+        
+        if (btnCancelEdit != null) {
+            btnCancelEdit.setOnClickListener(v -> {
+                isInDeleteMode = false;
+                selectedMedIds.clear();
+                if (actionButtonsContainer != null) {
+                    actionButtonsContainer.setVisibility(View.GONE);
+                }
+                loadTodaysSchedule();
+            });
+        }
 
         logFoodCard.setOnClickListener(v -> startActivity(new Intent(this, LogFood.class)));
         logExerciseCard.setOnClickListener(v -> startActivity(new Intent(this, LogExercise.class)));
@@ -305,6 +325,7 @@ public class HomeActivity extends BottomNavActivity {
         TextView scheduleTitle = rowView.findViewById(R.id.scheduleTitle);
         ImageView statusIcon = rowView.findViewById(R.id.scheduleStatusIcon);
         CheckBox deleteCheckbox = rowView.findViewById(R.id.deleteCheckbox);
+        ImageView editIcon = rowView.findViewById(R.id.editMedIcon);
         
         String id = doc.getId();
         scheduleTime.setText(doc.getString("time"));
@@ -314,14 +335,19 @@ public class HomeActivity extends BottomNavActivity {
         if (isInDeleteMode) {
             statusIcon.setVisibility(View.GONE);
             deleteCheckbox.setVisibility(View.VISIBLE);
+            editIcon.setVisibility(View.VISIBLE);
             deleteCheckbox.setChecked(selectedMedIds.contains(id));
+            
             deleteCheckbox.setOnCheckedChangeListener((btn, isChecked) -> {
                 if (isChecked) selectedMedIds.add(id);
                 else selectedMedIds.remove(id);
             });
+            
+            editIcon.setOnClickListener(v -> showEditOptionsMenu(doc));
         } else {
             statusIcon.setVisibility(View.VISIBLE);
             deleteCheckbox.setVisibility(View.GONE);
+            editIcon.setVisibility(View.GONE);
             statusIcon.setOnClickListener(v -> handleMedicationClick(doc));
         }
         
@@ -339,10 +365,114 @@ public class HomeActivity extends BottomNavActivity {
                     if (which == 0) {
                         isInDeleteMode = true;
                         selectedMedIds.clear();
-                        btnDelete.setVisibility(View.VISIBLE);
-                        loadTodaysSchedule(); // Refresh to show checkboxes
+                        if (actionButtonsContainer != null) {
+                            actionButtonsContainer.setVisibility(View.VISIBLE);
+                        }
+                        loadTodaysSchedule(); 
                     }
                 }).show();
+    }
+
+    private void showEditOptionsMenu(QueryDocumentSnapshot doc) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_edit_med, null);
+        bottomSheetDialog.setContentView(view);
+
+        view.findViewById(R.id.optionEditName).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            showEditMedNameDialog(doc);
+        });
+
+        view.findViewById(R.id.optionEditTime).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            showEditTimeDialog(doc);
+        });
+
+        bottomSheetDialog.show();
+    }
+
+    private void showEditMedNameDialog(QueryDocumentSnapshot doc) {
+        String currentName = doc.getString("name");
+        EditText input = new EditText(this);
+        input.setText(currentName);
+        input.setPadding(50, 20, 50, 20);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Edit Medication Name")
+                .setView(input)
+                .setPositiveButton("Save", (dialog, which) -> {
+                    String newName = input.getText().toString().trim();
+                    if (!newName.isEmpty()) {
+                        updateMedicationName(doc.getId(), newName);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void showEditTimeDialog(QueryDocumentSnapshot doc) {
+        Calendar cal = Calendar.getInstance();
+        Timestamp timestamp = doc.getTimestamp("timestamp");
+        if (timestamp != null) cal.setTime(timestamp.toDate());
+
+        new TimePickerDialog(this, (view, hourOfDay, minute) -> {
+            updateMedicationTime(doc, hourOfDay, minute);
+        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false).show();
+    }
+
+    private void updateMedicationName(String id, String newName) {
+        String userId = getUserId();
+        if (userId == null) return;
+
+        firestore.collection("users").document(userId).collection("medications").document(id)
+                .update("name", newName)
+                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Name updated", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to update", Toast.LENGTH_SHORT).show());
+    }
+
+    private void updateMedicationTime(QueryDocumentSnapshot doc, int hour, int minute) {
+        String userId = getUserId();
+        if (userId == null) return;
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, 0);
+
+        String newTimeStr = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(cal.getTime());
+        String medName = doc.getString("name");
+
+        firestore.collection("users").document(userId).collection("medications").document(doc.getId())
+                .update("time", newTimeStr, "timestamp", new Timestamp(cal.getTime()))
+                .addOnSuccessListener(aVoid -> {
+                    cancelAlarmForMed(medName); // Cancel old
+                    scheduleNewAlarm(medName, hour, minute, doc.getString("mealTime")); // Schedule new
+                    Toast.makeText(this, "Time updated to " + newTimeStr, Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void scheduleNewAlarm(String medName, int hour, int minute, String mealTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        if (calendar.before(Calendar.getInstance())) calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.setAction("com.example.chroniccare.MEDICATION_ALARM");
+        intent.putExtra("medicationName", medName);
+        intent.putExtra("mealTime", mealTime);
+        intent.putExtra("time", new SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.getTime()));
+
+        PendingIntent pi = PendingIntent.getBroadcast(this, medName.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+        } else {
+            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+        }
     }
 
     private void confirmDeletion() {
@@ -371,7 +501,9 @@ public class HomeActivity extends BottomNavActivity {
         }
         
         isInDeleteMode = false;
-        btnDelete.setVisibility(View.GONE);
+        if (actionButtonsContainer != null) {
+            actionButtonsContainer.setVisibility(View.GONE);
+        }
         selectedMedIds.clear();
         Toast.makeText(this, "Medications deleted", Toast.LENGTH_SHORT).show();
     }
@@ -382,15 +514,12 @@ public class HomeActivity extends BottomNavActivity {
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.setAction("com.example.chroniccare.MEDICATION_ALARM");
         
-        // Cancel all potential slots (Morning/Afternoon/Night)
         for (int i = 0; i < 3; i++) {
             PendingIntent pi = PendingIntent.getBroadcast(this, medName.hashCode() + i, intent, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE);
             if (pi != null) {
                 am.cancel(pi);
                 pi.cancel();
             }
-            
-            // Also cancel next-day reschedule intent if exists
             PendingIntent piNext = PendingIntent.getBroadcast(this, (medName + "_next").hashCode() + i, intent, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE);
             if (piNext != null) {
                 am.cancel(piNext);
