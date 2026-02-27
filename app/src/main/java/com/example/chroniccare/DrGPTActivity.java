@@ -16,10 +16,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.example.chroniccare.api.ChatRequest;
 import com.example.chroniccare.api.ChatResponse;
-import com.example.chroniccare.api.ChatHistoryResponse;
-import com.example.chroniccare.api.StatusResponse;
 import com.example.chroniccare.api.DrGPTApiService;
 import com.example.chroniccare.api.RetrofitClient;
 import com.example.chroniccare.database.User;
@@ -61,6 +63,7 @@ public class DrGPTActivity extends BottomNavActivity {
         
         executorService = Executors.newSingleThreadExecutor();
         
+        View root = findViewById(R.id.dr_gpt_root);
         chatContainer = findViewById(R.id.chatContainer);
         messageInput = findViewById(R.id.messageInput);
         chatScrollView = findViewById(R.id.chatScrollView);
@@ -73,6 +76,29 @@ public class DrGPTActivity extends BottomNavActivity {
             Log.e(TAG, "Failed to initialize views");
             finish();
             return;
+        }
+
+        // Advanced keyboard and nav bar management
+        if (root != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
+                Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+                boolean isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
+                
+                // 1. Hide Nav Bar when keyboard is up
+                if (bottomNavigationView != null) {
+                    bottomNavigationView.setVisibility(isKeyboardVisible ? View.GONE : View.VISIBLE);
+                }
+
+                // 2. Adjust root padding so the input field sits ABOVE the keyboard
+                // We add the bottom inset (keyboard height) as padding to the root layout
+                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), imeInsets.bottom);
+                
+                if (isKeyboardVisible) {
+                    scrollToBottom();
+                }
+                
+                return WindowInsetsCompat.CONSUMED;
+            });
         }
         
         if (profileImage != null) {
@@ -146,11 +172,11 @@ public class DrGPTActivity extends BottomNavActivity {
     }
 
     private void sendMessageToApi(String payload) {
-        ChatRequest request = new ChatRequest(sessionId, payload);
+        com.example.chroniccare.api.ChatRequest request = new com.example.chroniccare.api.ChatRequest(sessionId, payload);
 
-        apiService.sendMessage(request).enqueue(new Callback<ChatResponse>() {
+        apiService.sendMessage(request).enqueue(new Callback<com.example.chroniccare.api.ChatResponse>() {
             @Override
-            public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
+            public void onResponse(Call<com.example.chroniccare.api.ChatResponse> call, Response<com.example.chroniccare.api.ChatResponse> response) {
                 showLoading(false);
                 
                 if (response.isSuccessful() && response.body() != null) {
@@ -166,7 +192,7 @@ public class DrGPTActivity extends BottomNavActivity {
             }
             
             @Override
-            public void onFailure(Call<ChatResponse> call, Throwable t) {
+            public void onFailure(Call<com.example.chroniccare.api.ChatResponse> call, Throwable t) {
                 showLoading(false);
                 handleError("Connection failed. Please check if the server is running.");
             }

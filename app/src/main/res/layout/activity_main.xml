@@ -499,15 +499,26 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TodaysScheduleCard"
+        android:layout_marginTop="16dp"
+        android:text="Delete Selected"
+        android:visibility="gone"
+        app:backgroundTint="@android:color/holo_red_dark"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Health Insights"
-        android:layout_below="@id/TodaysScheduleCard"
+        android:layout_below="@id/btnDelete"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="0dp"
         android:textSize="25sp"
         android:id="@+id/HealthInsights"/>
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -629,18 +640,6 @@
         </LinearLayout>
 
     </HorizontalScrollView>
-<!--    <androidx.appcompat.widget.AppCompatButton-->
-<!--        android:id="@+id/btn_stop_alarm"-->
-<!--        android:layout_width="120dp"-->
-<!--        android:layout_height="38dp"-->
-<!--        android:layout_below="@id/HOrizontalCardContainer"-->
-<!--        android:background="@drawable/button_shape_t1"-->
-<!--        android:fontFamily="sans-serif"-->
-<!--        android:text="Stop Alarm"-->
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="15sp"-->
-<!--        android:textStyle="normal" />-->
 
 
 </RelativeLayout>
