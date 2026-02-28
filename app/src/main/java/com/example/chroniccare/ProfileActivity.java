@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.example.chroniccare.utils.ProfileImageHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -54,6 +57,7 @@ public class ProfileActivity extends BaseActivity {
     private AutoCompleteTextView spinnerGender, spinnerBloodGroup;
     private MaterialButton btnSaveProfile, btnLogout, btnUploadDocument, btnViewDocuments;
     private MaterialCardView btnFamilyDashboard;
+    private MaterialButton btnSaveProfile, btnLogout, btnUploadDocument, btnViewDocuments, btnChangeLanguage;
     private ImageView btnSharePersonal, btnShareMedical, btnShareEmergency;
     private MaterialToolbar toolbar;
     private RecyclerView rvFamilyMembersHorizontal;
@@ -83,6 +87,7 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
 
         executorService = Executors.newSingleThreadExecutor();
+        executorService = java.util.concurrent.Executors.newSingleThreadExecutor();
         db = AppDatabase.getInstance(this);
         firebaseSync = new com.example.chroniccare.utils.FirebaseSync(currentUserId);
 
@@ -126,6 +131,7 @@ public class ProfileActivity extends BaseActivity {
                 }
             })
             .addOnFailureListener(e -> Log.e("ProfileActivity", "Failed to sync personal info", e));
+            });
     }
 
     private void syncMedicalInfoFromCloud() {
@@ -156,6 +162,7 @@ public class ProfileActivity extends BaseActivity {
                 }
             })
             .addOnFailureListener(e -> Log.e("ProfileActivity", "Failed to sync medical info", e));
+            });
     }
 
     private void syncEmergencyContactFromCloud() {
@@ -187,6 +194,15 @@ public class ProfileActivity extends BaseActivity {
             .addOnFailureListener(e -> {
                 Log.e("ProfileActivity", "Failed to sync emergency contact", e);
                 runOnUiThread(this::loadUserData);
+                        user.emergencyName = doc.getString("name");
+                        user.emergencyPhone = doc.getString("phone");
+                        user.emergencyRelation = doc.getString("relation");
+                        db.userDao().insert(user);
+                        runOnUiThread(() -> loadUserData());
+                    });
+                } else {
+                    runOnUiThread(() -> loadUserData());
+                }
             });
     }
 
@@ -209,6 +225,7 @@ public class ProfileActivity extends BaseActivity {
         btnChangePhoto = findViewById(R.id.btnChangePhoto);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
         btnLogout = findViewById(R.id.btnLogout);
+        btnChangeLanguage = findViewById(R.id.btnChangeLanguage);
         btnUploadDocument = findViewById(R.id.btnUploadDocument);
         btnViewDocuments = findViewById(R.id.btnViewDocuments);
         btnFamilyDashboard = findViewById(R.id.btnFamilyDashboard);
@@ -216,6 +233,8 @@ public class ProfileActivity extends BaseActivity {
         btnShareMedical = findViewById(R.id.btnShareMedical);
         btnShareEmergency = findViewById(R.id.btnShareEmergency);
         rvFamilyMembersHorizontal = findViewById(R.id.rvFamilyMembersHorizontal);
+
+        loadConsistencyGrid();
     }
 
     private void setupToolbar() {
@@ -245,7 +264,7 @@ public class ProfileActivity extends BaseActivity {
                         } catch (Exception ignored) {}
                         profileImage.setImageURI(imageUri);
                         sharedPreferences.edit().putString("userPhoto", imageUri.toString()).apply();
-                        Toast.makeText(this, "Profile photo updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.profile_photo_updated_toast), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -272,6 +291,9 @@ public class ProfileActivity extends BaseActivity {
         etDOB.setOnClickListener(v -> showDatePicker());
         btnSaveProfile.setOnClickListener(v -> saveProfile());
         btnLogout.setOnClickListener(v -> logout());
+        if (btnChangeLanguage != null) {
+            btnChangeLanguage.setOnClickListener(v -> showLanguageDialog());
+        }
         btnSharePersonal.setOnClickListener(v -> sharePersonalInfo());
         btnShareMedical.setOnClickListener(v -> shareMedicalInfo());
         btnShareEmergency.setOnClickListener(v -> shareEmergencyInfo());
@@ -347,6 +369,36 @@ public class ProfileActivity extends BaseActivity {
                 Log.e("ProfileActivity", "Error loading user data", e);
             }
         });
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.execute(() -> {
+                try {
+                    User user = db.userDao().getUserByUserId(currentUserId);
+                    runOnUiThread(() -> {
+                        if (user != null) {
+                            tvName.setText(user.name != null ? user.name : getString(R.string.profile_default_user_name));
+                            tvEmail.setText(user.email != null ? user.email : "");
+                            if (etPhone != null) etPhone.setText(user.phone != null ? user.phone : "");
+                            if (etDOB != null) etDOB.setText(user.dob != null ? user.dob : "");
+                            if (etHeight != null) etHeight.setText(user.height != null ? user.height : "");
+                            if (etWeight != null) etWeight.setText(user.weight != null ? user.weight : "");
+                            if (etConditions != null) etConditions.setText(user.conditions != null ? user.conditions : "");
+                            if (etAllergies != null) etAllergies.setText(user.allergies != null ? user.allergies : "");
+                            if (etEmergencyName != null) etEmergencyName.setText(user.emergencyName != null ? user.emergencyName : "");
+                            if (etEmergencyPhone != null) etEmergencyPhone.setText(user.emergencyPhone != null ? user.emergencyPhone : "");
+                            if (etEmergencyRelation != null) etEmergencyRelation.setText(user.emergencyRelation != null ? user.emergencyRelation : "");
+                            if (user.gender != null && !user.gender.isEmpty() && spinnerGender != null) spinnerGender.setText(user.gender, false);
+                            if (user.bloodGroup != null && !user.bloodGroup.isEmpty() && spinnerBloodGroup != null) spinnerBloodGroup.setText(user.bloodGroup, false);
+                        } else {
+                            tvName.setText(sharedPreferences.getString("userName", getString(R.string.profile_default_user_name)));
+                            tvEmail.setText(sharedPreferences.getString("userEmail", ""));
+                        }
+                        ProfileImageHelper.loadProfileImage(ProfileActivity.this, profileImage);
+                    });
+                } catch (Exception e) {
+                    Log.e("ProfileActivity", "Error loading user data: " + e.getMessage());
+                }
+            });
+        }
     }
 
     private void saveProfile() {
@@ -378,6 +430,19 @@ public class ProfileActivity extends BaseActivity {
                 runOnUiThread(() -> Toast.makeText(this, "Failed to save profile", Toast.LENGTH_SHORT).show());
             }
         });
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.execute(() -> {
+                try {
+                    db.userDao().insert(user);
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, getString(R.string.profile_saved_success_toast), Toast.LENGTH_SHORT).show();
+                        loadUserData();
+                    });
+                } catch (Exception e) {
+                    runOnUiThread(() -> Toast.makeText(this, getString(R.string.profile_save_failed_toast), Toast.LENGTH_SHORT).show());
+                }
+            });
+        }
 
         try {
             java.util.HashMap<String, Object> personalInfo = new java.util.HashMap<>();
@@ -406,20 +471,58 @@ public class ProfileActivity extends BaseActivity {
             }
         } catch (Exception e) {
             Log.e("ProfileActivity", "Error syncing to Firebase", e);
+            Log.e("ProfileActivity", "Error syncing to Firebase: " + e.getMessage());
         }
     }
 
     private void logout() {
+        FirebaseAuth.getInstance().signOut();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         GoogleSignInClient gsc = GoogleSignIn.getClient(this, gso);
         gsc.signOut().addOnCompleteListener(task -> {
             sharedPreferences.edit().clear().apply();
-            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.profile_logout_success_toast), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ProfileActivity.this, LogInPage.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
         });
+    }
+
+    private void showLanguageDialog() {
+        String[] languages = {
+            getString(R.string.language_english), getString(R.string.language_hindi),
+            getString(R.string.language_bengali), getString(R.string.language_odia),
+            getString(R.string.language_tamil), getString(R.string.language_telugu),
+            getString(R.string.language_kannada), getString(R.string.language_malayalam)
+        };
+        String[] languageCodes = {"en", "hi", "bn", "or", "ta", "te", "kn", "ml"};
+        
+        String currentLang = com.example.chroniccare.utils.LocaleHelper.getPersistedLanguage(this);
+        int selectedIndex = 0;
+        for (int i = 0; i < languageCodes.length; i++) {
+            if (languageCodes[i].equals(currentLang)) {
+                selectedIndex = i;
+                break;
+            }
+        }
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(getString(R.string.profile_change_language))
+            .setSingleChoiceItems(languages, selectedIndex, (dialog, which) -> {
+                String selectedLanguage = languageCodes[which];
+                com.example.chroniccare.utils.LocaleHelper.setLocale(this, selectedLanguage);
+                sharedPreferences.edit().putBoolean("language_selected", true).apply();
+                dialog.dismiss();
+                
+                // CRITICAL FIX: Smooth restart to apply language instantly
+                Intent restartIntent = new Intent(this, HomeActivity.class);
+                restartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(restartIntent);
+                finish();
+            })
+            .setNegativeButton(getString(R.string.common_cancel), null)
+            .show();
     }
 
     private void sharePersonalInfo() {
@@ -428,14 +531,14 @@ public class ProfileActivity extends BaseActivity {
         String dob = etDOB.getText().toString();
         String gender = spinnerGender.getText().toString();
         String bloodGroup = spinnerBloodGroup.getText().toString();
-
-        StringBuilder message = new StringBuilder("Hello, Here is my Personal Info:\n\n");
-        message.append("Name: ").append(name).append("\n");
-        if (!phone.isEmpty()) message.append("Phone: ").append(phone).append("\n");
-        if (!dob.isEmpty()) message.append("DOB: ").append(dob).append("\n");
-        if (!gender.isEmpty() && !gender.equals("Select Gender")) message.append("Gender: ").append(gender).append("\n");
-        if (!bloodGroup.isEmpty() && !bloodGroup.equals("Select Blood Group")) message.append("Blood Group: ").append(bloodGroup);
-
+        String genderPlaceholder = getResources().getStringArray(R.array.gender_array)[0];
+        String bloodGroupPlaceholder = getResources().getStringArray(R.array.blood_group_array)[0];
+        StringBuilder message = new StringBuilder(getString(R.string.profile_share_personal_intro));
+        message.append(getString(R.string.profile_share_name_label)).append(name).append("\n");
+        if (!phone.isEmpty()) message.append(getString(R.string.profile_share_phone_label)).append(phone).append("\n");
+        if (!dob.isEmpty()) message.append(getString(R.string.profile_share_dob_label)).append(dob).append("\n");
+        if (!gender.isEmpty() && !gender.equals(genderPlaceholder)) message.append(getString(R.string.profile_share_gender_label)).append(gender).append("\n");
+        if (!bloodGroup.isEmpty() && !bloodGroup.equals(bloodGroupPlaceholder)) message.append(getString(R.string.profile_share_blood_group_label)).append(bloodGroup);
         shareText(message.toString());
     }
 
@@ -444,13 +547,11 @@ public class ProfileActivity extends BaseActivity {
         String weight = etWeight.getText().toString();
         String conditions = etConditions.getText().toString();
         String allergies = etAllergies.getText().toString();
-
-        StringBuilder message = new StringBuilder("Hello, Here is my Medical Info:\n\n");
-        if (!height.isEmpty()) message.append("Height: ").append(height).append(" cm\n");
-        if (!weight.isEmpty()) message.append("Weight: ").append(weight).append(" kg\n");
-        if (!conditions.isEmpty()) message.append("Chronic Conditions: ").append(conditions).append("\n");
-        if (!allergies.isEmpty()) message.append("Allergies: ").append(allergies);
-
+        StringBuilder message = new StringBuilder(getString(R.string.profile_share_medical_intro));
+        if (!height.isEmpty()) message.append(getString(R.string.profile_share_height_label)).append(height).append(getString(R.string.profile_share_height_suffix)).append("\n");
+        if (!weight.isEmpty()) message.append(getString(R.string.profile_share_weight_label)).append(weight).append(getString(R.string.profile_share_weight_suffix)).append("\n");
+        if (!conditions.isEmpty()) message.append(getString(R.string.profile_share_conditions_label)).append(conditions).append("\n");
+        if (!allergies.isEmpty()) message.append(getString(R.string.profile_share_allergies_label)).append(allergies);
         shareText(message.toString());
     }
 
@@ -458,12 +559,10 @@ public class ProfileActivity extends BaseActivity {
         String name = etEmergencyName.getText().toString();
         String phone = etEmergencyPhone.getText().toString();
         String relation = etEmergencyRelation.getText().toString();
-
-        StringBuilder message = new StringBuilder("Hello, Here is my Emergency Contact Info:\n\n");
-        if (!name.isEmpty()) message.append("Contact Name: ").append(name).append("\n");
-        if (!phone.isEmpty()) message.append("Contact Phone: ").append(phone).append("\n");
-        if (!relation.isEmpty()) message.append("Relationship: ").append(relation);
-
+        StringBuilder message = new StringBuilder(getString(R.string.profile_share_emergency_intro));
+        if (!name.isEmpty()) message.append(getString(R.string.profile_share_contact_name_label)).append(name).append("\n");
+        if (!phone.isEmpty()) message.append(getString(R.string.profile_share_contact_phone_label)).append(phone).append("\n");
+        if (!relation.isEmpty()) message.append(getString(R.string.profile_share_relation_label)).append(relation);
         shareText(message.toString());
     }
 
@@ -471,24 +570,20 @@ public class ProfileActivity extends BaseActivity {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(Intent.createChooser(shareIntent, "Share via"));
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.profile_share_chooser_title)));
     }
 
     private void showUploadBottomSheet() {
         uploadBottomSheet = new com.google.android.material.bottomsheet.BottomSheetDialog(this);
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_upload_document, null);
         uploadBottomSheet.setContentView(view);
-
         AutoCompleteTextView etDocumentType = view.findViewById(R.id.etDocumentType);
         com.google.android.material.textfield.TextInputEditText etDocumentName = view.findViewById(R.id.etDocumentName);
         MaterialButton btnSelectFile = view.findViewById(R.id.btnSelectFile);
-        TextView tvSelectedFile = view.findViewById(R.id.tvSelectedFile);
         MaterialButton btnSaveDocument = view.findViewById(R.id.btnSaveDocument);
-
-        String[] types = {"Lab Report", "Prescription", "Medical Certificate", "X-Ray/Scan", "Insurance Document", "Other"};
+        String[] types = getResources().getStringArray(R.array.profile_document_types);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, types);
         etDocumentType.setAdapter(adapter);
-
         btnSelectFile.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -497,7 +592,6 @@ public class ProfileActivity extends BaseActivity {
             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
             documentPickerLauncher.launch(intent);
         });
-
         btnSaveDocument.setOnClickListener(v -> {
             String docType = etDocumentType.getText().toString().trim();
             String docName = etDocumentName.getText().toString().trim();
@@ -505,10 +599,12 @@ public class ProfileActivity extends BaseActivity {
                 Toast.makeText(this, "Please fill all fields and select a file", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (docType.isEmpty()) { Toast.makeText(this, getString(R.string.profile_select_document_type_toast), Toast.LENGTH_SHORT).show(); return; }
+            if (docName.isEmpty()) { Toast.makeText(this, getString(R.string.profile_enter_document_name_toast), Toast.LENGTH_SHORT).show(); return; }
+            if (selectedDocumentUri == null) { Toast.makeText(this, getString(R.string.profile_select_file_toast), Toast.LENGTH_SHORT).show(); return; }
             uploadDocument(selectedDocumentUri, docType, docName);
             uploadBottomSheet.dismiss();
         });
-
         uploadBottomSheet.show();
     }
 
@@ -517,6 +613,8 @@ public class ProfileActivity extends BaseActivity {
             TextView tvSelectedFile = uploadBottomSheet.findViewById(R.id.tvSelectedFile);
             if (tvSelectedFile != null) {
                 tvSelectedFile.setText("Selected: " + getFileName(uri));
+                String fileName = getFileName(uri);
+                tvSelectedFile.setText(getString(R.string.profile_selected_file_label, fileName));
                 tvSelectedFile.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
             }
         }
@@ -526,11 +624,11 @@ public class ProfileActivity extends BaseActivity {
         try {
             String extension = getFileExtension(getFileName(uri));
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-            String storedFileName = currentUserId + "_" + timestamp + extension;
+            String storedFileName = currentUserId + "_" + timestamp + getFileExtension(getFileName(uri));
             long fileSize = getFileSize(uri);
 
             android.app.ProgressDialog progressDialog = new android.app.ProgressDialog(this);
-            progressDialog.setMessage("Uploading to cloud...");
+            progressDialog.setMessage(getString(R.string.profile_uploading_to_cloud));
             progressDialog.setProgressStyle(android.app.ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setMax(100);
             progressDialog.show();
@@ -582,6 +680,41 @@ public class ProfileActivity extends BaseActivity {
     private String getFileName(Uri uri) {
         String name = "Document";
         try (android.database.Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                    document.userId = currentUserId; document.documentName = docName; document.documentType = docType;
+                    document.documentUri = downloadUrl; document.uploadDate = System.currentTimeMillis(); document.fileSize = fileSize;
+                    if (executorService != null && !executorService.isShutdown()) {
+                        executorService.execute(() -> {
+                            try {
+                                db.medicalDocumentDao().insert(document);
+                                java.util.HashMap<String, Object> docData = new java.util.HashMap<>();
+                                docData.put("documentName", document.documentName); docData.put("documentType", document.documentType);
+                                docData.put("downloadUrl", downloadUrl); docData.put("fileName", storedFileName);
+                                docData.put("uploadDate", document.uploadDate); docData.put("fileSize", document.fileSize);
+                                if (firebaseSync != null) firebaseSync.syncDocument(String.valueOf(System.currentTimeMillis()), docData);
+                                runOnUiThread(() -> {
+                                    Toast.makeText(ProfileActivity.this, getString(R.string.profile_document_uploaded_toast, docType), Toast.LENGTH_SHORT).show();
+                                    selectedDocumentUri = null;
+                                });
+                            } catch (Exception e) {
+                                runOnUiThread(() -> Toast.makeText(ProfileActivity.this, getString(R.string.profile_save_document_failed_toast), Toast.LENGTH_SHORT).show());
+                            }
+                        });
+                    }
+                }
+                @Override public void onFailure(String error) { progressDialog.dismiss(); Toast.makeText(ProfileActivity.this, getString(R.string.profile_upload_failed_toast, error), Toast.LENGTH_SHORT).show(); }
+                @Override public void onProgress(int progress) { progressDialog.setProgress(progress); }
+            });
+        } catch (Exception e) { Toast.makeText(this, getString(R.string.profile_failed_upload_document_toast), Toast.LENGTH_SHORT).show(); }
+    }
+
+    private String getFileExtension(String fileName) {
+        return (fileName != null && fileName.contains(".")) ? fileName.substring(fileName.lastIndexOf(".")) : ".pdf";
+    }
+
+    private String getFileName(Uri uri) {
+        String name = getString(R.string.profile_default_document_name);
+        try {
+            android.database.Cursor cursor = getContentResolver().query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 int nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME);
                 if (nameIndex != -1) name = cursor.getString(nameIndex);
@@ -594,7 +727,44 @@ public class ProfileActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (executorService != null && !executorService.isShutdown()) executorService.shutdown();
+    private void loadConsistencyGrid() {
+        android.widget.GridLayout grid = findViewById(R.id.consistencyGrid);
+        if (grid == null) return;
+        grid.removeAllViews();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        int cardPadding = (int) (40 * getResources().getDisplayMetrics().density);
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
+        int availableWidth = screenWidth - cardPadding - (int) (32 * getResources().getDisplayMetrics().density);
+        int margin = (int) (2 * getResources().getDisplayMetrics().density);
+        int size = (availableWidth - (margin * 2 * 12)) / 12;
+        com.google.firebase.firestore.FirebaseFirestore.getInstance()
+            .collection("users").document(currentUserId).collection("medicationAdherence")
+            .get().addOnSuccessListener(querySnapshot -> {
+                java.util.Map<String, Integer> dailyData = new java.util.HashMap<>();
+                for (com.google.firebase.firestore.QueryDocumentSnapshot doc : querySnapshot) {
+                    String date = doc.getId(); Long taken = doc.getLong("taken");
+                    if (taken != null && taken > 0) dailyData.put(date, taken.intValue());
+                }
+                for (int col = 0; col < 12; col++) {
+                    for (int row = 0; row < 7; row++) {
+                        int dayOffset = (col * 7) + row;
+                        Calendar dayCal = (Calendar) cal.clone(); dayCal.add(Calendar.DAY_OF_YEAR, -(83 - dayOffset));
+                        String dateKey = sdf.format(dayCal.getTime());
+                        View square = new View(this);
+                        android.widget.GridLayout.LayoutParams params = new android.widget.GridLayout.LayoutParams();
+                        params.width = size; params.height = size; params.setMargins(margin, margin, margin, margin);
+                        params.rowSpec = android.widget.GridLayout.spec(row); params.columnSpec = android.widget.GridLayout.spec(col, 1f);
+                        square.setLayoutParams(params);
+                        Integer takenCount = dailyData.get(dateKey);
+                        square.setBackgroundColor((takenCount != null && takenCount > 0) ? (takenCount >= 3 ? 0xFF87CEEB : 0xFFA5D6A7) : 0xFF008080);
+                        grid.addView(square);
+                    }
+                }
+            });
     }
+
+    @Override protected void onDestroy() { super.onDestroy(); if (executorService != null && !executorService.isShutdown()) executorService.shutdown(); }
 
     private long getFileSize(Uri uri) {
         long size = 0;

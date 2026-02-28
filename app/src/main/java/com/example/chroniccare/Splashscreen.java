@@ -30,10 +30,14 @@ public class Splashscreen extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("ChronicCarePrefs", MODE_PRIVATE);
 
         new Handler().postDelayed(() -> {
+            boolean languageSelected = sharedPreferences.getBoolean("language_selected", false);
             boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
             
             Intent intent;
-            if (isLoggedIn) {
+            if (!languageSelected) {
+                // First time user - show language selection
+                intent = new Intent(Splashscreen.this, LanguageSelectionActivity.class);
+            } else if (isLoggedIn) {
                 intent = new Intent(Splashscreen.this, HomeActivity.class);
             } else {
                 intent = new Intent(Splashscreen.this, LogInPage.class);

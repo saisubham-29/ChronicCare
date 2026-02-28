@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+
 import com.example.chroniccare.database.AppDatabase;
 import com.example.chroniccare.database.User;
 import com.example.chroniccare.model.Article;
@@ -27,6 +29,7 @@ public class FitHubActivity extends BottomNavActivity {
     
     private CircleImageView profileImage;
     private LinearLayout articlesContainer;
+    private CardView logFoodCard, logExerciseCard;
     private AppDatabase db;
     
     @Override
@@ -35,9 +38,19 @@ public class FitHubActivity extends BottomNavActivity {
         
         profileImage = findViewById(R.id.profile_image);
         articlesContainer = findViewById(R.id.articlesContainer);
+        logFoodCard = findViewById(R.id.logFoodCard);
+        logExerciseCard = findViewById(R.id.logExerciseCard);
         
         ProfileImageHelper.loadProfileImage(this, profileImage);
         profileImage.setOnClickListener(v -> ProfileImageHelper.handleProfileClick(this));
+        
+        if (logFoodCard != null) {
+            logFoodCard.setOnClickListener(v -> startActivity(new Intent(this, LogFood.class)));
+        }
+        
+        if (logExerciseCard != null) {
+            logExerciseCard.setOnClickListener(v -> startActivity(new Intent(this, LogExercise.class)));
+        }
         
         setupVideoClickListeners();
         

@@ -1,0 +1,122 @@
+<resources>
+    <string name="app_name">ChronicCare</string>
+    
+    <!-- Language Selection -->
+    <string name="select_language">ଆପଣଙ୍କ ଭାଷା ବାଛନ୍ତୁ</string>
+    <string name="select_language_subtitle">ଆପ୍ ପାଇଁ ଆପଣଙ୍କ ପସନ୍ଦର ଭାଷା ବାଛନ୍ତୁ</string>
+    <string name="language_english">English</string>
+    <string name="language_hindi">हिंदी (Hindi)</string>
+    <string name="language_bengali">বাংলা (Bengali)</string>
+    <string name="language_odia">ଓଡ଼ିଆ (Odia)</string>
+    <string name="continue_button">ଜାରି ରଖନ୍ତୁ</string>
+    
+    <!-- Login -->
+    <string name="login_skip">ଛାଡ଼ନ୍ତୁ</string>
+    <string name="login_welcome_back">ପୁନର୍ବାର ସ୍ୱାଗତ!</string>
+    <string name="login_signin_continue">ଜାରି ରଖିବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ!</string>
+    <string name="login_username_hint">ଉପଯୋଗକର୍ତ୍ତା ନାମ</string>
+    <string name="login_password_hint">ପାସୱାର୍ଡ</string>
+    <string name="login_button">ଲଗ୍ ଇନ୍</string>
+    <string name="login_forgot_password">ପାସୱାର୍ଡ ଭୁଲିଗଲେ?</string>
+    <string name="login_no_account">ଖାତା ନାହିଁ? </string>
+    <string name="login_signup">ସାଇନ୍ ଅପ୍ କରନ୍ତୁ</string>
+    <string name="login_welcome_back_toast">ପୁନର୍ବାର ସ୍ୱାଗତ!</string>
+
+    <!-- Home -->
+    <string name="home_greeting_morning">ସୁପ୍ରଭାତ,</string>
+    <string name="home_greeting_afternoon">ନମସ୍କାର,</string>
+    <string name="home_greeting_evening">ଶୁଭ ସନ୍ଧ୍ୟା,</string>
+    <string name="home_default_user_name">ଉପଯୋଗକର୍ତ୍ତା</string>
+    <string name="home_current_reading_label">ବର୍ତ୍ତମାନର ରିଡିଂ</string>
+    <string name="home_check_now">ବର୍ତ୍ତମାନ ଯାଞ୍ચ କରନ୍ତୁ</string>
+    <string name="home_next_medication_label">ପରବର୍ତ୍ତୀ ଔଷଧ</string>
+    <string name="home_take_now">ବର୍ତ୍ତମାନ ନିଅନ୍ତୁ</string>
+    <string name="home_quick_actions">ଶୀଘ୍ର କାର୍ଯ୍ୟ</string>
+    <string name="home_log_food">ଖାଦ୍ୟ ଲଗ୍ କରନ୍ତୁ</string>
+    <string name="home_log_exercise">ବ୍ୟାୟାମ ଲଗ୍ କରନ୍ତୁ</string>
+    <string name="home_view_reports">ରିପୋର୍ଟ ଦେଖନ୍ତୁ</string>
+    <string name="home_contact_doctor">ଡାକ୍ତରଙ୍କ ସହ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
+    <string name="home_todays_schedule">ଆଜିର କାର୍ଯ୍ୟସୂଚୀ</string>
+    <string name="home_health_insights">ସ୍ୱାସ୍ଥ୍ୟ ସୂଚନା</string>
+
+    <!-- Profile -->
+    <string name="profile_title">ଆପଣଙ୍କ ବିବରଣୀ</string>
+    <string name="profile_personal_info_title">ବ୍ୟକ୍ତିଗତ ସୂଚନା</string>
+    <string name="profile_phone_hint">ଫୋନ୍ ନମ୍ବର</string>
+    <string name="profile_dob_hint">ଜନ୍ମ ତାରିଖ</string>
+    <string name="profile_gender_hint">ଲିଙ୍ഗ</string>
+    <string name="profile_blood_group_hint">ରକ୍ତ ଗୋଷ୍ଠୀ</string>
+    <string name="profile_medical_info_title">ଚିକିତ୍ସା ସୂଚନା</string>
+    <string name="profile_height_hint">ଉଚ୍ଚତା (cm)</string>
+    <string name="profile_weight_hint">ଓଜନ (kg)</string>
+    <string name="profile_conditions_hint">ଦୀର୍ଘସ୍ଥାୟୀ ରୋଗ</string>
+    <string name="profile_allergies_hint">ଆଲର୍ଜି</string>
+    <string name="profile_emergency_contact_title">ଜରୁରୀ ଯୋଗାଯୋଗ</string>
+    <string name="profile_save">ପ୍ରୋଫାଇଲ୍ ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
+    <string name="profile_logout">ଲଗ୍ ଆଉଟ୍</string>
+    <string name="profile_change_language">ଭାଷା ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="profile_saved_success_toast">ପ୍ରୋଫାଇଲ୍ ସଫଳତାର ସହ ସଂରକ୍ଷିତ ହୋଇଛି</string>
+    <string name="profile_language_changed_toast">ଭାଷା ପରିବର୍ତ୍ତିତ ହୋଇଛି। ପ୍ରୟୋଗ କରିବାକୁ ଆପ୍ ପୁନଃ ଆରମ୍ଭ କରନ୍ତୁ।</string>
+
+    <!-- Signup -->
+    <string name="signup_title">ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="signup_username_hint">ଉପଯୋଗକର୍ତ୍ତା ନାମ</string>
+    <string name="signup_email_hint">ଇମେଲ୍</string>
+    <string name="signup_password_hint">ପାସୱାର୍ଡ</string>
+    <string name="signup_button">ସାଇନ୍ ଅପ୍ କରନ୍ତୁ</string>
+
+    <!-- Medications -->
+    <string name="add_med_title">ଔଷଧ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="add_med_name_hint">ଔଷଧର ନାମ</string>
+    <string name="add_med_dose_hint">ଡୋଜ୍</string>
+    <string name="medications_title">ଔଷଧ</string>
+
+    <!-- Monitor -->
+    <string name="monitor_title">ରକ୍ତ ଶର୍କରା ମନିଟର</string>
+    <string name="monitor_save">ରିଡିଂ ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
+
+    <!-- FitHub -->
+    <string name="fithub_title">FitHub</string>
+    <string name="fithub_subtitle">ଫିଟ୍ ରୁହନ୍ତୁ, ଖୁସି ରୁହନ୍ତୁ।</string>
+
+    <!-- Dr.GPT -->
+    <string name="drgpt_title">Dr.GPT</string>
+
+    <!-- Common -->
+    <string name="common_ok">ଠିକ୍ ଅଛି</string>
+    <string name="common_cancel">ବାତିଲ୍ କରନ୍ତୁ</string>
+    <string name="common_yes">ହଁ</string>
+    <string name="common_no">ନା</string>
+    <string name="common_save">ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
+    <string name="common_close">ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="common_loading">ଲୋଡ୍ ହେଉଛି...</string>
+    <string name="home_default_reading_value">128</string>
+    <string name="home_last_checked_prefix">ଶେଷ ଯାଞ୍ଚ </string>
+    <string name="home_reading_logged">ରିଡିଂ ଲଗ୍ ହୋଇଛି</string>
+    <string name="home_mark_medications_prompt">ତଳୁ ଔଷଧ ଚିହ୍ନଟ କରନ୍ତୁ</string>
+    <string name="home_no_medications_selected">କୌଣସି ଔଷଧ ଚୟନ ହୋଇନାହିଁ</string>
+    <string name="home_medications_deleted">ଔଷଧ ବିଲୋପ ହୋଇଛି</string>
+    <string name="add_med_failed_load_image">ଚିତ୍ର ଲୋଡ୍ ବିଫଳ</string>
+    <string name="add_med_please_login">ଦୟାକରି ପ୍ରଥମେ ଲଗଇନ୍ କରନ୍ତୁ</string>
+    <string name="add_med_please_fill_fields">ଦୟାକରି ସମସ୍ତ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
+    <string name="add_med_select_one_time">ଅତିକମରେ ଗୋଟିଏ ସମୟ ଚୟନ କରନ୍ତୁ</string>
+    <string name="monitor_voice_coming_soon">ଭଏସ୍ ଇନପୁଟ୍ ଶୀଘ୍ର ଆସୁଛି!</string>
+    <string name="monitor_please_select_type">ଦୟାକରି ରିଡିଂ ପ୍ରକାର ଚୟନ କରନ୍ତୁ</string>
+    <string name="monitor_please_enter_unit">ଦୟାକରି %1$s ପ୍ରବେଶ କରନ୍ତୁ</string>
+    <string name="monitor_please_select_datetime">ଦୟାକରି ତାରିଖ ଏବଂ ସମୟ ଚୟନ କରନ୍ତୁ</string>
+    <string name="error_generic">ତ୍ରୁଟି: %1$s</string>
+    <string name="unable_to_open_link">ଲିଙ୍କ୍ ଖୋଲିବାରେ ଅସମର୍ଥ</string>
+    <string name="daily_workout_series">ଦୈନିକ ବ୍ୟାୟାମ ଶୃଙ୍ଖଳା</string>
+    <string name="playlist">ପ୍ଲେଲିଷ୍ଟ</string>
+    <string name="fithub_breakfast">ପ୍ରାତଃରାଶ</string>
+    <string name="fithub_lunch">ମଧ୍ୟାହ୍ନ ଭୋଜନ</string>
+    <string name="fithub_dinner">ରାତ୍ରୀ ଭୋଜନ</string>
+    <string name="medications_today_doses">ଆଜିର ଔଷଧ</string>
+    <string name="medications_upcoming">ଆଗାମୀ</string>
+    <string name="medications_missed">ଛାଡ଼ିଦିଆଯାଇଛି</string>
+    <string name="add_med_morning">ସକାଳ</string>
+    <string name="add_med_afternoon">ଅପରାହ୍ନ</string>
+    <string name="add_med_night">ରାତି</string>
+    <string name="add_med_before_food">B/F</string>
+    <string name="add_med_after_food">A/F</string>
+</resources>

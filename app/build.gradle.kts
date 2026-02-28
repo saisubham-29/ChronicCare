@@ -69,6 +69,15 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
+    // ML Kit Text Recognition for prescription scanning
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+
+    // CameraX for image capture
+    implementation("androidx.camera:camera-core:1.3.0")
+    implementation("androidx.camera:camera-camera2:1.3.0")
+    implementation("androidx.camera:camera-lifecycle:1.3.0")
+    implementation("androidx.camera:camera-view:1.3.0")
+
     // Optional: Room testing utilities
     testImplementation("androidx.room:room-testing:$room_version")
 

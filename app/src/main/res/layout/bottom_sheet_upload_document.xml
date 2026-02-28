@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Medical Document"
+        android:text="@string/profile_upload_document"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -18,7 +18,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Document Type"
+        android:hint="@string/profile_document_type_hint"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
         <AutoCompleteTextView
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Document Name"
+        android:hint="@string/profile_document_name_hint"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Select File"
+        android:text="@string/profile_select_file"
         app:icon="@android:drawable/ic_menu_upload"
         app:cornerRadius="8dp"
         style="@style/Widget.Material3.Button.OutlinedButton" />
@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="No file selected"
+        android:text="@string/profile_no_file_selected"
         android:textSize="14sp"
         android:textColor="#666666"
         android:gravity="center" />
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
-        android:text="Save Document"
+        android:text="@string/profile_save_document"
         app:icon="@android:drawable/ic_menu_save"
         app:cornerRadius="28dp"
         style="@style/Widget.Material3.Button" />

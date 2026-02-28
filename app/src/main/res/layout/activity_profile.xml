@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
             app:navigationIconTint="#FFFFFF"
-            app:title="Your Details"
+            app:title="@string/profile_title"
             app:titleCentered="true"
             app:titleTextColor="#FFFFFF" />
 
@@ -61,6 +61,9 @@
                 android:layout_marginTop="-50dp"
                 android:translationX="65dp"
                 android:src="@drawable/edit" />
+                 />
+
+            <TextView
 
             <TextView
                 android:id="@+id/tvProfileName"
@@ -69,6 +72,9 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="60dp"
                 android:text="John Doe"
+                android:text="@string/profile_name_placeholder"
+                         android:layout_gravity="center"
+                android:textSize="25sp"
                 android:textColor="#0B0A0A"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -353,6 +359,97 @@
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
+                android:layout_marginBottom="10dp"
+                android:text="@string/profile_email_placeholder"
+                android:textSize="18sp"
+                android:textColor="@color/black" />
+
+            <!-- Medication Consistency Tracker -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Medication Consistency"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Last 84 days"
+                        android:textSize="12sp"
+                        android:textColor="#666666"
+                        android:layout_marginBottom="16dp" />
+
+                    <GridLayout
+                        android:id="@+id/consistencyGrid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="12"
+                        android:rowCount="7"
+                        android:alignmentMode="alignBounds"
+                        android:useDefaultMargins="false" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="end"
+                        android:layout_marginTop="12dp">
+
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:background="#000000"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="None"
+                            android:textSize="10sp"
+                            android:layout_marginEnd="12dp" />
+
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:background="#A5D6A7"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Partial"
+                            android:textSize="10sp"
+                            android:layout_marginEnd="12dp" />
+
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:background="#2E7D32"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -377,6 +474,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:text="Personal Information"
+                        android:text="@string/profile_personal_info_title"
+                        android:textSize="18sp"
                         android:textColor="#000000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -397,7 +496,7 @@
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone Number"
+                        android:hint="@string/profile_phone_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_call"
                         app:startIconTint="#26A69A">
 
@@ -413,7 +512,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Date of Birth"
+                        android:hint="@string/profile_dob_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
                         app:startIconTint="#26A69A">
 
@@ -430,7 +529,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Gender"
+                        android:hint="@string/profile_gender_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_sort_by_size"
                         app:startIconTint="#26A69A">
 
@@ -446,7 +545,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Blood Group"
+                        android:hint="@string/profile_blood_group_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_add"
                         app:startIconTint="#E53935">
 
@@ -481,6 +580,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:text="Medical Information"
+                        android:text="@string/profile_medical_info_title"
+                        android:textSize="18sp"
                         android:textColor="#000000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -510,6 +611,8 @@
                             android:layout_marginEnd="8dp"
                             android:layout_weight="1"
                             android:hint="Height (cm)">
+                            android:hint="@string/profile_height_hint"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etHeight"
@@ -525,6 +628,8 @@
                             android:layout_marginStart="8dp"
                             android:layout_weight="1"
                             android:hint="Weight (kg)">
+                            android:hint="@string/profile_weight_hint"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etWeight"
@@ -539,7 +644,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Chronic Conditions"
+                        android:hint="@string/profile_conditions_hint"
                         app:counterEnabled="true"
                         app:counterMaxLength="200">
 
@@ -557,7 +662,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Allergies"
+                        android:hint="@string/profile_allergies_hint"
                         app:counterEnabled="true"
                         app:counterMaxLength="200">
 
@@ -577,6 +682,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Upload Medical Document"
+                        android:text="@string/profile_upload_document"
+                        app:icon="@android:drawable/ic_menu_upload"
                         app:cornerRadius="8dp"
                         app:icon="@android:drawable/ic_menu_upload" />
 
@@ -587,6 +694,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="View All Documents"
+                        android:text="@string/profile_view_documents"
+                        app:icon="@android:drawable/ic_menu_view"
                         app:cornerRadius="8dp"
                         app:icon="@android:drawable/ic_menu_view" />
 
@@ -629,6 +738,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Emergency Contact"
+                            android:text="@string/profile_emergency_contact_title"
+                            android:textSize="18sp"
                             android:textColor="#E53935"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -648,7 +759,7 @@
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Contact Name"
+                        android:hint="@string/profile_emergency_name_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_sort_by_size"
                         app:startIconTint="#E53935">
 
@@ -664,7 +775,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Contact Phone"
+                        android:hint="@string/profile_emergency_phone_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_call"
                         app:startIconTint="#E53935">
 
@@ -681,6 +792,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="Relationship">
+                        android:hint="@string/profile_emergency_relation_hint"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEmergencyRelation"
@@ -705,7 +818,7 @@
                     style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:text="Save Profile"
+                    android:text="@string/profile_save"
                     android:textSize="16sp"
                     app:cornerRadius="28dp"
                     app:icon="@android:drawable/ic_menu_save" />
@@ -716,10 +829,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="12dp"
-                    android:text="Logout"
+                    android:text="@string/profile_logout"
                     android:textSize="16sp"
                     app:cornerRadius="28dp"
                     app:icon="@android:drawable/ic_lock_power_off" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChangeLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/profile_change_language"
+                    android:textSize="16sp"
+                    app:icon="@android:drawable/ic_menu_sort_alphabetically"
+                    app:cornerRadius="28dp"
+                    style="@style/Widget.Material3.Button.TonalButton" />
 
             </LinearLayout>
 

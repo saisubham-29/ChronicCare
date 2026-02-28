@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dr_gpt_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
-    android:fitsSystemWindows="true"
+    android:paddingTop="48dp"
+    android:paddingBottom="8dp"
     android:background="#FFFFFF">
 
     <RelativeLayout
@@ -132,7 +132,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:isScrollContainer="true">
 
         <LinearLayout
             android:id="@+id/chatContainer"
@@ -150,10 +151,13 @@
         style="?android:attr/progressBarStyleLarge" />
 
     <LinearLayout
+        android:id="@+id/inputArea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:paddingBottom="4dp"
+        android:background="#FFFFFF">
 
         <EditText
             android:id="@+id/messageInput"
@@ -163,7 +167,9 @@
             android:hint="Ask Dr.GPT"
             android:background="@drawable/input_background"
             android:padding="12dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="#000000"
+            android:textColorHint="#999999" />
 
         <ImageView
             android:id="@+id/sendButton"

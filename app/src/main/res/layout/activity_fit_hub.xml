@@ -44,7 +44,7 @@
             app:civ_border_width="1dp"
             app:civ_border_color="#FF000000" />
 
-        <!-- Action Cards Section (Log Food/Exercise) - Unchanged -->
+        <!-- Action Cards Section (Log Food/Exercise) -->
         <LinearLayout
             android:id="@+id/FithubActions"
             android:layout_width="match_parent"
@@ -61,17 +61,20 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="0">
+                android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/logFoodCard"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="#f7f7f7"
                     app:cardCornerRadius="8dp"
-                    app:cardElevation="1dp">
+                    app:cardElevation="1dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -100,13 +103,17 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/logExerciseCard"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="#f7f7f7"
                     app:cardCornerRadius="8dp"
-                    app:cardElevation="1dp">
+                    app:cardElevation="1dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -146,7 +153,7 @@
             android:layout_below="@id/FithubActions"
             android:textSize="28sp" />
 
-        <!-- Meal Cards Section (Horizontal ScrollView with new detailed card replica) -->
+        <!-- Meal Cards Section -->
         <HorizontalScrollView
             android:id="@+id/meal_cards_scroll"
             android:layout_width="match_parent"
@@ -160,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- REPLICA MEAL CARD 1: Breakfast (Oatmeal with Berries) -->
+                <!-- Breakfast Card -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -174,7 +181,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <!-- Image -->
                         <ImageView
                             android:id="@+id/meal_image_1"
                             android:layout_width="match_parent"
@@ -182,14 +188,12 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_food1" />
 
-                        <!-- Content Area -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:padding="12dp">
 
-                            <!-- Meal Time -->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -197,7 +201,6 @@
                                 android:textSize="14sp"
                                 android:textColor="#808080" />
 
-                            <!-- Meal Name -->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -207,7 +210,6 @@
                                 android:textColor="#333333"
                                 android:layout_marginBottom="6dp" />
 
-                            <!-- Nutrition Info -->
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -237,7 +239,6 @@
                                     android:textColor="#555555" />
                             </LinearLayout>
 
-                            <!-- Tags -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -270,7 +271,6 @@
                                     android:textColor="#555555" />
                             </LinearLayout>
 
-                            <!-- Button -->
                             <Button
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -283,7 +283,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- REPLICA MEAL CARD 2: Lunch -->
+                <!-- Lunch Card -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -386,7 +386,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- REPLICA MEAL CARD 3: Dinner -->
+                <!-- Dinner Card -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -504,7 +504,7 @@
             android:textSize="22sp"
             android:fontFamily="sans-serif" />
 
-        <!-- Quick Workouts Videos (Horizontal ScrollView) -->
+        <!-- Quick Workouts Videos -->
         <HorizontalScrollView
             android:id="@+id/video_scroll"
             android:layout_width="match_parent"
@@ -519,34 +519,15 @@
                 android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
-                <!-- Video 1: MadFit - No Jumping Cardio -->
                 <include layout="@layout/item_video_card" android:id="@+id/video1" />
-
-                <!-- Video 2: Alex Crockford - Daily Workout -->
                 <include layout="@layout/item_video_card" android:id="@+id/video2" />
-
-                <!-- Video 3: Oliver Sjostrom - HIIT -->
                 <include layout="@layout/item_video_card" android:id="@+id/video3" />
-
-                <!-- Video 4: BullyJuice - Full Body -->
                 <include layout="@layout/item_video_card" android:id="@+id/video4" />
-
-                <!-- Video 5: MadFit - Beginner Full Body -->
                 <include layout="@layout/item_video_card" android:id="@+id/video5" />
-
-                <!-- Video 6: MadFit - AB Workout -->
                 <include layout="@layout/item_video_card" android:id="@+id/video6" />
-
-                <!-- Video 7: Oliver Sjostrom - Cardio HIIT -->
                 <include layout="@layout/item_video_card" android:id="@+id/video7" />
-
-                <!-- Video 8: Alex Crockford - Playlist -->
                 <include layout="@layout/item_video_card" android:id="@+id/video8" />
-
-                <!-- Video 9: General Daily Workout -->
                 <include layout="@layout/item_video_card" android:id="@+id/video9" />
-
-                <!-- Video 10: Lower Body Stretch -->
                 <include layout="@layout/item_video_card" android:id="@+id/video10" />
 
             </LinearLayout>

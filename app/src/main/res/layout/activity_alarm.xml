@@ -16,6 +16,7 @@
 
         <!-- Bell Icon -->
         <ImageView
+            android:id="@+id/ivBell"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/ic_bell2"
@@ -75,6 +76,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <!-- Color Overlay for swipe feedback -->
+                <View
+                    android:id="@+id/swipeOverlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0" />
+
                 <!-- Left Action (Snooze) -->
                 <LinearLayout
                     android:id="@+id/leftAction"
@@ -121,6 +129,7 @@
                         android:layout_marginEnd="8dp" />
 
                     <ImageView
+                        android:id="@+id/ivCheck"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_checked"
@@ -132,18 +141,17 @@
                     android:id="@+id/swipeButton"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
+                    android:layout_centerInParent="true"
                     app:cardCornerRadius="32dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="#26A69A">
 
                     <ImageView
+                        android:id="@+id/ivSwipeArrow"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_gravity="center"
-                        android:src="@android:drawable/ic_menu_send"
-                        android:rotation="180"
+                        android:src="@android:drawable/ic_menu_sort_by_size"
                         android:tint="#FFFFFF" />
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>

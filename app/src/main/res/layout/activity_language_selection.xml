@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="32dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_language"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_language_subtitle"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"/>
+
+    <RadioGroup
+        android:id="@+id/languageGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp">
+
+        <RadioButton
+            android:id="@+id/radioEnglish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_english"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/radioHindi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_hindi"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/radioBengali"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_bengali"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/radioOdia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_odia"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/radioTamil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_tamil"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/radioTelugu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_telugu"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/radioKannada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_kannada"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/radioMalayalam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_malayalam"
+            android:textSize="16sp"
+            android:padding="12dp"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/continue_button"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rectangle_button"
+        android:padding="16dp"/>
+
+</LinearLayout>

@@ -88,6 +88,16 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                                 String uid = user.getUid();
 
+                                Map<String, Object> userDoc = new HashMap<>();
+                                userDoc.put("userId", uid);
+                                userDoc.put("username", username);
+                                userDoc.put("usernameKey", usernameKey);
+                                userDoc.put("email", email);
+                                userDoc.put("createdAt", System.currentTimeMillis());
+
+                                firestore.collection("users").document(uid)
+                                        .set(userDoc);
+
                                 Map<String, Object> personalInfo = new HashMap<>();
                                 personalInfo.put("name", username);
                                 personalInfo.put("email", email);
@@ -96,15 +106,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 firestore.collection("users").document(uid)
                                         .collection("profile").document("personalInfo")
                                         .set(personalInfo);
-
-                                Map<String, Object> usernameMap = new HashMap<>();
-                                usernameMap.put("userId", uid);
-                                usernameMap.put("email", email);
-                                usernameMap.put("username", username);
-                                usernameMap.put("createdAt", System.currentTimeMillis());
-
-                                firestore.collection("usernames").document(usernameKey)
-                                        .set(usernameMap);
 
                                 saveLoginState(uid, username, email);
                                 Toast.makeText(this, "Account created", Toast.LENGTH_SHORT).show();

@@ -1,0 +1,215 @@
+<resources>
+    <string name="app_name">ChronicCare</string>
+
+    <!-- భాష ఎంపిక -->
+    <string name="select_language">మీ భాషను ఎంచుకోండి</string>
+    <string name="select_language_subtitle">యాప్ కోసం మీ ఇష్టమైన భాషను ఎంచుకోండి</string>
+    <string name="language_english">English</string>
+    <string name="language_hindi">हिंदी (Hindi)</string>
+    <string name="language_bengali">বাংলা (Bengali)</string>
+    <string name="language_odia">ଓଡ଼ିଆ (Odia)</string>
+    <string name="language_tamil">தமிழ் (Tamil)</string>
+    <string name="language_telugu">తెలుగు (Telugu)</string>
+    <string name="language_kannada">ಕನ್ನಡ (Kannada)</string>
+    <string name="language_malayalam">മലയാളം (Malayalam)</string>
+    <string name="continue_button">కొనసాగించు</string>
+
+    <!-- లాగిన్ -->
+    <string name="login_skip">స్కిప్</string>
+    <string name="login_welcome_back">తిరిగి స్వాగతం!</string>
+    <string name="login_signin_continue">కొనసాగడానికి సైన్ ఇన్ చేయండి!</string>
+    <string name="login_language_hint">భాష</string>
+    <string name="login_username_hint">యూజర్ నేమ్</string>
+    <string name="login_username_invalid">యూజర్ నేమ్ సరైనది కాదు</string>
+    <string name="login_password_hint">పాస్ వర్డ్</string>
+    <string name="login_password_invalid">పాస్ వర్డ్ సరైనది కాదు</string>
+    <string name="login_or">లేదా</string>
+    <string name="login_google">గూగుల్ తో లాగిన్ అవ్వండి</string>
+    <string name="login_instagram">ఇన్ స్టాగ్రామ్ తో లాగిన్ అవ్వండి</string>
+    <string name="login_button">లాగిన్</string>
+    <string name="login_forgot_password">పాస్ వర్డ్ మర్చిపోయారా?</string>
+    <string name="login_no_account">ఖాతా లేదా? </string>
+    <string name="login_signup">సైన్ అప్</string>
+    <string name="login_welcome_user">స్వాగతం %1$s</string>
+    <string name="login_signin_failed_code">సైన్-ఇన్ విఫలమైంది: %1$d</string>
+    <string name="login_enter_credentials">యూజర్ నేమ్ మరియు పాస్ వర్డ్ నమోదు చేయండి</string>
+    <string name="login_username_not_found">యూజర్ నేమ్ కనుగొనబడలేదు</string>
+    <string name="login_email_not_found">యూజర్ నేమ్ కోసం ఈమెయిల్ కనుగొనబడలేదు</string>
+    <string name="login_failed_try_again">లాగిన్ విఫలమైంది. మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="login_welcome_back_toast">తిరిగి స్వాగతం!</string>
+    <string name="login_signin_failed_message">సైన్-ఇన్ విఫలమైంది: %1$s</string>
+
+    <!-- హోమ్ స్క్రీన్ -->
+    <string name="home_greeting_morning">శుభోదయం,</string>
+    <string name="home_greeting_afternoon">శుభ మధ్యాహ్నం,</string>
+    <string name="home_greeting_evening">శుభ సాయంత్రం,</string>
+    <string name="home_default_user_name">యూజర్</string>
+    <string name="home_name_placeholder">అంజలి</string>
+    <string name="home_date_placeholder">శుక్రవారం, ఆగస్టు 15</string>
+    <string name="home_current_reading_label">ప్రస్తుత రీడింగ్</string>
+    <string name="home_default_reading">128</string>
+    <string name="home_reading_unit">mg/dL</string>
+    <string name="home_last_checked_placeholder">చివరిగా 8:30pm కి తనిఖీ చేయబడింది</string>
+    <string name="home_last_checked_at">చివరిగా %1$s కి తనిఖీ చేయబడింది</string>
+    <string name="home_reading_status_in_range">పరిధిలో ఉంది</string>
+    <string name="home_check_now">ఇప్పుడు తనిఖీ చేయండి</string>
+    <string name="home_next_medication_label">తదుపరి మందులు</string>
+    <string name="home_medication_name_placeholder">Empagliflozin</string>
+    <string name="home_medication_dose_placeholder">10mg</string>
+    <string name="home_due_placeholder">15 నిమిషాల్లో -</string>
+    <string name="home_due_now">ఇప్పుడే వేసుకోవాలి</string>
+    <string name="home_due_with_separator">%1$s -</string>
+    <string name="home_food_instruction_placeholder">A/F</string>
+    <string name="home_take_now">ఇప్పుడే తీసుకోండి</string>
+    <string name="home_quick_actions">త్వరిత చర్యలు</string>
+    <string name="home_log_food">ఫుడ్ లాగ్</string>
+    <string name="home_log_exercise">వ్యాయామం లాగ్</string>
+    <string name="home_view_reports">రిపోర్టులు చూడండి</string>
+    <string name="home_contact_doctor">డాక్టర్ ని సంప్రదించండి</string>
+    <string name="home_todays_schedule">నేటి షెడ్యూల్</string>
+    <string name="home_add">యాడ్</string>
+    <string name="home_health_insights">ఆరోగ్య సమాచారం</string>
+    <string name="home_tip_of_day">నేటి చిట్కా</string>
+    <string name="home_tip_of_day_body">హైడ్రేటెడ్ గా ఉండండి! రోజుకు 8 గ్లాసుల నీరు త్రాగండి.</string>
+    <string name="home_meal_of_day">నేటి ఆహారం</string>
+    <string name="home_meal_of_day_body">సుభంగా జీర్ణమయ్యే ఆరోగ్యకరమైన ఆహారం తీసుకోండి.</string>
+    <string name="home_schedule_time_placeholder">8:30 AM</string>
+    <string name="home_schedule_title_placeholder">ఉదయపు మందులు</string>
+    <string name="home_permission_title">అనుమతి అవసరం</string>
+    <string name="home_permission_message">ఫోన్ లాక్ అయి ఉన్నప్పుడు అలారం చూపించడానికి ChronicCare కి అనుమతి అవసరం.</string>
+    <string name="home_permission_grant">అనుమతి ఇవ్వండి</string>
+    <string name="home_permission_later">తర్వాత</string>
+    <string name="home_reading_logged_toast">రీడింగ్ లాగ్ చేయబడింది</string>
+    <string name="home_mark_medications_toast">షెడ్యూల్ నుండి మందులను మార్క్ చేయండి</string>
+    <string name="home_all_alarms_stopped_toast">అన్ని అలారాలు ఆపబడ్డాయి</string>
+    <string name="home_no_medications">మందులు లేవు</string>
+    <string name="home_no_upcoming">రాబోయే మందులు లేవు</string>
+    <string name="home_error_loading">లోడింగ్ లో లోపం</string>
+    <string name="home_default_medication">మందులు</string>
+    <string name="home_med_unmarked_toast">మందులు అన్ మార్క్ చేయబడ్డాయి</string>
+    <string name="home_med_update_error_toast">మందుల అప్ డేట్ లో లోపం</string>
+    <string name="home_med_taken_toast">మందులు తీసుకున్నారు</string>
+
+    <!-- ప్రొఫైల్ -->
+    <string name="profile_title">మీ వివరాలు</string>
+    <string name="profile_name_placeholder">జాన్ డో</string>
+    <string name="profile_email_placeholder">user@email.com</string>
+    <string name="profile_personal_info_title">వ్యక్తిగత సమాచారం</string>
+    <string name="profile_phone_hint">ఫోన్ నంబర్</string>
+    <string name="profile_dob_hint">పుట్టిన తేదీ</string>
+    <string name="profile_gender_hint">లింగం</string>
+    <string name="profile_blood_group_hint">రక్త వర్గం</string>
+    <string name="profile_medical_info_title">వైద్య సమాచారం</string>
+    <string name="profile_height_hint">ఎత్తు (cm)</string>
+    <string name="profile_weight_hint">బరువు (kg)</string>
+    <string name="profile_conditions_hint">దీర్ఘకాలిక వ్యాధులు</string>
+    <string name="profile_allergies_hint">అలర్జీలు</string>
+    <string name="profile_upload_document">వైద్య పత్రాన్ని అప్ లోడ్ చేయండి</string>
+    <string name="profile_view_documents">అన్ని పత్రాలను చూడండి</string>
+    <string name="profile_emergency_contact_title">అత్యవసర సంప్రదింపు</string>
+    <string name="profile_emergency_name_hint">సంప్రదించవలసిన వ్యక్తి పేరు</string>
+    <string name="profile_emergency_phone_hint">సంప్రదించవలసిన ఫోన్ నంబర్</string>
+    <string name="profile_emergency_relation_hint">సంబంధం</string>
+    <string name="profile_save">ప్రొఫైల్ సేవ్ చేయండి</string>
+    <string name="profile_logout">లాగ్ అవుట్</string>
+    <string name="profile_change_language">భాషను మార్చండి</string>
+    <string name="profile_saved_success_toast">ప్రొఫైల్ విజయవంతంగా సేవ్ చేయబడింది</string>
+    <string name="profile_save_failed_toast">ప్రొఫైల్ సేవ్ చేయడం విఫలమైంది</string>
+    <string name="profile_logout_success_toast">విజయవంతంగా లాగ్ అవుట్ అయ్యారు</string>
+    <string name="profile_language_changed_toast">భాష మార్చబడింది. అప్లై చేయడానికి యాప్ ను రీస్టార్ట్ చేయండి.</string>
+
+    <!-- సైన్ అప్ -->
+    <string name="signup_title">ఖాతాను సృష్టించండి</string>
+    <string name="signup_username_hint">యూజర్ నేమ్</string>
+    <string name="signup_email_hint">ఈమెయిల్</string>
+    <string name="signup_password_hint">పాస్ వర్డ్</string>
+    <string name="signup_confirm_password_hint">పాస్ వర్డ్ ను నిర్ధారించండి</string>
+    <string name="signup_button">సైన్ అప్</string>
+    <string name="signup_login_link">ఖాతా ఉందా? లాగిన్ అవ్వండి</string>
+    <string name="signup_fill_all_fields_toast">అన్ని ఫీల్డ్ లను పూరించండి</string>
+    <string name="signup_passwords_not_match_toast">పాస్ వర్డ్ లు సరిపోలలేదు</string>
+    <string name="signup_account_created_toast">ఖాతా సృష్టించబడింది</string>
+
+    <!-- మందులు -->
+    <string name="add_med_title">మందులను జోడించండి</string>
+    <string name="add_med_name_hint">మందు పేరు</string>
+    <string name="add_med_dose_hint">మోతాదు (ఉదా: 10mg)</string>
+    <string name="add_med_frequency_hint">ఫ్రీక్వెన్సీ</string>
+    <string name="add_med_times_label">సమయాలను ఎంచుకోండి</string>
+    <string name="add_med_food_instruction_hint">ఆహార సూచనలు</string>
+    <string name="add_med_reminders_set_toast">రిమైండర్లు సెట్ చేయబడ్డాయి!</string>
+
+    <!-- మానిటర్ -->
+    <string name="monitor_title">బ్లడ్ షుగర్ మానిటర్</string>
+    <string name="monitor_save">రీడింగ్ సేవ్ చేయండి</string>
+    <string name="monitor_reading_saved_toast">రీడింగ్ సేవ్ చేయబడింది!</string>
+    <string name="monitor_reading_type_hint">రీడింగ్ రకం</string>
+    <string name="monitor_value_hint">వాల్యూ</string>
+    <string name="monitor_date_time_hint">తేదీ మరియు సమయం</string>
+    <string name="monitor_notes_hint">నోట్స్ (ఐచ్ఛికం)</string>
+    <string name="monitor_fasting">ఫాస్టింగ్</string>
+    <string name="monitor_before_meal">భోజనానికి ముందు</string>
+    <string name="monitor_after_meal">భోజనం తర్వాత</string>
+    <string name="monitor_random">రాండమ్</string>
+
+    <!-- ఫిట్ హబ్ -->
+    <string name="fithub_title">FitHub</string>
+    <string name="fithub_subtitle">ఫిట్ గా ఉండండి, సంతోషంగా ఉండండి.</string>
+    <string name="fithub_log_food">ఆహారం నమోదు</string>
+    <string name="fithub_log_exercise">వ్యాయామం నమోదు</string>
+    <string name="fithub_meal_plan_title">నేటి ఆహార ప్రణాళిక</string>
+    <string name="fithub_breakfast">అల్పాహారం</string>
+    <string name="fithub_lunch">మధ్యాహ్న భోజనం</string>
+    <string name="fithub_dinner">రాత్రి భోజనం</string>
+    <string name="fithub_swap_meal">ఆహారాన్ని మార్చండి</string>
+    <string name="fithub_quick_workouts_title">త్వరిత వ్యాయామాలు</string>
+    <string name="fithub_recommended_title">మీ కోసం సూచించబడినవి</string>
+
+    <!-- Dr.GPT -->
+    <string name="drgpt_title">Dr.GPT</string>
+    <string name="drgpt_missed_dose">💊 మందులు మర్చిపోయారా</string>
+    <string name="drgpt_feeling_dizzy">😵 కళ్ళు తిరుగుతున్నాయా</string>
+    <string name="drgpt_high_sugar">📈 హై షుగర్</string>
+    <string name="drgpt_low_sugar">📉 లో షుగర్</string>
+    <string name="drgpt_feeling_tired">😴 అలసటగా ఉందా</string>
+
+    <!-- సాధారణం -->
+    <string name="common_ok">సరే</string>
+    <string name="common_cancel">రద్దు</string>
+    <string name="common_yes">అవును</string>
+    <string name="common_no">కాదు</string>
+    <string name="common_delete">తొలగించు</string>
+    <string name="common_save">సేవ్</string>
+    <string name="common_close">మూసివేయి</string>
+    <string name="common_loading">లోడ్ అవుతోంది...</string>
+    <string name="common_success">విజయం</string>
+    <string name="common_failed">విఫలం</string>
+    <string name="common_select">ఎంచుకోండి</string>
+    <string name="common_edit">సవరించండి</string>
+
+    <!-- ప్లూరల్స్ -->
+    <plurals name="home_due_days">
+        <item quantity="one">%1$d రోజులో</item>
+        <item quantity="other">%1$d రోజుల్లో</item>
+    </plurals>
+    <plurals name="home_due_hours">
+        <item quantity="one">%1$d గంటలో</item>
+        <item quantity="other">%1$d గంటల్లో</item>
+    </plurals>
+    <plurals name="home_due_minutes">
+        <item quantity="one">%1$d నిమిషంలో</item>
+        <item quantity="other">%1$d నిమిషాల్లో</item>
+    </plurals>
+
+    <!-- మందుల స్క్రీన్ -->
+    <string name="medications_title">మందులు</string>
+    <string name="medications_today_doses">నేటి మందులు</string>
+    <string name="medications_upcoming">రాబోయేవి</string>
+    <string name="medications_missed">మర్చిపోయినవి</string>
+    <string name="medications_stay_on_track">మీ రోజువారీ మందుల మోతాదును ట్రాక్ చేయండి</string>
+    <string name="add_med_morning">ఉదయం</string>
+    <string name="add_med_afternoon">మధ్యాహ్నం</string>
+    <string name="add_med_night">రాత్రి</string>
+    <string name="add_med_before_food">B/F (ఆహారానికి ముందు)</string>
+    <string name="add_med_after_food">A/F (ఆహారం తర్వాత)</string>
+</resources>

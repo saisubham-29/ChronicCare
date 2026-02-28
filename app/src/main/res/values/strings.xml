@@ -1,6 +1,442 @@
 <resources>
     <string name="app_name">ChronicCare</string>
     <string name="default_web_client_id">202062206794-1fq8obnm035tv8ts2fp9ptophte5mc8i.apps.googleusercontent.com</string>
+    <string name="login_skip">skip</string>
+    <string name="login_welcome_back">Welcome Back!</string>
+    <string name="login_signin_continue">Sign in to Continue!</string>
+    <string name="login_language_hint">Language</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_username_invalid">Username Not Valid</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_password_invalid">Passowrd Not Valid</string>
+    <string name="login_or">OR</string>
+    <string name="login_google">Log in with Google</string>
+    <string name="login_instagram">Log in with Instagram</string>
+    <string name="login_button">LOG IN</string>
+    <string name="login_forgot_password">Forgot password ?</string>
+    <string name="login_no_account">Don\'t have an account ? </string>
+    <string name="login_signup">Signup</string>
+    <string name="login_welcome_user">Welcome %1$s</string>
+    <string name="login_signin_failed_code">Sign-in failed: %1$d</string>
+    <string name="login_enter_credentials">Enter username and password</string>
+    <string name="login_username_not_found">Username not found</string>
+    <string name="login_email_not_found">Email not found for username</string>
+    <string name="login_failed_try_again">Login failed. Try again.</string>
+    <string name="login_welcome_back_toast">Welcome back!</string>
+    <string name="login_signin_failed_message">Sign-in failed: %1$s</string>
+
+    <string name="home_greeting_morning">Good Morning,</string>
+    <string name="home_greeting_afternoon">Good Afternoon,</string>
+    <string name="home_greeting_evening">Good Evening,</string>
+    <string name="home_default_user_name">User</string>
+    <string name="home_name_placeholder">Anjali</string>
+    <string name="home_date_placeholder">Friday, Aug 15</string>
+    <string name="home_current_reading_label">Current Reading</string>
+    <string name="home_default_reading">128</string>
+    <string name="home_reading_unit">mg/dL</string>
+    <string name="home_last_checked_placeholder">Last checked at 8:30pm</string>
+    <string name="home_last_checked_at">Last checked at %1$s</string>
+    <string name="home_reading_status_in_range">In Range</string>
+    <string name="home_check_now">Check Now</string>
+    <string name="home_next_medication_label">Next Medication</string>
+    <string name="home_medication_name_placeholder">Empagliflozin</string>
+    <string name="home_medication_dose_placeholder">10mg</string>
+    <string name="home_due_placeholder">Due In 15 Mins -</string>
+    <string name="home_due_now">Due Now</string>
+    <string name="home_due_with_separator">%1$s -</string>
+    <string name="home_food_instruction_placeholder">A/F</string>
+    <string name="home_take_now">Take Now</string>
+    <string name="home_quick_actions">Quick Actions</string>
+    <string name="home_log_food">Log  Food</string>
+    <string name="home_log_exercise">Log Exercise</string>
+    <string name="home_view_reports">View Reports</string>
+    <string name="home_contact_doctor">Contact Doctor</string>
+    <string name="home_todays_schedule">Today\'s Schedule</string>
+    <string name="home_add">Add</string>
+    <string name="home_health_insights">Health Insights</string>
+    <string name="home_tip_of_day">Tip of the Day</string>
+    <string name="home_tip_of_day_body">Stay hydrated! Aim for 8 glasses of water daily.</string>
+    <string name="home_meal_of_day">Meal of the Day</string>
+    <string name="home_meal_of_day_body">Eat a healthy diet for easy and quick digestion.</string>
+    <string name="home_schedule_time_placeholder">8:30 AM</string>
+    <string name="home_schedule_title_placeholder">Morning Medication</string>
+    <string name="home_permission_title">Permission Required</string>
+    <string name="home_permission_message">ChronicCare needs permission to show alarms when your phone is locked.\n\nThis ensures you never miss your medication reminders.</string>
+    <string name="home_permission_grant">Grant Permission</string>
+    <string name="home_permission_later">Later</string>
+    <string name="home_reading_logged_toast">Reading logged</string>
+    <string name="home_mark_medications_toast">Mark medications from schedule below</string>
+    <string name="home_all_alarms_stopped_toast">All alarms stopped</string>
+    <string name="home_no_medications">No medications</string>
+    <string name="home_no_upcoming">No upcoming</string>
+    <string name="home_error_loading">Error loading</string>
+    <string name="home_default_medication">Medication</string>
+    <string name="home_med_unmarked_toast">Medication unmarked</string>
+    <string name="home_med_update_error_toast">Error updating medication</string>
+    <string name="home_med_taken_toast">Medication taken</string>
+
+    <string name="profile_title">Your Details</string>
+    <string name="profile_name_placeholder">John Doe</string>
+    <string name="profile_email_placeholder">user@email.com</string>
+    <string name="profile_personal_info_title">Personal Information</string>
+    <string name="profile_phone_hint">Phone Number</string>
+    <string name="profile_dob_hint">Date of Birth</string>
+    <string name="profile_gender_hint">Gender</string>
+    <string name="profile_blood_group_hint">Blood Group</string>
+    <string name="profile_medical_info_title">Medical Information</string>
+    <string name="profile_height_hint">Height (cm)</string>
+    <string name="profile_weight_hint">Weight (kg)</string>
+    <string name="profile_conditions_hint">Chronic Conditions</string>
+    <string name="profile_allergies_hint">Allergies</string>
+    <string name="profile_upload_document">Upload Medical Document</string>
+    <string name="profile_view_documents">View All Documents</string>
+    <string name="profile_emergency_contact_title">Emergency Contact</string>
+    <string name="profile_emergency_name_hint">Contact Name</string>
+    <string name="profile_emergency_phone_hint">Contact Phone</string>
+    <string name="profile_emergency_relation_hint">Relationship</string>
+    <string name="profile_save">Save Profile</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_document_type_hint">Document Type</string>
+    <string name="profile_document_name_hint">Document Name</string>
+    <string name="profile_select_file">Select File</string>
+    <string name="profile_no_file_selected">No file selected</string>
+    <string name="profile_save_document">Save Document</string>
+    <string name="profile_default_user_name">User</string>
+    <string name="profile_default_document_name">Document</string>
+    <string name="profile_photo_updated_toast">Profile photo updated</string>
+    <string name="profile_saved_success_toast">Profile saved successfully</string>
+    <string name="profile_save_failed_toast">Failed to save profile</string>
+    <string name="profile_logout_success_toast">Logged out successfully</string>
+    <string name="profile_select_document_type_toast">Please select document type</string>
+    <string name="profile_enter_document_name_toast">Please enter document name</string>
+    <string name="profile_select_file_toast">Please select a file</string>
+    <string name="profile_selected_file_label">Selected: %1$s</string>
+    <string name="profile_uploading_to_cloud">Uploading to cloud...</string>
+    <string name="profile_document_uploaded_toast">%1$s uploaded to cloud successfully</string>
+    <string name="profile_save_document_failed_toast">Failed to save document</string>
+    <string name="profile_upload_failed_toast">Upload failed: %1$s</string>
+    <string name="profile_failed_upload_document_toast">Failed to upload document</string>
+    <string name="profile_share_personal_intro">Hello, Here is my Personal Info:\n\n</string>
+    <string name="profile_share_medical_intro">Hello, Here is my Medical Info:\n\n</string>
+    <string name="profile_share_emergency_intro">Hello, Here is my Emergency Contact Info:\n\n</string>
+    <string name="profile_share_name_label">Name: </string>
+    <string name="profile_share_phone_label">Phone: </string>
+    <string name="profile_share_dob_label">DOB: </string>
+    <string name="profile_share_gender_label">Gender: </string>
+    <string name="profile_share_blood_group_label">Blood Group: </string>
+    <string name="profile_share_height_label">Height: </string>
+    <string name="profile_share_weight_label">Weight: </string>
+    <string name="profile_share_conditions_label">Chronic Conditions: </string>
+    <string name="profile_share_allergies_label">Allergies: </string>
+    <string name="profile_share_contact_name_label">Contact Name: </string>
+    <string name="profile_share_contact_phone_label">Contact Phone: </string>
+    <string name="profile_share_relation_label">Relationship: </string>
+    <string name="profile_share_height_suffix"> cm</string>
+    <string name="profile_share_weight_suffix"> kg</string>
+    <string name="profile_share_chooser_title">Share via</string>
+
+    <string name="signup_title">Create Account</string>
+    <string name="signup_username_hint">Username</string>
+    <string name="signup_email_hint">Email</string>
+    <string name="signup_password_hint">Password</string>
+    <string name="signup_confirm_password_hint">Confirm Password</string>
+    <string name="signup_button">SIGN UP</string>
+    <string name="signup_login_link">Already have an account? Log in</string>
+    <string name="signup_fill_all_fields_toast">Fill all fields</string>
+    <string name="signup_passwords_not_match_toast">Passwords do not match</string>
+    <string name="signup_password_min_length_toast">Password must be at least 6 characters</string>
+    <string name="signup_username_taken_toast">Username already taken</string>
+    <string name="signup_failed_toast">Signup failed</string>
+    <string name="signup_account_created_toast">Account created</string>
+    <string name="signup_try_again_toast">Signup failed. Try again.</string>
+
+    <string name="add_med_title">Add Medication</string>
+    <string name="add_med_name_hint">Medication Name</string>
+    <string name="add_med_dose_hint">Dose (e.g., 10mg)</string>
+    <string name="add_med_frequency_hint">Frequency</string>
+    <string name="add_med_times_label">Select Times</string>
+    <string name="add_med_food_instruction_hint">Food Instruction (Before/After)</string>
+    <string name="add_med_notes_hint">Notes (optional)</string>
+    <string name="add_med_enable_overlay_toast">Enable \'Display over other apps\' in Settings for alarms to work when locked</string>
+    <string name="add_med_login_first_toast">Please login first</string>
+    <string name="add_med_fill_all_fields_toast">Please fill all fields</string>
+    <string name="add_med_select_time_toast">Select at least one time</string>
+    <string name="add_med_reminders_set_toast">Medication reminders set!</string>
+
+    <string name="medications_title">Medications</string>
+    <string name="medications_empty">No medications added yet</string>
+    <string name="medications_add_new">Add New Medication</string>
+    <string name="medications_edit">Edit</string>
+    <string name="medications_delete">Delete</string>
+    <string name="medications_delete_confirm_title">Delete Medication</string>
+    <string name="medications_delete_confirm_message">Are you sure you want to delete this medication?</string>
+
+    <string name="monitor_title">Blood Sugar Monitor</string>
+    <string name="monitor_reading_type_hint">Reading Type</string>
+    <string name="monitor_value_hint">Value</string>
+    <string name="monitor_date_time_hint">Date &amp; Time</string>
+    <string name="monitor_notes_hint">Notes (optional)</string>
+    <string name="monitor_save">Save Reading</string>
+    <string name="monitor_voice_coming_soon_toast">Voice input feature coming soon!</string>
+    <string name="monitor_select_reading_type_toast">Please select reading type</string>
+    <string name="monitor_enter_value_toast">Please enter %1$s</string>
+    <string name="monitor_select_date_time_toast">Please select date and time</string>
+    <string name="monitor_valid_number_toast">Please enter a valid number</string>
+    <string name="monitor_reading_saved_toast">Reading saved!</string>
+    <string name="monitor_reading_saved_cloud_toast">Reading saved to cloud!</string>
+    <string name="monitor_fasting">Fasting</string>
+    <string name="monitor_before_meal">Before Meal</string>
+    <string name="monitor_after_meal">After Meal</string>
+    <string name="monitor_random">Random</string>
+
+    <string name="log_food_title">Log Food</string>
+    <string name="log_food_subtitle">Track your meals and nutrition</string>
+    <string name="log_food_recent_title">Recent Foods</string>
+    <string name="log_food_manual_entry">Manual Entry</string>
+    <string name="log_food_save_button">Save Food Entry</string>
+    <string name="log_food_name_hint">Food Name</string>
+    <string name="log_food_calories_hint">Calories</string>
+    <string name="log_food_carbs_hint">Carbs (g)</string>
+    <string name="log_food_search_hint">Search food...</string>
+    <string name="log_food_enter_food_name_toast">Please enter a food name</string>
+    <string name="log_food_logged_toast">Food entry logged</string>
+    <string name="log_food_enter_search_toast">Enter a food to search</string>
+    <string name="log_food_no_results_toast">No results found</string>
+    <string name="log_food_search_failed_toast">Search failed. Try again.</string>
+    <string name="log_food_no_named_foods_toast">No named foods found</string>
+    <string name="log_food_loaded_per_100g_toast">Loaded per 100g values. Adjust if needed.</string>
+    <string name="log_food_cal">cal</string>
+    <string name="log_food_carbs_g">carbs</string>
+    <string name="log_food_add">Add</string>
+
+    <string name="log_exercise_title">Log Exercise</string>
+    <string name="log_exercise_name_hint">Exercise Name</string>
+    <string name="log_exercise_duration_hint">Duration (minutes)</string>
+    <string name="log_exercise_calories_hint">Calories Burned</string>
+    <string name="log_exercise_save_button">Save Exercise</string>
+    <string name="log_exercise_enter_name_toast">Please enter an exercise name</string>
+    <string name="log_exercise_logged_toast">Exercise logged</string>
+
+    <string name="reports_title">Reports</string>
+    <string name="reports_view">View</string>
+    <string name="reports_delete">Delete</string>
+    <string name="reports_empty">No reports available</string>
+    <string name="reports_upload_new">Upload New Report</string>
+    <string name="reports_load_failed_toast">Unable to load report</string>
+
+    <string name="report_insights_title">Report</string>
+    <string name="report_analyze_button">Analyze Report</string>
+    <string name="report_open_pdf_button">Open PDF</string>
+    <string name="report_summary_title">Summary</string>
+    <string name="report_no_summary">No summary yet.</string>
+    <string name="report_detailed_title">Detailed Explanation</string>
+    <string name="report_key_findings_title">Key Findings</string>
+    <string name="report_status_not_analyzed">Status: Not analyzed</string>
+    <string name="report_missing_toast">Report details missing</string>
+    <string name="report_analysis_requested_toast">Analysis requested</string>
+    <string name="report_analysis_failed_toast">Unable to request analysis</string>
+    <string name="report_doctor_review_requested_toast">Doctor review requested</string>
+    <string name="report_verified_toast">Report verified</string>
+    <string name="report_url_unavailable_toast">Report URL unavailable</string>
+    <string name="report_open_failed_toast">Unable to open report</string>
+    <string name="report_not_found_cloud_toast">Report not found in cloud</string>
+    <string name="report_load_failed_cloud_toast">Unable to load report</string>
+    <string name="report_status_not_requested">Status: Not requested</string>
+    <string name="report_status_pending">Status: %1$s (by %2$s)</string>
+    <string name="report_status_approved">Status: %1$s</string>
+
+    <string name="documents_title">Medical Documents</string>
+    <string name="documents_empty">No documents found</string>
+    <string name="documents_upload">Upload Document</string>
+    <string name="documents_delete">Delete</string>
+    <string name="documents_url_unavailable_toast">Report URL unavailable</string>
+    <string name="documents_not_found_cloud_toast">Report not found in cloud</string>
+    <string name="documents_load_failed_toast">Unable to load report</string>
+    <string name="documents_cannot_open_toast">Cannot open document</string>
+    <string name="documents_deleted_toast">Document deleted</string>
+    <string name="documents_delete_confirm_title">Delete Document</string>
+    <string name="documents_delete_confirm_message">Are you sure you want to delete this document?</string>
+
+    <string name="fithub_title">FitHub</string>
+    <string name="fithub_subtitle">Stay fit, Live happier.</string>
+    <string name="fithub_log_food">Log Food</string>
+    <string name="fithub_log_exercise">Log Exercise</string>
+    <string name="fithub_meal_plan_title">Today\'s Meal Plan</string>
+    <string name="fithub_breakfast">Breakfast</string>
+    <string name="fithub_lunch">Lunch</string>
+    <string name="fithub_dinner">Dinner</string>
+    <string name="fithub_swap_meal">Swap Meal</string>
+    <string name="fithub_quick_workouts_title">Quick Workouts</string>
+    <string name="fithub_recommended_title">Recommended For You</string>
+    <string name="fithub_daily_workout_series">Daily Workout Series</string>
+    <string name="fithub_playlist">Playlist</string>
+    <string name="fithub_open_link_failed_toast">Unable to open link</string>
+    <string name="fithub_cal">cal</string>
+    <string name="fithub_carbs_g">carbs</string>
+    <string name="fithub_low_sugar">Low sugar</string>
+    <string name="fithub_high_fiber">High fiber</string>
+    <string name="fithub_high_protein">High protein</string>
+    <string name="fithub_easy_prep">Easy prep</string>
+
+    <string name="drgpt_title">Dr.GPT</string>
+    <string name="drgpt_missed_dose">💊 Missed Dose</string>
+    <string name="drgpt_feeling_dizzy">😵 Feeling Dizzy</string>
+    <string name="drgpt_high_sugar">📈 High Sugar</string>
+    <string name="drgpt_low_sugar">📉 Low Sugar</string>
+    <string name="drgpt_feeling_tired">😴 Feeling Tired</string>
+    <string name="drgpt_clear_chat_toast">Chat cleared</string>
+    <string name="drgpt_error_toast">Error: %1$s</string>
+
+    <string name="alarm_title">Medication Reminder</string>
+    <string name="alarm_medication_taken_toast">Medication marked as taken</string>
+    <string name="alarm_already_snoozed_toast">Already snoozed once</string>
+    <string name="alarm_snooze_5_min_toast">Reminder in 5 minutes</string>
+    <string name="alarm_swipe_toast">Please swipe to respond</string>
+    <string name="alarm_reminder_set_toast">%1$s reminder set!</string>
+    <string name="alarm_snoozing_toast">Snoozing for 10 minutes...</string>
+
+    <string name="permissions_title">Permission Required</string>
+    <string name="permissions_message">ChronicCare needs permission to show alarms when your phone is locked.\n\nThis ensures you never miss your medication reminders.</string>
+    <string name="permissions_grant_button">Grant Permission</string>
+    <string name="permissions_later_button">Later</string>
+
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_yes">Yes</string>
+    <string name="common_no">No</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_save">Save</string>
+    <string name="common_close">Close</string>
+    <string name="common_loading">Loading...</string>
+    <string name="common_error">Error</string>
+    <string name="common_retry">Retry</string>
+    <string name="common_share">Share</string>
+    <string name="common_edit">Edit</string>
+    <string name="common_view">View</string>
+    <string name="common_upload">Upload</string>
+    <string name="common_download">Download</string>
+    <string name="common_search">Search</string>
+    <string name="common_settings">Settings</string>
+    <string name="common_logout">Logout</string>
+    <string name="common_login">Login</string>
+    <string name="common_back">Back</string>
+    <string name="common_next">Next</string>
+    <string name="common_done">Done</string>
+    <string name="common_clear">Clear</string>
+    <string name="common_select">Select</string>
+    <string name="common_select_date">Select Date</string>
+    <string name="common_select_time">Select Time</string>
+    <string name="common_uploading">Uploading...</string>
+    <string name="common_downloading">Downloading...</string>
+    <string name="common_success">Success</string>
+    <string name="common_failed">Failed</string>
+
+    <!-- Medications Screen -->
+    <string name="medications_stay_on_track">Stay on track with your daily doses</string>
+    <string name="medications_today_doses">Today Doses</string>
+    <string name="medications_upcoming">Upcoming</string>
+    <string name="medications_missed">Missed</string>
+    <string name="medications_my_medications">My Medications</string>
+    <string name="medications_add">Add</string>
+    <string name="medications_refill_required">Refill required - %1$s days remaining</string>
+    <string name="medications_due_in_min">Due in %1$s min - %2$s</string>
+    <string name="medications_due_at">Due @ %1$s - %2$s</string>
+    <string name="medications_tablet_daily">%1$s - %2$s tablet daily %3$s</string>
+
+    <!-- Add Medications -->
+    <string name="add_med_schedule_reminder">Schedule your medication reminder</string>
+    <string name="add_med_scan_prescription">Scan Prescription</string>
+    <string name="add_med_scan_description">Take a photo to auto-fill medication details</string>
+    <string name="add_med_medication_name">Medication Name</string>
+    <string name="add_med_dosage">Dosage</string>
+    <string name="add_med_daily_schedule">Daily Schedule</string>
+    <string name="add_med_morning">Morning</string>
+    <string name="add_med_afternoon">Afternoon</string>
+    <string name="add_med_night">Night</string>
+    <string name="add_med_before_food">B/F</string>
+    <string name="add_med_after_food">A/F</string>
+
+    <!-- Additional Home Strings -->
+    <string name="home_default_reading_value">128</string>
+    <string name="home_last_checked_prefix">Last checked at </string>
+    <string name="home_reading_logged">Reading logged</string>
+    <string name="home_mark_medications_prompt">Mark medications from schedule below</string>
+    <string name="home_no_medications_selected">No medications selected</string>
+    <string name="home_medications_deleted">Medications deleted</string>
+
+    <!-- Additional AddMedications Strings -->
+    <string name="add_med_failed_load_image">Failed to load image</string>
+    <string name="add_med_please_login">Please login first</string>
+    <string name="add_med_please_fill_fields">Please fill all fields</string>
+    <string name="add_med_select_one_time">Select at least one time</string>
+
+    <!-- Additional Monitor Strings -->
+    <string name="monitor_voice_coming_soon">Voice input feature coming soon!</string>
+    <string name="monitor_please_select_type">Please select reading type</string>
+    <string name="monitor_please_enter_unit">Please enter %1$s</string>
+    <string name="monitor_please_select_datetime">Please select date and time</string>
+
+    <!-- Additional Strings -->
+    <string name="error_generic">Error: %1$s</string>
+    <string name="unable_to_open_link">Unable to open link</string>
+    <string name="daily_workout_series">Daily Workout Series</string>
+    <string name="playlist">Playlist</string>
+
+    <string-array name="frequency_options">
+        <item>Daily</item>
+        <item>Twice Daily</item>
+        <item>Weekly</item>
+        <item>As Needed</item>
+    </string-array>
+
+    <string-array name="food_instruction_options">
+        <item>Before Food</item>
+        <item>After Food</item>
+        <item>With Food</item>
+        <item>Empty Stomach</item>
+    </string-array>
+
+    <string-array name="reading_types">
+        <item>Fasting</item>
+        <item>Before Meal</item>
+        <item>After Meal</item>
+        <item>Random</item>
+    </string-array>
+
+    <string-array name="profile_document_types">
+        <item>Lab Report</item>
+        <item>Prescription</item>
+        <item>Medical Certificate</item>
+        <item>X-Ray/Scan</item>
+        <item>Insurance Document</item>
+        <item>Other</item>
+    </string-array>
+
+    <plurals name="home_due_days">
+        <item quantity="one">Due in %1$d day</item>
+        <item quantity="other">Due in %1$d days</item>
+    </plurals>
+    <plurals name="home_due_hours">
+        <item quantity="one">Due in %1$d hr</item>
+        <item quantity="other">Due in %1$d hrs</item>
+    </plurals>
+    <plurals name="home_due_minutes">
+        <item quantity="one">Due in %1$d min</item>
+        <item quantity="other">Due in %1$d mins</item>
+    </plurals>
+
+    <string-array name="language_labels">
+        <item>English</item>
+        <item>Hindi</item>
+        <item>Bengali</item>
+        <item>Tamil</item>
+        <item>Telugu</item>
+        <item>Marathi</item>
+        <item>Gujarati</item>
+        <item>Kannada</item>
+        <item>Malayalam</item>
+        <item>Punjabi</item>
+    </string-array>
 
     <string-array name="gender_array">
         <item>Select Gender</item>
@@ -21,4 +457,19 @@
         <item>O+</item>
         <item>O-</item>
     </string-array>
+
+    <!-- Language Selection -->
+    <string name="select_language">Select Your Language</string>
+    <string name="select_language_subtitle">Choose your preferred language for the app</string>
+    <string name="language_english">English</string>
+    <string name="language_hindi">हिंदी (Hindi)</string>
+    <string name="language_bengali">বাংলা (Bengali)</string>
+    <string name="language_odia">ଓଡ଼ିଆ (Odia)</string>
+    <string name="language_tamil">தமிழ் (Tamil)</string>
+    <string name="language_telugu">తెలుగు (Telugu)</string>
+    <string name="language_kannada">ಕನ್ನಡ (Kannada)</string>
+    <string name="language_malayalam">മലയാളം (Malayalam)</string>
+    <string name="continue_button">Continue</string>
+    <string name="profile_change_language">Change Language</string>
+    <string name="profile_language_changed_toast">Language changed. Restart app to apply.</string>
 </resources>

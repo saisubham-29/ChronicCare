@@ -113,6 +113,7 @@
   <li><b>Chiranjeebi Samsal</b> – Pre-Final Year</li>
   <li><b>Sai Subham Sahu</b> – Pre-Final Year</li>
   <li><b>Anshuman Mahanta</b> – Pre-Final Year</li>
+  <li><b>Yugantik Mahapatra</b> - Pre-Final Year</li>
 </ul>
 
 <p>

@@ -35,6 +35,55 @@
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
+        <!-- Scan Prescription Button -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardScanPrescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#26A69A">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="Scan prescription" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scan Prescription"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Take a photo to auto-fill medication details"
+                        android:textSize="12sp"
+                        android:textColor="#E0F2F1" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- Medication Name Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -131,21 +180,23 @@
                     android:textStyle="bold"
                     android:layout_marginBottom="12dp" />
 
-                <!-- Morning -->
+                <!-- Morning Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="16dp">
 
-                    <CheckBox
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkMorning"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Morning"
-                        android:textSize="14sp"
-                        android:buttonTint="#26A69A" />
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:buttonTint="#26A69A"
+                        app:useMaterialThemeColors="true" />
 
                     <TextView
                         android:id="@+id/tvMorningTime"
@@ -155,7 +206,9 @@
                         android:text="8:00 AM"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:textColor="#666666" />
+                        android:textColor="#26A69A"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:padding="4dp" />
 
                     <RadioGroup
                         android:id="@+id/rgMorning"
@@ -182,21 +235,23 @@
                     </RadioGroup>
                 </LinearLayout>
 
-                <!-- Afternoon -->
+                <!-- Afternoon Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="16dp">
 
-                    <CheckBox
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkAfternoon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Afternoon"
-                        android:textSize="14sp"
-                        android:buttonTint="#26A69A" />
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:buttonTint="#26A69A"
+                        app:useMaterialThemeColors="true" />
 
                     <TextView
                         android:id="@+id/tvAfternoonTime"
@@ -206,7 +261,9 @@
                         android:text="2:00 PM"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:textColor="#666666" />
+                        android:textColor="#26A69A"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:padding="4dp" />
 
                     <RadioGroup
                         android:id="@+id/rgAfternoon"
@@ -233,20 +290,22 @@
                     </RadioGroup>
                 </LinearLayout>
 
-                <!-- Night -->
+                <!-- Night Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <CheckBox
+                    <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkNight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Night"
-                        android:textSize="14sp"
-                        android:buttonTint="#26A69A" />
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:buttonTint="#26A69A"
+                        app:useMaterialThemeColors="true" />
 
                     <TextView
                         android:id="@+id/tvNightTime"
@@ -256,7 +315,9 @@
                         android:text="9:00 PM"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:textColor="#666666" />
+                        android:textColor="#26A69A"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:padding="4dp" />
 
                     <RadioGroup
                         android:id="@+id/rgNight"
