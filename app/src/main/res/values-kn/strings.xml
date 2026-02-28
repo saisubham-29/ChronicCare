@@ -5,7 +5,7 @@
     <string name="language_english">English</string>
     <string name="language_hindi">हिंदी (Hindi)</string>
     <string name="language_bengali">বাংলা (Bengali)</string>
-    <string name="language_odia">ଓଡ଼ିଆ (Odia)</string>
+    <string name="language_odia">ଓಡ଼ಿଆ (Odia)</string>
     <string name="language_tamil">தமிழ் (Tamil)</string>
     <string name="language_telugu">తెలుగు (Telugu)</string>
     <string name="language_kannada">ಕನ್ನಡ (Kannada)</string>
@@ -44,7 +44,6 @@
     <string name="unable_to_open_link">ಲಿಂಕ್ ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
     <string name="daily_workout_series">ದೈನಂದಿನ ವ್ಯಾಯಾಮ ಸರಣಿ</string>
     <string name="playlist">ಪ್ಲೇಲಿಸ್ಟ್</string>
-</resources>
     <string name="fithub_breakfast">ಬೆಳಗಿನ ಉಪಾಹಾರ</string>
     <string name="fithub_lunch">ಮಧ್ಯಾಹ್ನದ ಊಟ</string>
     <string name="fithub_dinner">ರಾತ್ರಿ ಊಟ</string>

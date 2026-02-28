@@ -112,14 +112,14 @@ public class HomeActivity extends BottomNavActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
                 new AlertDialog.Builder(this)
-                    .setTitle("Permission Required")
-                    .setMessage("ChronicCare needs permission to show alarms when your phone is locked.\n\nThis ensures you never miss your medication reminders.")
-                    .setPositiveButton("Grant Permission", (dialog, which) -> {
+                    .setTitle(R.string.home_permission_title)
+                    .setMessage(R.string.home_permission_message)
+                    .setPositiveButton(R.string.home_permission_grant, (dialog, which) -> {
                         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                         intent.setData(Uri.parse("package:" + getPackageName()));
                         startActivity(intent);
                     })
-                    .setNegativeButton("Later", null)
+                    .setNegativeButton(R.string.home_permission_later, null)
                     .show();
             }
         }
@@ -178,9 +178,9 @@ public class HomeActivity extends BottomNavActivity {
 
     private void updateGreeting() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        if (hour < 12) mainPageGreeting.setText("Good Morning,");
-        else if (hour < 17) mainPageGreeting.setText("Good Afternoon,");
-        else mainPageGreeting.setText("Good Evening,");
+        if (hour < 12) mainPageGreeting.setText(R.string.home_greeting_morning);
+        else if (hour < 17) mainPageGreeting.setText(R.string.home_greeting_afternoon);
+        else mainPageGreeting.setText(R.string.home_greeting_evening);
     }
 
     private void updateDate() {
@@ -189,31 +189,31 @@ public class HomeActivity extends BottomNavActivity {
     }
 
     private void updateUserName(GoogleSignInAccount account) {
-        String fullName = "User";
+        String fullName = getString(R.string.home_default_user_name);
         if (account != null) {
             if (account.getDisplayName() != null) fullName = account.getDisplayName();
             else if (account.getGivenName() != null) fullName = account.getGivenName();
         } else {
-            fullName = sharedPreferences.getString("userName", "User");
+            fullName = sharedPreferences.getString("userName", getString(R.string.home_default_user_name));
         }
         mainPageName.setText(formatName(fullName));
     }
     
     private String formatName(String name) {
-        if (name == null || name.trim().isEmpty()) return "User";
+        if (name == null || name.trim().isEmpty()) return getString(R.string.home_default_user_name);
         name = name.trim();
         if (!name.contains(" ")) return name;
         return name.substring(0, name.indexOf(" ")) + "...";
     }
 
     private void updateInitialReadings() {
-        currentReadingValue.setText("128");
+        currentReadingValue.setText(R.string.home_default_reading);
         updateLastCheckedTime();
     }
 
     private void updateLastCheckedTime() {
         String time = new SimpleDateFormat("h:mma", Locale.getDefault()).format(Calendar.getInstance().getTime()).toLowerCase();
-        lastCheckedTime.setText("Last checked at " + time);
+        lastCheckedTime.setText(getString(R.string.home_last_checked_at, time));
     }
 
     private void updateNextMedicationFromSnapshot(List<QueryDocumentSnapshot> medications) {
@@ -237,7 +237,7 @@ public class HomeActivity extends BottomNavActivity {
         
         if (nextMed != null) updateNextMedicationUI(nextMed, minDiff);
         else {
-            nextMedicationName.setText("No upcoming");
+            nextMedicationName.setText(R.string.home_no_upcoming);
             nextMedicationDose.setText("");
             medTiming.setText("");
             foodInstruction.setText("");
@@ -252,14 +252,25 @@ public class HomeActivity extends BottomNavActivity {
             nextMedicationName.setText(fullName.substring(0, lastSpace));
             nextMedicationDose.setText(fullName.substring(lastSpace + 1));
         } else {
-            nextMedicationName.setText(fullName != null ? fullName : "Medication");
+            nextMedicationName.setText(fullName != null ? fullName : getString(R.string.home_default_medication));
             nextMedicationDose.setText("");
         }
         long minutes = millisUntil / 60000;
         long hours = minutes / 60;
         long days = hours / 24;
-        String timeText = days > 0 ? "Due in " + days + " d" : hours > 0 ? "Due in " + hours + " h" : minutes > 0 ? "Due in " + minutes + " m" : "Due Now";
-        medTiming.setText(timeText + " -");
+        
+        String timeText;
+        if (days > 0) {
+            timeText = getResources().getQuantityString(R.plurals.home_due_days, (int) days, (int) days);
+        } else if (hours > 0) {
+            timeText = getResources().getQuantityString(R.plurals.home_due_hours, (int) hours, (int) hours);
+        } else if (minutes > 0) {
+            timeText = getResources().getQuantityString(R.plurals.home_due_minutes, (int) minutes, (int) minutes);
+        } else {
+            timeText = getString(R.string.home_due_now);
+        }
+        
+        medTiming.setText(getString(R.string.home_due_with_separator, timeText));
         foodInstruction.setText(mealTime != null ? mealTime : "");
     }
 
@@ -275,10 +286,10 @@ public class HomeActivity extends BottomNavActivity {
         btnCheckNow.setOnClickListener(v -> {
             currentReadingValue.setText(String.valueOf(80 + random.nextInt(120)));
             updateLastCheckedTime();
-            Toast.makeText(this, "Reading logged", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.home_reading_logged_toast, Toast.LENGTH_SHORT).show();
         });
 
-        btnTakeNow.setOnClickListener(v -> Toast.makeText(this, "Mark medications from schedule below", Toast.LENGTH_SHORT).show());
+        btnTakeNow.setOnClickListener(v -> Toast.makeText(this, R.string.home_mark_medications_toast, Toast.LENGTH_SHORT).show());
         
         if (btnDelete != null) {
             btnDelete.setOnClickListener(v -> confirmDeletion());
@@ -361,7 +372,7 @@ public class HomeActivity extends BottomNavActivity {
 
     private void showMiniPopup(QueryDocumentSnapshot doc) {
         new AlertDialog.Builder(this)
-                .setItems(new String[]{"Select", "Cancel"}, (dialog, which) -> {
+                .setItems(new String[]{getString(R.string.common_select), getString(R.string.common_cancel)}, (dialog, which) -> {
                     if (which == 0) {
                         isInDeleteMode = true;
                         selectedMedIds.clear();
@@ -398,15 +409,15 @@ public class HomeActivity extends BottomNavActivity {
         input.setPadding(50, 20, 50, 20);
 
         new AlertDialog.Builder(this)
-                .setTitle("Edit Medication Name")
+                .setTitle(R.string.common_edit)
                 .setView(input)
-                .setPositiveButton("Save", (dialog, which) -> {
+                .setPositiveButton(R.string.common_save, (dialog, which) -> {
                     String newName = input.getText().toString().trim();
                     if (!newName.isEmpty()) {
                         updateMedicationName(doc.getId(), newName);
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.common_cancel, null)
                 .show();
     }
 
@@ -426,8 +437,8 @@ public class HomeActivity extends BottomNavActivity {
 
         firestore.collection("users").document(userId).collection("medications").document(id)
                 .update("name", newName)
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Name updated", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Failed to update", Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(aVoid -> Toast.makeText(this, R.string.common_success, Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, R.string.common_failed, Toast.LENGTH_SHORT).show());
     }
 
     private void updateMedicationTime(QueryDocumentSnapshot doc, int hour, int minute) {
@@ -447,7 +458,7 @@ public class HomeActivity extends BottomNavActivity {
                 .addOnSuccessListener(aVoid -> {
                     cancelAlarmForMed(medName); // Cancel old
                     scheduleNewAlarm(medName, hour, minute, doc.getString("mealTime")); // Schedule new
-                    Toast.makeText(this, "Time updated to " + newTimeStr, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.common_success), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -477,14 +488,14 @@ public class HomeActivity extends BottomNavActivity {
 
     private void confirmDeletion() {
         if (selectedMedIds.isEmpty()) {
-            Toast.makeText(this, "No medications selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.home_no_medications_selected, Toast.LENGTH_SHORT).show();
             return;
         }
         new AlertDialog.Builder(this)
-                .setTitle("Delete Medications")
-                .setMessage("Are you sure? This will also cancel your reminders.")
-                .setPositiveButton("Delete", (dialog, which) -> executeDeletion())
-                .setNegativeButton("Cancel", null)
+                .setTitle(R.string.common_delete)
+                .setMessage(R.string.medications_delete_confirm_message)
+                .setPositiveButton(R.string.common_delete, (dialog, which) -> executeDeletion())
+                .setNegativeButton(R.string.common_cancel, null)
                 .show();
     }
 
@@ -505,7 +516,7 @@ public class HomeActivity extends BottomNavActivity {
             actionButtonsContainer.setVisibility(View.GONE);
         }
         selectedMedIds.clear();
-        Toast.makeText(this, "Medications deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.home_medications_deleted, Toast.LENGTH_SHORT).show();
     }
 
     private void cancelAlarmForMed(String medName) {

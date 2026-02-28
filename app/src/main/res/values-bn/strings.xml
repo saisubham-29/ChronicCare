@@ -7,7 +7,7 @@
     <string name="language_english">English</string>
     <string name="language_hindi">हिंदी (Hindi)</string>
     <string name="language_bengali">বাংলা (Bengali)</string>
-    <string name="language_odia">ଓଡ଼ିଆ (Odia)</string>
+    <string name="language_odia">ଓଡ଼িଆ (Odia)</string>
     <string name="continue_button">চালিয়ে যান</string>
     
     <!-- Login -->
@@ -108,7 +108,6 @@
     <string name="unable_to_open_link">লিঙ্ক খুলতে অক্ষম</string>
     <string name="daily_workout_series">দৈনিক ব্যায়াম সিরিজ</string>
     <string name="playlist">প্লেলিস্ট</string>
-</resources>
     <string name="fithub_breakfast">সকালের নাস্তা</string>
     <string name="fithub_lunch">দুপুরের খাবার</string>
     <string name="fithub_dinner">রাতের খাবার</string>

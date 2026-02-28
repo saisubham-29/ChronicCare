@@ -136,6 +136,12 @@
     <string name="fithub_dinner">रात का खाना</string>
     <string name="fithub_quick_workouts_title">त्वरित व्यायाम</string>
     <string name="fithub_recommended_title">आपके लिए अनुशंसित</string>
+    <string name="fithub_swap_meal">भोजन बदलें</string>
+    <string name="fithub_cal">cal</string>
+    <string name="fithub_carbs_g">carbs</string>
+    <string name="fithub_low_sugar">Low sugar</string>
+    <string name="fithub_high_fiber">High fiber</string>
+    <string name="fithub_high_protein">High protein</string>
 
     <!-- Dr.GPT -->
     <string name="drgpt_title">Dr.GPT</string>
@@ -144,22 +150,6 @@
     <string name="drgpt_high_sugar">📈 उच्च शर्करा</string>
     <string name="drgpt_low_sugar">📉 कम शर्करा</string>
     <string name="drgpt_feeling_tired">😴 थकान महसूस हो रही है</string>
-
-    <!-- FitHub -->
-    <string name="fithub_title">FitHub</string>
-    <string name="fithub_subtitle">फिट रहें, खुश रहें।</string>
-    <string name="fithub_log_food">भोजन लॉग करें</string>
-    <string name="fithub_log_exercise">व्यायाम लॉग करें</string>
-    <string name="fithub_meal_plan_title">आज की भोजन योजना</string>
-    <string name="fithub_breakfast">नाश्ता</string>
-    <string name="fithub_lunch">दोपहर का भोजन</string>
-    <string name="fithub_dinner">रात का खाना</string>
-    <string name="fithub_swap_meal">भोजन बदलें</string>
-    <string name="fithub_cal">cal</string>
-    <string name="fithub_carbs_g">carbs</string>
-    <string name="fithub_low_sugar">Low sugar</string>
-    <string name="fithub_high_fiber">High fiber</string>
-    <string name="fithub_high_protein">High protein</string>
 
     <!-- Medications -->
     <string name="medications_stay_on_track">अपनी दैनिक खुराक पर नज़र रखें</string>

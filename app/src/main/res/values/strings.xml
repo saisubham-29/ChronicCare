@@ -331,28 +331,6 @@
     <string name="common_success">Success</string>
     <string name="common_failed">Failed</string>
 
-    <!-- FitHub -->
-    <string name="fithub_title">FitHub</string>
-    <string name="fithub_subtitle">Stay fit, Live happier.</string>
-    <string name="fithub_log_food">Log Food</string>
-    <string name="fithub_log_exercise">Log Exercise</string>
-    <string name="fithub_meal_plan_title">Today\'s Meal Plan</string>
-    <string name="fithub_breakfast">Breakfast</string>
-    <string name="fithub_lunch">Lunch</string>
-    <string name="fithub_dinner">Dinner</string>
-    <string name="fithub_swap_meal">Swap Meal</string>
-    <string name="fithub_quick_workouts_title">Quick Workouts</string>
-    <string name="fithub_recommended_title">Recommended For You</string>
-    <string name="fithub_daily_workout_series">Daily Workout Series</string>
-    <string name="fithub_playlist">Playlist</string>
-    <string name="fithub_open_link_failed_toast">Unable to open link</string>
-    <string name="fithub_cal">cal</string>
-    <string name="fithub_carbs_g">carbs</string>
-    <string name="fithub_low_sugar">Low sugar</string>
-    <string name="fithub_high_fiber">High fiber</string>
-    <string name="fithub_high_protein">High protein</string>
-    <string name="fithub_easy_prep">Easy prep</string>
-
     <!-- Medications Screen -->
     <string name="medications_stay_on_track">Stay on track with your daily doses</string>
     <string name="medications_today_doses">Today Doses</string>

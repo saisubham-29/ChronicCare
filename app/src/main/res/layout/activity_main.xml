@@ -19,7 +19,7 @@
         android:id="@+id/mainPageGreeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Good Morning,"
+        android:text="@string/home_greeting_morning"
         android:textSize="28sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/mainPageGreeting"
         android:layout_marginStart="5dp"
-        android:text="Anjali"
+        android:text="@string/home_name_placeholder"
         android:textSize="28sp" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/mainPageGreeting"
-        android:text="Friday, Aug 15"
+        android:text="@string/home_date_placeholder"
         android:textSize="18sp"
         android:textColor="#4c5663" />
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
-                android:text="Current Reading"
+                android:text="@string/home_current_reading_label"
                 android:textColor="#4c5663" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_below="@id/currentReadingTxt"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
-                android:text="250"
+                android:text="@string/home_default_reading"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -91,7 +91,7 @@
                 android:layout_below="@id/currentReadingTxt"
                 android:layout_marginTop="13dp"
                 android:layout_marginStart="8dp"
-                android:text="mg/dL"
+                android:text="@string/home_reading_unit"
                 android:textColor="#4c5663" />
 
             <ImageView
@@ -110,7 +110,7 @@
                 android:layout_toEndOf="@id/clockIcon"
                 android:layout_alignBottom="@id/clockIcon"
                 android:layout_marginStart="3dp"
-                android:text="Last checked at 8:30pm"
+                android:text="@string/home_last_checked_placeholder"
                 android:textColor="#4c5663" />
 
             <LinearLayout
@@ -133,7 +133,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="In Range"
+                    android:text="@string/home_reading_status_in_range"
                     android:textColor="@color/black"
                     android:textSize="19sp" />
             </LinearLayout>
@@ -148,7 +148,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/button_shape_t1"
                 android:fontFamily="sans-serif"
-                android:text="Check Now"
+                android:text="@string/home_check_now"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
-                android:text="Next Medication"
+                android:text="@string/home_next_medication_label"
                 android:textColor="#4c5663" />
 
             <TextView
@@ -193,7 +193,7 @@
                 android:layout_below="@id/NextMedicationTxt"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
-                android:text="Empagliflozin"
+                android:text="@string/home_medication_name_placeholder"
                 android:textSize="25sp" />
 
             <TextView
@@ -203,7 +203,7 @@
                 android:layout_toEndOf="@id/NextMedicationName"
                 android:layout_alignBaseline="@id/NextMedicationName"
                 android:layout_marginStart="5dp"
-                android:text="10mg"
+                android:text="@string/home_medication_dose_placeholder"
                 android:textSize="25sp" />
 
             <LinearLayout
@@ -226,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
-                    android:text="Due In 15 Mins -"
+                    android:text="@string/home_due_placeholder"
                     android:textColor="#4c5663" />
 
                 <TextView
@@ -234,7 +234,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
-                    android:text="A/F"
+                    android:text="@string/home_food_instruction_placeholder"
                     android:textColor="#4c5663" />
             </LinearLayout>
 
@@ -244,11 +244,11 @@
                 android:layout_height="38dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/button_shape_t1"
                 android:fontFamily="sans-serif"
-                android:text="Take Now"
+                android:text="@string/home_take_now"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -258,7 +258,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quick Actions"
+        android:text="@string/home_quick_actions"
         android:layout_below="@id/NextMedicationCard"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="0dp"
@@ -317,7 +317,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/foodImg"
                         android:layout_centerVertical="true"
-                        android:text="Log  Food"
+                        android:text="@string/home_log_food"
                         android:textSize="15sp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="8dp"/>
@@ -358,7 +358,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/gymImg"
                         android:layout_centerVertical="true"
-                        android:text="Log Exercise"
+                        android:text="@string/home_log_exercise"
                         android:textSize="15sp"
                         android:layout_marginStart="10dp"/>
                 </RelativeLayout>
@@ -404,7 +404,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/reportImg"
                         android:layout_centerVertical="true"
-                        android:text="View Reports"
+                        android:text="@string/home_view_reports"
                         android:textSize="15sp"
                         android:layout_marginStart="10dp"/>
                 </RelativeLayout>
@@ -441,7 +441,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/docImg"
                         android:layout_centerVertical="true"
-                        android:text="Contact Doctor"
+                        android:text="@string/home_contact_doctor"
                         android:textSize="15sp"
                         android:layout_marginStart="10dp"/>
                 </RelativeLayout>
@@ -451,7 +451,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Today's Schedule"
+        android:text="@string/home_todays_schedule"
         android:layout_below="@id/QuickActionSection"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="0dp"
@@ -464,7 +464,7 @@
         android:id="@+id/AddMediaction"
         android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/TodaysScheduleTxt"
-        android:text="Add"
+        android:text="@string/home_add"
         android:textColor="#2faa92"
         android:layout_marginRight="10dp"/>
 
@@ -515,7 +515,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
-            android:text="Undo"
+            android:text="@string/common_cancel"
             app:strokeColor="#666666"
             android:textColor="#666666"/>
 
@@ -525,14 +525,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
-            android:text="Delete Selected"
+            android:text="@string/common_delete"
             app:backgroundTint="@android:color/holo_red_dark"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Health Insights"
+        android:text="@string/home_health_insights"
         android:layout_below="@id/actionButtonsContainer"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="0dp"
@@ -591,7 +591,7 @@
                             android:id="@+id/HealthInsightsFirstCardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tip of the Day"
+                            android:text="@string/home_tip_of_day"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             android:textColor="@color/black"/>
@@ -599,7 +599,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Stay hydrated! Aim for 8 glasses of water daily."
+                            android:text="@string/home_tip_of_day_body"
                             android:textSize="18sp"
                             android:layout_marginTop="4dp"/>
                     </LinearLayout>
@@ -642,7 +642,7 @@
                             android:id="@+id/HealthInsightsSecondCardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Meal of the Day"
+                            android:text="@string/home_meal_of_day"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             android:textColor="@color/black"/>
@@ -650,7 +650,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Eat a healthy diet for easy and quick digestion."
+                            android:text="@string/home_meal_of_day_body"
                             android:textSize="18sp"
                             android:layout_marginTop="4dp"/>
                     </LinearLayout>

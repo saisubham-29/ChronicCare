@@ -28,7 +28,7 @@
     <string name="home_greeting_evening">ଶୁଭ ସନ୍ଧ୍ୟା,</string>
     <string name="home_default_user_name">ଉପଯୋଗକର୍ତ୍ତା</string>
     <string name="home_current_reading_label">ବର୍ତ୍ତମାନର ରିଡିଂ</string>
-    <string name="home_check_now">ବର୍ତ୍ତମାନ ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="home_check_now">ବର୍ତ୍ତମାନ ଯାଞ୍ચ କରନ୍ତୁ</string>
     <string name="home_next_medication_label">ପରବର୍ତ୍ତୀ ଔଷଧ</string>
     <string name="home_take_now">ବର୍ତ୍ତମାନ ନିଅନ୍ତୁ</string>
     <string name="home_quick_actions">ଶୀଘ୍ର କାର୍ଯ୍ୟ</string>
@@ -44,7 +44,7 @@
     <string name="profile_personal_info_title">ବ୍ୟକ୍ତିଗତ ସୂଚନା</string>
     <string name="profile_phone_hint">ଫୋନ୍ ନମ୍ବର</string>
     <string name="profile_dob_hint">ଜନ୍ମ ତାରିଖ</string>
-    <string name="profile_gender_hint">ଲିଙ୍ଗ</string>
+    <string name="profile_gender_hint">ଲିଙ୍ഗ</string>
     <string name="profile_blood_group_hint">ରକ୍ତ ଗୋଷ୍ଠୀ</string>
     <string name="profile_medical_info_title">ଚିକିତ୍ସା ସୂଚନା</string>
     <string name="profile_height_hint">ଉଚ୍ଚତା (cm)</string>
@@ -108,7 +108,6 @@
     <string name="unable_to_open_link">ଲିଙ୍କ୍ ଖୋଲିବାରେ ଅସମର୍ଥ</string>
     <string name="daily_workout_series">ଦୈନିକ ବ୍ୟାୟାମ ଶୃଙ୍ଖଳା</string>
     <string name="playlist">ପ୍ଲେଲିଷ୍ଟ</string>
-</resources>
     <string name="fithub_breakfast">ପ୍ରାତଃରାଶ</string>
     <string name="fithub_lunch">ମଧ୍ୟାହ୍ନ ଭୋଜନ</string>
     <string name="fithub_dinner">ରାତ୍ରୀ ଭୋଜନ</string>
