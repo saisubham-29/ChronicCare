@@ -3,4 +3,9 @@
     <style name="NoIndicatorStyle">
         <item name="android:color">@android:color/transparent</item>
     </style>
+    
+    <style name="RoundedSquare" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
 </resources>

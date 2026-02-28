@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -24,11 +25,11 @@
             app:titleTextColor="#FFFFFF" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@drawable/profile_shape"
-        />
+        android:background="@drawable/profile_shape" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -40,45 +41,324 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:scaleType="centerCrop"
+                android:src="@color/white"
+                app:shapeAppearanceOverlay="@style/RoundedSquare"
+                app:strokeColor="#FFFFFF"
+                app:strokeWidth="4dp" />
 
-
-
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:translationY="50dp"
-                        android:id="@+id/profileImage"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:src="@color/white"
-                        app:civ_border_width="4dp"
-                        android:layout_gravity="center"
-                        app:civ_border_color="#FFFFFF" />
             <de.hdodenhof.circleimageview.CircleImageView
-                android:translationX="65dp"
                 android:id="@+id/btnChangePhoto"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/edit"
                 android:layout_gravity="center"
+                android:layout_marginTop="-50dp"
+                android:translationX="65dp"
+                android:src="@drawable/edit" />
                  />
 
             <TextView
 
+            <TextView
                 android:id="@+id/tvProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:text="John Doe"
                 android:text="@string/profile_name_placeholder"
                          android:layout_gravity="center"
                 android:textSize="25sp"
                 android:textColor="#0B0A0A"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvProfileEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="user@email.com"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <!-- Family Profile Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardvfamily"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Family Profile"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!-- Current Family Member Horizontal Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="2dp"
+                        app:strokeColor="#EEEEEE"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:id="@+id/layoutSwitchProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/ivFamilyMemberProfile"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_profile"
+                                app:shapeAppearanceOverlay="@style/RoundedSquare"
+                                app:strokeColor="#26A69A"
+                                app:strokeWidth="2dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvFamilyMemberName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Jane Doe"
+                                    android:textColor="#333333"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvFamilyMemberRelation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Relation: Spouse"
+                                    android:textColor="#666666"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@android:drawable/ic_menu_rotate"
+                                    android:tint="#26A69A" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Switch"
+                                    android:textColor="#26A69A"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Horizontal User Switcher -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Switch Member"
+                        android:textColor="#666666"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvFamilyMembersHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_family_member_horizontal"
+                        tools:orientation="horizontal" />
+
+                    <!-- Vertical List of Family Features -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Family Dashboard -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnFamilyDashboard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="1dp"
+                            app:strokeColor="#F0F0F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="12dp">
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@android:drawable/ic_menu_view"
+                                    android:tint="#26A69A" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:text="Family Dashboard"
+                                    android:textColor="#444444"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_arrow_right"
+                                    android:tint="#BDBDBD" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Caregiver -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnCaregiver"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="1dp"
+                            app:strokeColor="#F0F0F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="12dp">
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_contact"
+                                    android:tint="#26A69A" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:text="Caregiver"
+                                    android:textColor="#444444"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_arrow_right"
+                                    android:tint="#BDBDBD" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Family Insurance -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnFamilyInsurance"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="1dp"
+                            app:strokeColor="#F0F0F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="12dp">
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@android:drawable/ic_secure"
+                                    android:tint="#26A69A" />
+
+                                <TextView
+                                    android:id="@+id/tvFamilyInsurance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:text="Family Insurance"
+                                    android:textColor="#444444"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_arrow_right"
+                                    android:tint="#BDBDBD" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
                 android:layout_marginBottom="10dp"
                 android:text="@string/profile_email_placeholder"
                 android:textSize="18sp"
@@ -173,10 +453,10 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Personal Information Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#00acac"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
@@ -186,18 +466,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical"
                     android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Personal Information"
                         android:text="@string/profile_personal_info_title"
                         android:textSize="18sp"
                         android:textColor="#000000"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/btnSharePersonal"
@@ -206,18 +487,18 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="-40dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@android:drawable/ic_menu_share"
-                        android:tint="#26A69A"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:padding="4dp" />
+                        android:padding="4dp"
+                        android:src="@android:drawable/ic_menu_share"
+                        app:tint="#26A69A" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/profile_phone_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_call"
-                        app:startIconTint="#26A69A"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                        app:startIconTint="#26A69A">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPhone"
@@ -227,30 +508,30 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/profile_dob_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
-                        app:startIconTint="#26A69A"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                        app:startIconTint="#26A69A">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etDOB"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:clickable="true" />
+                            android:clickable="true"
+                            android:focusable="false" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/profile_gender_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_sort_by_size"
-                        app:startIconTint="#26A69A"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                        app:startIconTint="#26A69A">
 
                         <AutoCompleteTextView
                             android:id="@+id/spinnerGender"
@@ -260,13 +541,13 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/profile_blood_group_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_add"
-                        app:startIconTint="#E53935"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                        app:startIconTint="#E53935">
 
                         <AutoCompleteTextView
                             android:id="@+id/spinnerBloodGroup"
@@ -278,6 +559,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Medical Information Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -296,11 +578,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Medical Information"
                         android:text="@string/profile_medical_info_title"
                         android:textSize="18sp"
                         android:textColor="#000000"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/btnShareMedical"
@@ -309,10 +593,10 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="-40dp"
                         android:layout_marginEnd="4dp"
-                        android:src="@android:drawable/ic_menu_share"
-                        android:tint="#26A69A"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:padding="4dp" />
+                        android:padding="4dp"
+                        android:src="@android:drawable/ic_menu_share"
+                        app:tint="#26A69A" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -321,10 +605,12 @@
                         android:weightSum="2">
 
                         <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:hint="Height (cm)">
                             android:hint="@string/profile_height_hint"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
@@ -336,10 +622,12 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:hint="Weight (kg)">
                             android:hint="@string/profile_weight_hint"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
@@ -352,64 +640,69 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/profile_conditions_hint"
                         app:counterEnabled="true"
-                        app:counterMaxLength="200"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                        app:counterMaxLength="200">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etConditions"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="80dp"
                             android:gravity="top"
-                            android:inputType="textMultiLine" />
+                            android:inputType="textMultiLine"
+                            android:minHeight="80dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/profile_allergies_hint"
                         app:counterEnabled="true"
-                        app:counterMaxLength="200"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                        app:counterMaxLength="200">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etAllergies"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="80dp"
                             android:gravity="top"
-                            android:inputType="textMultiLine" />
+                            android:inputType="textMultiLine"
+                            android:minHeight="80dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnUploadDocument"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:text="Upload Medical Document"
                         android:text="@string/profile_upload_document"
                         app:icon="@android:drawable/ic_menu_upload"
                         app:cornerRadius="8dp"
-                        style="@style/Widget.Material3.Button.OutlinedButton" />
+                        app:icon="@android:drawable/ic_menu_upload" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnViewDocuments"
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:text="View All Documents"
                         android:text="@string/profile_view_documents"
                         app:icon="@android:drawable/ic_menu_view"
                         app:cornerRadius="8dp"
-                        style="@style/Widget.Material3.Button.TextButton" />
+                        app:icon="@android:drawable/ic_menu_view" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Emergency Contact Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -430,43 +723,45 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="16dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:layout_marginEnd="8dp"
                             android:src="@android:drawable/ic_dialog_alert"
-                            android:tint="#E53935"
-                            android:layout_marginEnd="8dp" />
+                            app:tint="#E53935" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="Emergency Contact"
                             android:text="@string/profile_emergency_contact_title"
                             android:textSize="18sp"
                             android:textColor="#E53935"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/btnShareEmergency"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@android:drawable/ic_menu_share"
-                            android:tint="#E53935"
+                            android:layout_marginStart="8dp"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:padding="4dp"
-                            android:layout_marginStart="8dp" />
+                            android:src="@android:drawable/ic_menu_share"
+                            app:tint="#E53935" />
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/profile_emergency_name_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_sort_by_size"
-                        app:startIconTint="#E53935"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                        app:startIconTint="#E53935">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEmergencyName"
@@ -476,13 +771,13 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:hint="@string/profile_emergency_phone_hint"
                         app:startIconDrawable="@android:drawable/ic_menu_call"
-                        app:startIconTint="#E53935"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                        app:startIconTint="#E53935">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEmergencyPhone"
@@ -492,9 +787,11 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:hint="Relationship">
                         android:hint="@string/profile_emergency_relation_hint"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
@@ -508,6 +805,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -517,24 +815,24 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSaveProfile"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:text="@string/profile_save"
                     android:textSize="16sp"
-                    app:icon="@android:drawable/ic_menu_save"
                     app:cornerRadius="28dp"
-                    style="@style/Widget.Material3.Button" />
+                    app:icon="@android:drawable/ic_menu_save" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLogout"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/profile_logout"
                     android:textSize="16sp"
-                    app:icon="@android:drawable/ic_lock_power_off"
                     app:cornerRadius="28dp"
-                    style="@style/Widget.Material3.Button.OutlinedButton" />
+                    app:icon="@android:drawable/ic_lock_power_off" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnChangeLanguage"

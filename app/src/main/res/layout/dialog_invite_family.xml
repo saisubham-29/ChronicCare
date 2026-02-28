@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invite Family Member or Friend"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etInviteEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etInviteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/spinnerRelation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Relationship"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Data to Share"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbPersonalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Personal Information (Name, Phone, DOB, Gender, Blood Group)"
+        android:textColor="#666666" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbEmergencyInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Emergency Contact (Name, Phone, Relationship)"
+        android:textColor="#666666" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbMedicalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Medical Information (Height, Weight, Conditions, Allergies)"
+        android:textColor="#666666" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbGdprInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GDPR Information (All data except medication dosage)"
+        android:textColor="#666666" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbIsCaretaker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Make this person a CARETAKER (full read access)"
+        android:textColor="#26A69A" />
+
+</LinearLayout>

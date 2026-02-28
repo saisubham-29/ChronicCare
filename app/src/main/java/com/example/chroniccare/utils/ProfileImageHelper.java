@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.chroniccare.LogInPage;
 import com.example.chroniccare.ProfileActivity;
@@ -13,12 +14,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.squareup.picasso.Picasso;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ProfileImageHelper {
     private static final String TAG = "ProfileImageHelper";
     
-    public static void loadProfileImage(Context context, CircleImageView imageView) {
+    /**
+     * Loads the profile image into the provided ImageView.
+     * Supports both CircleImageView and ShapeableImageView as they both extend ImageView.
+     */
+    public static void loadProfileImage(Context context, ImageView imageView) {
         if (context == null || imageView == null) {
             Log.e(TAG, "Context or ImageView is null");
             return;
@@ -55,7 +58,7 @@ public class ProfileImageHelper {
         }
     }
     
-    private static void loadGooglePhoto(Context context, CircleImageView imageView) {
+    private static void loadGooglePhoto(Context context, ImageView imageView) {
         if (context == null || imageView == null) return;
         
         try {

@@ -102,6 +102,9 @@
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".FamilyDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".DocumentsActivity"
             android:exported="false" />
         <activity
